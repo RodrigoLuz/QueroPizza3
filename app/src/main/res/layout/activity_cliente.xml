@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,31 +10,24 @@
     android:orientation="vertical"
     tools:context=".activities.ClienteActivity">
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="16"
+        android:id="@+id/edtNome"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="5dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nome"
         android:id="@+id/txtvNome"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Nome"
-        android:ems="10"
-        android:id="@+id/edtNome"
-        android:layout_below="@+id/txtvNome"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CEP"
-        android:id="@+id/txtvCep"
         android:layout_below="@+id/edtNome"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -42,58 +35,42 @@
         android:inputType="textPostalAddress"
         android:ems="10"
         android:id="@+id/edtCep"
+        android:layout_below="@+id/txtvNome"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CEP"
+        android:id="@+id/txtvCep"
+        android:layout_below="@+id/edtCep"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtEndereco"
         android:layout_below="@+id/txtvCep"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Endereço"
         android:id="@+id/txtvEndereco"
-        android:layout_below="@+id/edtCep"
-        android:layout_alignParentStart="true" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edtEndereco"
-        android:layout_below="@+id/txtvEndereco"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/edtEndereco"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout2">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cidade"
-            android:id="@+id/txtvCidade"
-            android:layout_below="@+id/edtEndereco"
-            android:layout_alignParentStart="true" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/edtCidade"
-            android:layout_below="@+id/txtvCidade"
-            android:layout_alignParentStart="true" />
-
-       <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/edtUf"
-            android:layout_below="@+id/txtvUf"
-            android:layout_alignEnd="@+id/txtvUf" />
-
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="UF"
-           android:id="@+id/txtvUf"
-           android:layout_below="@+id/edtEndereco"
-           android:layout_alignEnd="@+id/edtEndereco" />
     </LinearLayout>
 
     <TextView
@@ -101,17 +78,19 @@
         android:layout_height="wrap_content"
         android:text="email"
         android:id="@+id/txtvEmail"
-        android:layout_below="@+id/edtTelefone"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/edtEmail"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:ems="10"
+        android:ems="30"
         android:id="@+id/edtEmail"
-        android:layout_below="@+id/txtvEmail"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/txtvCidade"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -119,8 +98,9 @@
         android:text="Telefone"
         android:id="@+id/txtvTelefone"
         android:singleLine="true"
-        android:layout_below="@+id/edtCidade"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/edtTelefone"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -128,16 +108,54 @@
         android:inputType="phone"
         android:ems="10"
         android:id="@+id/edtTelefone"
-        android:layout_below="@+id/txtvTelefone"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/txtvEmail"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Salvar"
         android:id="@+id/btnSalvarCliente"
+        android:onClick="btnSalvarClienteClick"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="btnSalvarClienteClick"/>
+        android:layout_centerHorizontal="true" />
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cidade"
+        android:id="@+id/txtvCidade"
+        android:layout_below="@+id/edtCidade"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UF"
+        android:id="@+id/txtvUf"
+        android:layout_below="@+id/edtUf"
+        android:layout_toEndOf="@+id/edtCidade"
+        android:layout_marginLeft="5dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtCidade"
+        android:layout_below="@+id/txtvEndereco"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/edtEmail"
+        android:layout_alignEnd="@+id/btnSalvarCliente"
+        android:layout_marginTop="15dp"
+        android:ems="5"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtUf"
+        android:ems="2"
+        android:layout_alignTop="@+id/edtCidade"
+        android:layout_toEndOf="@+id/edtCidade" />
+
+</RelativeLayout>
