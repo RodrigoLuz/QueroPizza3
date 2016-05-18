@@ -1,4 +1,4 @@
-package com.pap.queropizza3;
+package com.pap.queropizza3.activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ExpandableListView;
+
+import com.pap.queropizza3.R;
+import com.pap.queropizza3.adapters.TExpandableAdapter;
+import com.pap.queropizza3.models.TPedidoItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +19,7 @@ import java.util.Map;
 public class ListaSimplesActivity extends AppCompatActivity {
 
     ExpandableListView lstvListaSimples;
-    List<TPedidoCardapio> pedido = new ArrayList<TPedidoCardapio>();
+    List<TPedidoItem> pedido = new ArrayList<TPedidoItem>();
 
     String [] tipos = {"Refrigerantes", "Vinhos", "Cervejas"};
 
@@ -26,7 +30,7 @@ public class ListaSimplesActivity extends AppCompatActivity {
 
         lstvListaSimples = (ExpandableListView)findViewById(R.id.lstvListaSimples);
 
-        Map<String, List<TPedidoCardapio>> dados =  new HashMap<String, List<TPedidoCardapio>>();
+        Map<String, List<TPedidoItem>> dados =  new HashMap<String, List<TPedidoItem>>();
         dados.put("Refrigerantes", retornarBebidas());
         dados.put("Vinhos", retornarBebidas());
 
@@ -38,24 +42,24 @@ public class ListaSimplesActivity extends AppCompatActivity {
 //        lstvListaSimples.setAdapter(adapter);
     }
 
-    public List<TPedidoCardapio> retornarBebidas(){
+    public List<TPedidoItem> retornarBebidas(){
         Cursor cursor;
-        List<TPedidoCardapio> bebidas = new ArrayList<TPedidoCardapio>();
-        TPedidoCardapio p;
+        List<TPedidoItem> bebidas = new ArrayList<TPedidoItem>();
+        TPedidoItem p;
 
-        p = new TPedidoCardapio();
+        p = new TPedidoItem();
         p.setQuantidade(0);
         p.setDescricao("Fanta");
         pedido.add(p);
-        p = new TPedidoCardapio();
+        p = new TPedidoItem();
         p.setQuantidade(0);
         p.setDescricao("Guaraná");
         pedido.add(p);
-        p = new TPedidoCardapio();
+        p = new TPedidoItem();
         p.setQuantidade(0);
         p.setDescricao("Coca Cola");
         pedido.add(p);
-        p = new TPedidoCardapio();
+        p = new TPedidoItem();
         p.setQuantidade(0);
         p.setDescricao("Pepsi");
         pedido.add(p);

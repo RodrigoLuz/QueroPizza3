@@ -1,4 +1,4 @@
-package com.pap.queropizza3;
+package com.pap.queropizza3.activities;
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,9 +1,12 @@
-package com.pap.queropizza3;
+// http://blog.smartlogic.io/2013/07/09/organizing-your-android-development-code-structure
+package com.pap.queropizza3.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.pap.queropizza3.R;
 
 import java.io.File;
 

@@ -1,10 +1,12 @@
-package com.pap.queropizza3;
+package com.pap.queropizza3.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.pap.queropizza3.R;
 
 public class GrupoActivity extends AppCompatActivity {
 
@@ -16,9 +18,9 @@ public class GrupoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grupo);
 
         btnGrupo1 = (Button)findViewById(R.id.btnGrupo1);
-        btnGrupo2 = (Button)findViewById(R.id.btnGrupo2);
-        btnGrupo3 = (Button)findViewById(R.id.btnGrupo3);
-        btnGrupo4 = (Button)findViewById(R.id.btnGrupo4);
+//        btnGrupo2 = (Button)findViewById(R.id.btnGrupo2);
+//        btnGrupo3 = (Button)findViewById(R.id.btnGrupo3);
+//        btnGrupo4 = (Button)findViewById(R.id.btnGrupo4);
         btnGrupo5 = (Button)findViewById(R.id.btnGrupo5);
     }
 

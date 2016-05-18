@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="2dip">
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chkbSelecao"
+        android:onClick="chkbSelecaoClick"/>
+
+    <TextView
+        android:padding="1dip"
+        android:id="@+id/txtvItemSabor"
+        android:text="Sabor"
+        android:layout_marginLeft="5dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/chkbSelecao"
+        android:textStyle="bold" />
+    <TextView
+        android:padding="1dip"
+        android:layout_marginLeft="5dip"
+        android:id="@+id/txtvIngredientes"
+        android:text="Ingredientes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtvItemSabor"
+        android:layout_toEndOf="@+id/chkbSelecao" />
+
+    <TextView
+        android:padding="1dip"
+        android:layout_marginLeft="5dip"
+        android:id="@+id/txtvValor"
+        android:text="R$ 10,00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtvIngredientes"
+        android:layout_alignParentEnd="true"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+

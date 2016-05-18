@@ -1,4 +1,4 @@
-package com.pap.queropizza3;
+package com.pap.queropizza3.adapters;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.pap.queropizza3.R;
+import com.pap.queropizza3.models.TPedidoItem;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +21,11 @@ import java.util.Map;
  */
 public class TExpandableAdapter extends BaseExpandableListAdapter {
 
-    private Map<String, List<TPedidoCardapio>> dados;
+    private Map<String, List<TPedidoItem>> dados;
     private List<String> keys;
     int vQuant;
 
-    public TExpandableAdapter(Map<String, List<TPedidoCardapio>> dados) {
+    public TExpandableAdapter(Map<String, List<TPedidoItem>> dados) {
 
         this.dados = dados;
         this.keys = new ArrayList<String>(
@@ -115,7 +118,7 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
 
         TextView txtvQuant = (TextView)vi.findViewById(R.id.txtvQuant);
 //        TextView txtvItem = (TextView)vi.findViewById(R.id.txtvItem);
-        TPedidoCardapio p;
+        TPedidoItem p;
         p = dados.get(keys.get(groupPosition)).get(childPosition);
         txtvQuant.setText(Integer.toString(p.getQuantidade()));
 //        txtvItem.setText(p.getDescricao());

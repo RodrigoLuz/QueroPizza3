@@ -1,13 +1,13 @@
-package com.pap.queropizza3;
+package com.pap.queropizza3.models;
 
 /**
  * Created by Rodrigo on 22/04/2016.
  */
-public class TPedidoCardapio {
+public class TPedidoItem {
 
     int quantidade;
     String descricao;
-    float valorUn;
+    float valor;
 
     public int getQuantidade() {
         return quantidade;
@@ -25,12 +25,12 @@ public class TPedidoCardapio {
         this.descricao = descricao;
     }
 
-    public float getValorUn() {
-        return valorUn;
+    public float getValor() {
+        return valor;
     }
 
-    public void setValorUn(float valorUn) {
-        this.valorUn = valorUn;
+    public void setValor(float valor) {
+        this.valor = valor;
     }
 
 

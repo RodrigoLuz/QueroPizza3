@@ -1,4 +1,4 @@
-package com.pap.queropizza3;
+package com.pap.queropizza3.activities;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.pap.queropizza3.R;
+import com.pap.queropizza3.models.TCliente;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
@@ -37,14 +40,14 @@ public class ClienteActivity extends AppCompatActivity {
 
     private void salvarCliente(){
         TCliente c = new TCliente();
-        c.idCliente = 1;
-        c.nome = edtNome.getText().toString();
-        c.cep = edtCep.getText().toString();
-        c.endereco = edtEndereco.getText().toString();
-        c.cidade = edtCidade.getText().toString();
-        c.uf = edtUf.getText().toString();
-        c.email = edtEmail.getText().toString();
-        c.telefone = edtTelefone.getText().toString();
+        c.setIdCliente(1);
+        c.setNome(edtNome.getText().toString());
+        c.setCep(edtCep.getText().toString());
+        c.setEndereco(edtEndereco.getText().toString());
+        c.setCidade(edtCidade.getText().toString());
+        c.setUf(edtUf.getText().toString());
+        c.setEmail(edtEmail.getText().toString());
+        c.setTelefone(edtTelefone.getText().toString());
 
         String filename = "user.dat";
         FileOutputStream fileOut = null;

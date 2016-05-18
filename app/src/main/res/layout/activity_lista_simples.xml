@@ -1,34 +1,21 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <ExpandableListView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:id="@+id/lstvListaSimples" />
+        android:layout_height="match_parent"
+        android:id="@+id/lstvListaSimples"
+        android:layout_above="@+id/btnContinuar" />
 
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Continuar"
+          android:id="@+id/btnContinuar"
+          android:onClick="btnContinuarClick"
+          android:layout_alignParentBottom="true"
+          android:layout_alignParentEnd="true" />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout"
-        android:gravity="right">
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Continuar"
-            android:id="@+id/btnContinuar"
-            android:layout_alignParentBottom="true"
-            android:onClick="btnContinuarClick"/>
-
-    </LinearLayout>
-
-
-
-</LinearLayout>
+</RelativeLayout>

@@ -1,23 +1,20 @@
-package com.pap.queropizza3;
+package com.pap.queropizza3.activities;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
+import com.pap.queropizza3.R;
+import com.pap.queropizza3.fragments.ComplementoFragment;
+import com.pap.queropizza3.fragments.SaboresFragment;
 
 public class MontaSaborActivity extends AppCompatActivity {
 
@@ -41,8 +38,6 @@ public class MontaSaborActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_monta_sabor);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -53,15 +48,6 @@ public class MontaSaborActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 
@@ -109,7 +95,7 @@ public class MontaSaborActivity extends AppCompatActivity {
                 case 0:
                     return SaboresFragment.newInstance(position + 1);
                 case 1:
-                    return SaboresSelecionadosFragment.newInstance(position + 2);
+                    return ComplementoFragment.newInstance(position + 2);
             }
             return null; //if you use default, you would not need to return null
         }
@@ -126,9 +112,15 @@ public class MontaSaborActivity extends AppCompatActivity {
                 case 0:
                     return "Sabores";
                 case 1:
-                    return "Sabores selecionados";
+                    return "Complemento";
             }
             return null;
         }
     }
+
+    public void  btnContinuarClick(View view) {
+        Intent it = new Intent(this, GrupoActivity.class);
+        startActivity(it);
+    }
+
 }

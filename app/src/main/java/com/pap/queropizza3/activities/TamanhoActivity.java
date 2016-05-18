@@ -1,9 +1,11 @@
-package com.pap.queropizza3;
+package com.pap.queropizza3.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.pap.queropizza3.R;
 
 public class TamanhoActivity extends AppCompatActivity {
 
