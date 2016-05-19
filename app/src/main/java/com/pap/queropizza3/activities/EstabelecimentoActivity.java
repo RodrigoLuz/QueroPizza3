@@ -192,14 +192,14 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                         for(int i = 0; i < arrayCardapioGrupo.length(); i++) {
                             TCardapioGrupo cardapiogrupo = new TCardapioGrupo();
                             JSONObject objectgrupo = arrayCardapioGrupo.getJSONObject(i);
-                            cardapiogrupo.setIdGrupo(objectgrupo.getInt("ClasseCardapioID"));
+                            cardapiogrupo.setCodGrupo(objectgrupo.getInt("ClasseCardapioID"));
                             cardapiogrupo.setNome(objectgrupo.getString("Nome")); // pizza, bebidas
 
                             JSONArray arrayCardapioSubGrupo = objectgrupo.getJSONArray("SubClasseCardapio");
                             for(int j = 0; j < arrayCardapioSubGrupo.length(); j++) {
                                 TCardapioSubGrupo cardapiosubgrupo = new TCardapioSubGrupo();
                                 JSONObject objectsubgrupo = arrayCardapioSubGrupo.getJSONObject(j);
-                                cardapiosubgrupo.setIdSubGrupo(objectsubgrupo.getInt("SubClasseCardapioID"));
+                                cardapiosubgrupo.setCodSubGrupo(objectsubgrupo.getInt("SubClasseCardapioID"));
                                 cardapiosubgrupo.setNome(objectsubgrupo.getString("Nome")); // pizza doce, pizza salgada, refrigerantes, vinho
                                 cardapiosubgrupo.setGrupo(cardapiogrupo);
 
@@ -207,7 +207,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                                 for(int k = 0; k < arrayCardapioItem.length(); k++) {
                                     TCardapioItem cardapioitem = new TCardapioItem();
                                     JSONObject objectitem = arrayCardapioItem.getJSONObject(k);
-                                    cardapioitem.setIdCardapioItem(objectitem.getInt("ItemCardapioID"));
+                                    cardapioitem.setCodCardapioItem(objectitem.getInt("ItemCardapioID"));
                                     cardapioitem.setNome(objectitem.getString("Nome")); // calabresa, mussarela, guaraná
                                     cardapioitem.setValor(objectitem.getDouble("Preco"));
                                     cardapioitem.setSubgrupo(cardapiosubgrupo);

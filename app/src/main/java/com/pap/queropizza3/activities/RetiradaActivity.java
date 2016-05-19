@@ -1,7 +1,9 @@
 package com.pap.queropizza3.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,9 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.models.TCliente;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,7 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /*
 Seleciona a forma de retirada (delivery ou balcão)
@@ -37,6 +43,7 @@ public class RetiradaActivity extends AppCompatActivity {
     ProgressDialog progress;
     String url, distancia;
     RadioButton rdoBalcao;
+    RadioGroup rgRetirada;
 
     Handler handler = new Handler(){
         @Override
@@ -66,12 +73,14 @@ public class RetiradaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_retirada);
         btnAvancarRetirada = (Button)findViewById(R.id.btnAvancarRetirada);
         rdoBalcao = (RadioButton)findViewById(R.id.rdoBalcao);
-
+        rgRetirada = (RadioGroup)findViewById(R.id.rgRetirada);
         buscarValorEntrega("Curitiba", "Paranagua");
     }
 
     public void btnAvancarRetiradaClick(View v){
         {
+            Boolean d = (rgRetirada.getCheckedRadioButtonId() == 0);
+            salvarRetirada((float) 10.00, d);
             Intent it = new Intent(this, GrupoActivity.class);
             startActivity(it);
         }
@@ -127,6 +136,16 @@ public class RetiradaActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    // criar as tabelas do pedido !
+
+    private void salvarRetirada(Float valor, Boolean delivery){
+        SharedPreferences ret = getSharedPreferences("retirada", MODE_PRIVATE);
+        SharedPreferences.Editor editor = ret.edit();
+        editor.putFloat("valor", valor);
+        editor.putBoolean("delivery", delivery);
+        editor.commit();
     }
 }
 

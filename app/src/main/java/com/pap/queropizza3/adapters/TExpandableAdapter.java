@@ -52,6 +52,7 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
         return groupPosition;
     }
 
+    // sub categorias
     @Override
     public View getGroupView(int groupPosition,
                              boolean isExpanded, View convertView,
@@ -59,17 +60,19 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             convertView = LayoutInflater.from(
                     parent.getContext()).inflate(
-                    android.R.layout.simple_expandable_list_item_1,
+                    android.R.layout. simple_expandable_list_item_1,
                     null);
         }
         TextView txt = (TextView)
                 convertView.findViewById(android.R.id.text1);
         txt.setTextColor(Color.WHITE);
         txt.setBackgroundColor(Color.GRAY);
+        txt.setMinHeight(100);
         txt.setText(keys.get(groupPosition));
         return convertView;
     }
 
+    // itens
     @Override
     public View getChildView(int groupPosition,
                              int childPosition, boolean isLastChild,
@@ -118,7 +121,9 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
 
         TextView txtvQuant = (TextView)vi.findViewById(R.id.txtvQuant);
 //        TextView txtvItem = (TextView)vi.findViewById(R.id.txtvItem);
+
         TPedidoItem p;
+
         p = dados.get(keys.get(groupPosition)).get(childPosition);
         txtvQuant.setText(Integer.toString(p.getQuantidade()));
 //        txtvItem.setText(p.getDescricao());

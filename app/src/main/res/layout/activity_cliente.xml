@@ -27,7 +27,7 @@
         android:id="@+id/txtvNome"
         android:layout_below="@+id/edtNome"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="5dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
         android:id="@+id/txtvCep"
         android:layout_below="@+id/edtCep"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="5dp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -119,7 +119,7 @@
         android:id="@+id/btnSalvarCliente"
         android:onClick="btnSalvarClienteClick"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -145,8 +145,7 @@
         android:id="@+id/edtCidade"
         android:layout_below="@+id/txtvEndereco"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/edtEmail"
-        android:layout_alignEnd="@+id/btnSalvarCliente"
+        android:layout_toStartOf="@+id/btnSalvarCliente"
         android:layout_marginTop="15dp"
         android:ems="5"/>
 
@@ -157,5 +156,14 @@
         android:ems="2"
         android:layout_alignTop="@+id/edtCidade"
         android:layout_toEndOf="@+id/edtCidade" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buscar"
+        android:id="@+id/btnBuscarCep"
+        android:layout_alignBottom="@+id/edtCep"
+        android:layout_toEndOf="@+id/edtCep"
+        android:onClick="btnBuscarClick"/>
 
 </RelativeLayout>

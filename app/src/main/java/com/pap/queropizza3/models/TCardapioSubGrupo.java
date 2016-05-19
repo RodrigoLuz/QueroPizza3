@@ -4,16 +4,16 @@ package com.pap.queropizza3.models;
  * Created by Rodrigo on 16/05/2016.
  */
 public class TCardapioSubGrupo {
-    int idSubGrupo;
+    int codSubGrupo;
     String nome;
     TCardapioGrupo grupo;
 
-    public int getIdSubGrupo() {
-        return idSubGrupo;
+    public int getCodSubGrupo() {
+        return codSubGrupo;
     }
 
-    public void setIdSubGrupo(int idSubGrupo) {
-        this.idSubGrupo = idSubGrupo;
+    public void setCodSubGrupo(int codSubGrupo) {
+        this.codSubGrupo = codSubGrupo;
     }
 
     public String getNome() {
