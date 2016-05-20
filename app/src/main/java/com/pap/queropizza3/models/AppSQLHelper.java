@@ -15,23 +15,23 @@ public class AppSQLHelper extends SQLiteOpenHelper {
     private static final int versao_banco = 1;
 
     public static final String t_grupo = "cardapio_grupo";
-    public static final String t_grupo_id = "id_grupo integer primary key autoincrement, ";
-    public static final String t_grupo_cod_grupo = "cod_grupo integer, ";
-    public static final String t_grupo_nome = "nome text";
+    public static final String t_grupo_id = "id_grupo";
+    public static final String t_grupo_cod_grupo = "cod_grupo";
+    public static final String t_grupo_nome = "nome";
 
     public static final String t_sub_grupo = "cardapio_sub_grupo";
-    public static final String t_sub_grupo_id = "id_sub_grupo integer primary key autoincrement, ";
-    public static final String t_sub_grupo_cod_sub_grupo = "cod_sub_grupo integer, ";
-    public static final String t_sub_grupo_nome = "nome text, ";
-    public static final String t_sub_grupo_grupo = "id_grupo integer";
+    public static final String t_sub_grupo_id = "id_sub_grupo";
+    public static final String t_sub_grupo_cod_sub_grupo = "cod_sub_grupo";
+    public static final String t_sub_grupo_nome = "nome";
+    public static final String t_sub_grupo_grupo = "id_grupo";
 
     public static final String t_item = "cardapio_item";
-    public static final String t_item_id = "id_item integer primary key autoincrement, ";
-    public static final String t_item_cod_item = "cod_item integer, ";
-    public static final String t_item_nome = "nome text, ";
-    public static final String t_item_descricao = "descricao text, ";
-    public static final String t_item_valor = "valor real, ";
-    public static final String t_item_sub_grupo = "id_sub_grupo integer";
+    public static final String t_item_id = "id_item";
+    public static final String t_item_cod_item = "cod_item";
+    public static final String t_item_nome = "nome";
+    public static final String t_item_descricao = "descricao";
+    public static final String t_item_valor = "valor";
+    public static final String t_item_sub_grupo = "id_sub_grupo";
 
     public AppSQLHelper(Context context) {
         super(context, nome_banco, null, versao_banco);
@@ -41,17 +41,27 @@ public class AppSQLHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(
                 "create table " + t_grupo + "(" +
-                        t_grupo_id + t_grupo_cod_grupo + t_grupo_nome + ")"
+                        t_grupo_id + " integer primary key autoincrement, " +
+                        t_grupo_cod_grupo + " integer," +
+                        t_grupo_nome + " text)"
         );
 
         sqLiteDatabase.execSQL(
                 "create table " + t_sub_grupo + "(" +
-                        t_sub_grupo_id + t_sub_grupo_cod_sub_grupo + t_sub_grupo_nome + t_sub_grupo_grupo + ")"
+                        t_sub_grupo_id + " integer primary key autoincrement, " +
+                        t_sub_grupo_cod_sub_grupo + " integer, " +
+                        t_sub_grupo_nome + " text, " +
+                        t_sub_grupo_grupo + " integer)"
         );
 
         sqLiteDatabase.execSQL(
                 "create table " + t_item + "(" +
-                        t_item_id + t_item_cod_item + t_item_nome + t_item_descricao + t_item_valor + t_item_sub_grupo + ")"
+                        t_item_id + " integer primary key autoincrement, " +
+                        t_item_cod_item + " integer, " +
+                        t_item_nome + " text, " +
+                        t_item_descricao + " text, " +
+                        t_item_valor + " real, " +
+                        t_item_sub_grupo + " integer)"
         );
 
     }

@@ -4,9 +4,9 @@ package com.pap.queropizza3.models;
  * Created by Rodrigo on 16/05/2016.
  */
 public class TCardapioSubGrupo {
-    int codSubGrupo;
-    String nome;
-    TCardapioGrupo grupo;
+    private int codSubGrupo;
+    private String nome;
+    private TCardapioGrupo grupo;
 
     public int getCodSubGrupo() {
         return codSubGrupo;

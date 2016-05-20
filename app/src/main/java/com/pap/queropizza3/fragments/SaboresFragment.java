@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.adapters.TCheckAdapter;
+import com.pap.queropizza3.models.AppSQLDao;
+import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TSabores;
 
 import java.util.ArrayList;
@@ -80,9 +82,6 @@ public class SaboresFragment extends Fragment implements AdapterView.OnItemClick
         View view = inflater.inflate(R.layout.fragment_sabores, container, false);
         lstvSabores = (ListView)view.findViewById(R.id.lstvSabores);
 
-//        ArrayAdapter<TSabores> adapter = new MyAdapter(getActivity(), R.layout.fragment_sabores, retornarSabores());
-//        lstvSabores.setAdapter(adapter);
-
         sabores = retornarSabores();
         ArrayAdapter<TSabores> adapter = new TCheckAdapter(getActivity(), R.layout.fragment_sabores, sabores);
         lstvSabores.setAdapter(adapter);
@@ -91,91 +90,25 @@ public class SaboresFragment extends Fragment implements AdapterView.OnItemClick
         return view;
     }
 
-
     public List<TSabores> retornarSabores(){
         List<TSabores> sabores = new ArrayList<TSabores>();
         TSabores s;
 
-        s = new TSabores();
-        s.setNome("Calabresa");
-        s.setIngredientes("Descrição calabresa");
-        sabores.add(s);
+        AppSQLDao dbDao;
+        dbDao = new AppSQLDao(getActivity());
 
-        s = new TSabores();
-        s.setNome("Mussarela");
-        s.setIngredientes("Descrição mussarela, queijo, presunto, oregano, massa, milho, calabresa, catupiry, massa de tomate, tomate em fatias");
-        sabores.add(s);
+        List<TCardapioItem> itens = dbDao.listaSabores(null);
 
-        s = new TSabores();
-        s.setNome("4 Queijos");
-        s.setIngredientes("Descrição 4 queijos");
-        sabores.add(s);
-
-        s = new TSabores();
-        s.setNome("Milho");
-        s.setIngredientes("Descrição calabresa, milho, queijo");
-        sabores.add(s);
-        s = new TSabores();
-        s.setNome("Calabresa");
-        s.setIngredientes("Descrição calabresa");
-        sabores.add(s);
-
-        s = new TSabores();
-        s.setNome("Mussarela");
-        s.setIngredientes("Descrição mussarela, queijo, presunto, oregano, massa, milho, calabresa, catupiry, massa de tomate, tomate em fatias");
-        sabores.add(s);
-
-        s = new TSabores();
-        s.setNome("4 Queijos");
-        s.setIngredientes("Descrição 4 queijos");
-        sabores.add(s);
-
-        s = new TSabores();
-        s.setNome("Milho");
-        s.setIngredientes("Descrição calabresa, milho, queijo");
-        sabores.add(s);
-        s = new TSabores();
-        s.setNome("Calabresa");
-        s.setIngredientes("Descrição calabresa");
-        sabores.add(s);
-
-        s = new TSabores();
-        s.setNome("Mussarela");
-        s.setIngredientes("Descrição mussarela, queijo, presunto, oregano, massa, milho, calabresa, catupiry, massa de tomate, tomate em fatias");
-        sabores.add(s);
-
-        s = new TSabores();
-        s.setNome("4 Queijos");
-        s.setIngredientes("Descrição 4 queijos");
-        sabores.add(s);
-
-        s = new TSabores();
-        s.setNome("Milho");
-        s.setIngredientes("Descrição calabresa, milho, queijo");
-        sabores.add(s);
-        s = new TSabores();
-        s.setNome("Calabresa");
-        s.setIngredientes("Descrição calabresa");
-        sabores.add(s);
-
-        s = new TSabores();
-        s.setNome("Mussarela");
-        s.setIngredientes("Descrição mussarela, queijo, presunto, oregano, massa, milho, calabresa, catupiry, massa de tomate, tomate em fatias");
-        sabores.add(s);
-
-        s = new TSabores();
-        s.setNome("4 Queijos");
-        s.setIngredientes("Descrição 4 queijos");
-        sabores.add(s);
-
-        s = new TSabores();
-        s.setNome("Milho");
-        s.setIngredientes("Descrição calabresa, milho, queijo");
-        sabores.add(s);
+        for(int i = 0 ; i < itens.size(); i++){
+            s = new TSabores();
+            s.setNome(itens.get(i).getNome());
+            s.setIngredientes(itens.get(i).getDescricao());
+            s.setValor(itens.get(i).getValor());
+            sabores.add(s);
+        }
 
         return sabores;
     }
-
 
     public void chkbSelecaoClick(View view) {
     }

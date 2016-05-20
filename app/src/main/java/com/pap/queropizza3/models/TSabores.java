@@ -7,6 +7,16 @@ public class TSabores {
     int idCardapioItem;
     String nome;
     String ingredientes;
+    Double valor;
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
     boolean selecionado = false;
 
     public int getIdCardapioItem() {

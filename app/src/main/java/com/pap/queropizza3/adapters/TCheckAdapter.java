@@ -33,6 +33,7 @@ public class TCheckAdapter extends ArrayAdapter<TSabores> {
         static class ViewHolder {
             protected TextView txtvItemSabor;
             protected TextView txtvIngredientes;
+            protected TextView txtvValor;
             protected CheckBox chkbSelecao;
         }
 
@@ -49,6 +50,7 @@ public class TCheckAdapter extends ArrayAdapter<TSabores> {
                 viewHolder.chkbSelecao = (CheckBox)convertView.findViewById(R.id.chkbSelecao);
                 viewHolder.txtvItemSabor = (TextView)convertView.findViewById(R.id.txtvItemSabor);
                 viewHolder.txtvIngredientes = (TextView)convertView.findViewById(R.id.txtvIngredientes);
+                viewHolder.txtvValor = (TextView)convertView.findViewById(R.id.txtvValor);
 
                 viewHolder.chkbSelecao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
@@ -61,6 +63,7 @@ public class TCheckAdapter extends ArrayAdapter<TSabores> {
                 convertView.setTag(R.id.chkbSelecao, viewHolder.chkbSelecao);
                 convertView.setTag(R.id.txtvItemSabor, viewHolder.txtvItemSabor);
                 convertView.setTag(R.id.txtvIngredientes, viewHolder.txtvIngredientes);
+                convertView.setTag(R.id.txtvValor, viewHolder.txtvValor);
             } else {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
@@ -69,6 +72,7 @@ public class TCheckAdapter extends ArrayAdapter<TSabores> {
             viewHolder.chkbSelecao.setChecked(list.get(position).isSelecionado());
             viewHolder.txtvItemSabor.setText(list.get(position).getNome());
             viewHolder.txtvIngredientes.setText(list.get(position).getIngredientes());
+            viewHolder.txtvValor.setText(String.format("%.2f", (list.get(position).getValor())));
 
             return convertView;
         }

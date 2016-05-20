@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.models.AppSQLDao;
 import com.pap.queropizza3.models.TCardapioGrupo;
 import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TCardapioSubGrupo;
@@ -45,6 +46,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     String url;
     List<TEstabelecimento> estabelecimentos = new ArrayList<TEstabelecimento>();
     List<TCardapioItem> cardapioitens = new ArrayList<TCardapioItem>();
+    AppSQLDao dbDao;
 
     Handler handler = new Handler(){
         @Override
@@ -66,6 +68,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dbDao = new AppSQLDao(getApplicationContext());
         buscarEstabelecimentos();
         buscarCardapio();
     }
@@ -194,6 +197,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                             JSONObject objectgrupo = arrayCardapioGrupo.getJSONObject(i);
                             cardapiogrupo.setCodGrupo(objectgrupo.getInt("ClasseCardapioID"));
                             cardapiogrupo.setNome(objectgrupo.getString("Nome")); // pizza, bebidas
+                            dbDao.inserirCardapioGrupo(cardapiogrupo);
 
                             JSONArray arrayCardapioSubGrupo = objectgrupo.getJSONArray("SubClasseCardapio");
                             for(int j = 0; j < arrayCardapioSubGrupo.length(); j++) {
@@ -202,6 +206,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                                 cardapiosubgrupo.setCodSubGrupo(objectsubgrupo.getInt("SubClasseCardapioID"));
                                 cardapiosubgrupo.setNome(objectsubgrupo.getString("Nome")); // pizza doce, pizza salgada, refrigerantes, vinho
                                 cardapiosubgrupo.setGrupo(cardapiogrupo);
+                                dbDao.inserirCardapioSubGrupo(cardapiosubgrupo);
 
                                 JSONArray arrayCardapioItem = objectsubgrupo.getJSONArray("ItemCardapio");
                                 for(int k = 0; k < arrayCardapioItem.length(); k++) {
@@ -211,6 +216,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                                     cardapioitem.setNome(objectitem.getString("Nome")); // calabresa, mussarela, guaraná
                                     cardapioitem.setValor(objectitem.getDouble("Preco"));
                                     cardapioitem.setSubgrupo(cardapiosubgrupo);
+                                    dbDao.inserirCardapioItem(cardapioitem);
 
                                     cardapioitens.add(cardapioitem);
 

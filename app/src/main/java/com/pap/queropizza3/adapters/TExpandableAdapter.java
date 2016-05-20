@@ -67,7 +67,7 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
                 convertView.findViewById(android.R.id.text1);
         txt.setTextColor(Color.WHITE);
         txt.setBackgroundColor(Color.GRAY);
-        txt.setMinHeight(100);
+        txt.setMinHeight(150);
         txt.setText(keys.get(groupPosition));
         return convertView;
     }

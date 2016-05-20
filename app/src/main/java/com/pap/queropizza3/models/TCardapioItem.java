@@ -4,11 +4,11 @@ package com.pap.queropizza3.models;
  * Created by Rodrigo on 16/05/2016.
  */
 public class TCardapioItem {
-    int codCardapioItem;
-    String nome;
-    String descricao;
-    Double valor;
-    TCardapioSubGrupo subgrupo;
+    private int codCardapioItem;
+    private String nome;
+    private String descricao;
+    private Double valor;
+    private TCardapioSubGrupo subgrupo;
 
     public int getCodCardapioItem() {
         return codCardapioItem;
