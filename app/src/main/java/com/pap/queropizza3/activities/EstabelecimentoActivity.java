@@ -45,7 +45,6 @@ public class EstabelecimentoActivity extends AppCompatActivity {
 
     String url;
     List<TEstabelecimento> estabelecimentos = new ArrayList<TEstabelecimento>();
-    List<TCardapioItem> cardapioitens = new ArrayList<TCardapioItem>();
     AppSQLDao dbDao;
 
     Handler handler = new Handler(){
@@ -215,11 +214,9 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                                     cardapioitem.setCodCardapioItem(objectitem.getInt("ItemCardapioID"));
                                     cardapioitem.setNome(objectitem.getString("Nome")); // calabresa, mussarela, guaraná
                                     cardapioitem.setValor(objectitem.getDouble("Preco"));
+                                    cardapioitem.setDescricao(objectitem.getString("Insumos"));
                                     cardapioitem.setSubgrupo(cardapiosubgrupo);
                                     dbDao.inserirCardapioItem(cardapioitem);
-
-                                    cardapioitens.add(cardapioitem);
-
                                 }
                             }
                         }

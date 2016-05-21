@@ -1,7 +1,6 @@
 package com.pap.queropizza3.activities;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +8,9 @@ import android.widget.ExpandableListView;
 
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.adapters.TExpandableAdapter;
+import com.pap.queropizza3.models.AppSQLDao;
+import com.pap.queropizza3.models.TCardapioItem;
+import com.pap.queropizza3.models.TCardapioSubGrupo;
 import com.pap.queropizza3.models.TPedidoItem;
 
 import java.util.ArrayList;
@@ -21,8 +23,6 @@ public class ListaSimplesActivity extends AppCompatActivity {
     ExpandableListView lstvListaSimples;
     List<TPedidoItem> pedido = new ArrayList<TPedidoItem>();
 
-    String [] tipos = {"Refrigerantes", "Vinhos", "Cervejas"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,21 +30,22 @@ public class ListaSimplesActivity extends AppCompatActivity {
 
         lstvListaSimples = (ExpandableListView)findViewById(R.id.lstvListaSimples);
 
-        Map<String, List<TPedidoItem>> dados =  new HashMap<String, List<TPedidoItem>>();
-        dados.put("Refrigerantes", retornarBebidas());
-        dados.put("Vinhos", retornarBebidas());
+        AppSQLDao dbDao;
+        dbDao = new AppSQLDao(getApplicationContext());
+        List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(null);
+        Map<String, List<TCardapioItem>> dados =  new HashMap<String, List<TCardapioItem>>();
 
-        lstvListaSimples.setAdapter(new TExpandableAdapter(dados));
+        for(int i = 0 ; i < subgrupos.size(); i++){
+            //erro, não busca itens
+            List<TCardapioItem> itens = dbDao.listaItem(subgrupos.get(i));
+      //      List<TCardapioItem> itens = dbDao.listaItem(null);
+            dados.put(subgrupos.get(i).getNome(), itens);
+        }
 
-        // cria o adapter para o layout do item
-//        ArrayAdapter<String> adapter = new MyAdapter(this, R.layout.layout_item_lista_simples, bebidas);
-        // passa o adapter para listview
-//        lstvListaSimples.setAdapter(adapter);
+         lstvListaSimples.setAdapter(new TExpandableAdapter(dados));
     }
 
     public List<TPedidoItem> retornarBebidas(){
-        Cursor cursor;
-        List<TPedidoItem> bebidas = new ArrayList<TPedidoItem>();
         TPedidoItem p;
 
         p = new TPedidoItem();

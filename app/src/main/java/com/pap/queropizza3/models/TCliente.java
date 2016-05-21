@@ -1,31 +1,24 @@
 package com.pap.queropizza3.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Rodrigo on 02/04/2016.
  */
-public class TCliente {
-    int idCliente;
-    String nome;
-    String senha;
-    String cep;
-    String endereco;
-    String numero;
-    String complemento;
-    String bairro;
-    String cidade;
-    String uf;
-    String email;
-    String telefone;
+public class TCliente implements Serializable {
+    private String nome;
+    private String senha;
+    private String cep;
+    private String endereco;
+    private String numero;
+    private String complemento;
+    private String bairro;
+    private String cidade;
+    private String uf;
+    private String email;
+    private String telefone;
 
     public TCliente() {
-    }
-
-    public int getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(int idCliente) {
-        idCliente = idCliente;
     }
 
     public String getNome() {
@@ -89,7 +82,7 @@ public class TCliente {
     }
 
     public void setCidade(String cidade) {
-        cidade = cidade;
+        this.cidade = cidade;
     }
 
     public String getUf() {
@@ -97,7 +90,7 @@ public class TCliente {
     }
 
     public void setUf(String uf) {
-        uf = uf;
+        this.uf = uf;
     }
 
     public String getEmail() {

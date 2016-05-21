@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.pap.queropizza3.R;
-import com.pap.queropizza3.models.TPedidoItem;
+import com.pap.queropizza3.models.TCardapioItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +21,11 @@ import java.util.Map;
  */
 public class TExpandableAdapter extends BaseExpandableListAdapter {
 
-    private Map<String, List<TPedidoItem>> dados;
+    private Map<String, List<TCardapioItem>> dados;
     private List<String> keys;
     int vQuant;
 
-    public TExpandableAdapter(Map<String, List<TPedidoItem>> dados) {
+    public TExpandableAdapter(Map<String, List<TCardapioItem>> dados) {
 
         this.dados = dados;
         this.keys = new ArrayList<String>(
@@ -95,6 +95,7 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
                     if (vQuant > 0) {
                         vQuant--;
                         holder1.txtvQuant.setText(Integer.toString(vQuant));
+
                     }
                 }
             });
@@ -119,14 +120,14 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
         holder.btnMais.setTag(holder);
         holder.btnMenos.setTag(holder);
 
-        TextView txtvQuant = (TextView)vi.findViewById(R.id.txtvQuant);
-//        TextView txtvItem = (TextView)vi.findViewById(R.id.txtvItem);
+//        TextView txtvQuant = (TextView)vi.findViewById(R.id.txtvQuant);
+        TextView txtvItem = (TextView)vi.findViewById(R.id.txtvItem);
 
-        TPedidoItem p;
+        TCardapioItem p;
 
         p = dados.get(keys.get(groupPosition)).get(childPosition);
-        txtvQuant.setText(Integer.toString(p.getQuantidade()));
-//        txtvItem.setText(p.getDescricao());
+//        txtvQuant.setText(Integer.toString(p.getQuantidade()));
+        txtvItem.setText(p.getNome());
         return vi;
     }
 

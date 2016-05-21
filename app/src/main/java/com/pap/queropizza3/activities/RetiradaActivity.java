@@ -1,9 +1,7 @@
 package com.pap.queropizza3.activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.models.InternalStorage;
 import com.pap.queropizza3.models.TCliente;
 
 import org.apache.http.HttpEntity;
@@ -28,9 +27,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 /*
 Seleciona a forma de retirada (delivery ou balcão)
@@ -41,7 +40,7 @@ public class RetiradaActivity extends AppCompatActivity {
 
     Button btnAvancarRetirada;
     ProgressDialog progress;
-    String url, distancia;
+    String url, distancia, valor, tempo;
     RadioButton rdoBalcao;
     RadioGroup rgRetirada;
 
@@ -55,7 +54,7 @@ public class RetiradaActivity extends AppCompatActivity {
 //
             switch (msg.what){
                 case 1:
-                     rdoBalcao.setText("Balcao R$ " + distancia);
+                     rdoBalcao.setText("Balcao R$ " + valor);
                     break;
                 case 2:
                     Toast.makeText(RetiradaActivity.this, "Erro de conexão", Toast.LENGTH_LONG).show();
@@ -74,13 +73,29 @@ public class RetiradaActivity extends AppCompatActivity {
         btnAvancarRetirada = (Button)findViewById(R.id.btnAvancarRetirada);
         rdoBalcao = (RadioButton)findViewById(R.id.rdoBalcao);
         rgRetirada = (RadioGroup)findViewById(R.id.rgRetirada);
-        buscarValorEntrega("Curitiba", "Paranagua");
+
+        buscarValorEntrega("", buscarDestination());
+    }
+
+    public String buscarDestination(){
+        TCliente c = new TCliente();
+        try {
+            c = (TCliente) InternalStorage.readObject(getApplicationContext(),"user.dat");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String d = replaceNull(c.getEndereco()) + "," + replaceNull(c.getNumero()) + "," + replaceNull(c.getCidade());
+        return d;
+    }
+
+    public static String replaceNull(String input) {
+        return input == null ? "" : input;
     }
 
     public void btnAvancarRetiradaClick(View v){
         {
             Boolean d = (rgRetirada.getCheckedRadioButtonId() == 0);
-            salvarRetirada((float) 10.00, d);
+            //salvarRetirada((float) 10.00, d);
             Intent it = new Intent(this, GrupoActivity.class);
             startActivity(it);
         }
@@ -95,9 +110,15 @@ public class RetiradaActivity extends AppCompatActivity {
             @Override
             public void run() {
                 HttpClient client = AndroidHttpClient.newInstance("HttpAndroid");
-                url = "https://maps.googleapis.com/maps/api/distancematrix/json?";
-                url = url + "origins=" + origins + "&destinations=" + destinations;
-                url = url + "&key=AIzaSyCmCqojmk_KOO4B6ffzHwSDFElMnqUCz0w";
+
+                // verificar se passa o endereço 100% correto no formato url
+                URI uri = null;
+                try {
+                    uri = new URI("http","queropizzaweb.azurewebsites.net","/api/ApiEntrega/json?","destino=" + destinations,null);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+                url = uri.toASCIIString();
                 HttpGet get = new HttpGet(url);
 
                 try {
@@ -107,15 +128,10 @@ public class RetiradaActivity extends AppCompatActivity {
                         String dadosServidor = EntityUtils.toString(entity);
                         JSONObject objectRoot = new JSONObject(dadosServidor);
 
-                        JSONArray arrayRows = objectRoot.getJSONArray("rows");
-                        JSONObject objectRows = arrayRows.getJSONObject(0);
-
-                        JSONArray arrayElements = objectRows.getJSONArray("elements");
-                        JSONObject objectElements = arrayElements.getJSONObject(0);
-
-                        JSONObject objectDistance = objectElements.getJSONObject("distance");
-
-                        distancia = objectDistance.getString("value");
+                        JSONArray arrayTaxa = objectRoot.getJSONArray("RotaPreco");
+                        distancia = arrayTaxa.getJSONObject(0).getString("distancia");
+                        tempo = arrayTaxa.getJSONObject(0).getString("tempo");
+                        valor = arrayTaxa.getJSONObject(0).getString("preco");
 
                         handler.sendEmptyMessage(1);
                     } else {
@@ -138,15 +154,6 @@ public class RetiradaActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
-    // criar as tabelas do pedido !
-
-    private void salvarRetirada(Float valor, Boolean delivery){
-        SharedPreferences ret = getSharedPreferences("retirada", MODE_PRIVATE);
-        SharedPreferences.Editor editor = ret.edit();
-        editor.putFloat("valor", valor);
-        editor.putBoolean("delivery", delivery);
-        editor.commit();
-    }
 }
 
 

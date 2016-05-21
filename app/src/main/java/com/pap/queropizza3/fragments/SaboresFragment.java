@@ -1,6 +1,5 @@
 package com.pap.queropizza3.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -55,12 +54,11 @@ public class SaboresFragment extends Fragment implements AdapterView.OnItemClick
         return fragment;
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
-//        TextView label = (TextView) v.getTag(R.id.label);
-//        CheckBox checkbox = (CheckBox) v.getTag(R.id.check);
-//        Toast.makeText(v.getContext(), label.getText().toString()+" "+isCheckedOrNot(checkbox), Toast.LENGTH_LONG).show();
+        TextView label = (TextView) v.getTag(R.id.txtvItemSabor);
+        CheckBox checkbox = (CheckBox) v.getTag(R.id.chkbSelecao);
+        Toast.makeText(v.getContext(), label.getText().toString()+" "+isCheckedOrNot(checkbox), Toast.LENGTH_LONG).show();
     }
 
     private String isCheckedOrNot(CheckBox checkbox) {
@@ -96,8 +94,7 @@ public class SaboresFragment extends Fragment implements AdapterView.OnItemClick
 
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getActivity());
-
-        List<TCardapioItem> itens = dbDao.listaSabores(null);
+        List<TCardapioItem> itens = dbDao.listaItem(null);
 
         for(int i = 0 ; i < itens.size(); i++){
             s = new TSabores();
@@ -110,6 +107,4 @@ public class SaboresFragment extends Fragment implements AdapterView.OnItemClick
         return sabores;
     }
 
-    public void chkbSelecaoClick(View view) {
-    }
 }
