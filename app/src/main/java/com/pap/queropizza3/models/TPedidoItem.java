@@ -1,5 +1,7 @@
 package com.pap.queropizza3.models;
 
+import java.util.List;
+
 /**
  * Created by Rodrigo on 22/04/2016.
  */
@@ -8,6 +10,7 @@ public class TPedidoItem {
     int quantidade;
     String descricao;
     float valor;
+    private List<TPedidoSubitem> subitens;
 
     public int getQuantidade() {
         return quantidade;
@@ -33,5 +36,11 @@ public class TPedidoItem {
         this.valor = valor;
     }
 
+    public List<TPedidoSubitem> getSubitens() {
+        return subitens;
+    }
 
+    public void setSubitens(List<TPedidoSubitem> subitens) {
+        this.subitens = subitens;
+    }
 }

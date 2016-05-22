@@ -3,11 +3,13 @@ package com.pap.queropizza3.models;
 /**
  * Created by Rodrigo on 17/05/2016.
  */
-public class TSabores {
+public class TItemTela {
     int idCardapioItem;
     String nome;
     String ingredientes;
     Double valor;
+    boolean selecionado = false;
+    int quantidade = 0;
 
     public Double getValor() {
         return valor;
@@ -16,8 +18,6 @@ public class TSabores {
     public void setValor(Double valor) {
         this.valor = valor;
     }
-
-    boolean selecionado = false;
 
     public int getIdCardapioItem() {
         return idCardapioItem;
@@ -49,5 +49,13 @@ public class TSabores {
 
     public void setSelecionado(boolean selecionado) {
         this.selecionado = selecionado;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 }

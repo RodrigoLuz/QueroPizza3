@@ -82,7 +82,6 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
         if (vi == null) {
             vi = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_lista_simples, parent, false);
             holder = new ViewHolder();
-
             holder.txtvQuant = (TextView)vi.findViewById(R.id.txtvQuant);
             holder.txtvItem = (TextView)vi.findViewById(R.id.txtvItem);
 
@@ -95,7 +94,6 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
                     if (vQuant > 0) {
                         vQuant--;
                         holder1.txtvQuant.setText(Integer.toString(vQuant));
-
                     }
                 }
             });
@@ -126,8 +124,8 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
         TCardapioItem p;
 
         p = dados.get(keys.get(groupPosition)).get(childPosition);
-//        txtvQuant.setText(Integer.toString(p.getQuantidade()));
-        txtvItem.setText(p.getNome());
+//        txtvQuant.setText(p.Integer.toString(p.getQuantidade()));
+         txtvItem.setText(p.getNome());
         return vi;
     }
 

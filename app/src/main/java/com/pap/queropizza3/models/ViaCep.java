@@ -126,8 +126,6 @@ public class ViaCEP {
     public String getUf() {
         return this.Uf;
     }
-
-
     /**
      * Procedimento para obtem dados via GET
      *

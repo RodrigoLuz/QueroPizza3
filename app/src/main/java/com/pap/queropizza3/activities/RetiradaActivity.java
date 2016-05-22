@@ -16,8 +16,9 @@ import android.widget.Toast;
 
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.models.AppSQLDao;
-import com.pap.queropizza3.models.InternalStorage;
+import com.pap.queropizza3.models.EnviarPedido;
 import com.pap.queropizza3.models.TCliente;
+import com.pap.queropizza3.models.TPedido;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -42,8 +43,9 @@ public class RetiradaActivity extends AppCompatActivity {
 
     Button btnAvancarRetirada;
     ProgressDialog progress;
-    String url, distancia, valor, tempo;
-    RadioButton rdoBalcao;
+    String url;
+    Double taxa, distancia, tempo;
+    RadioButton rdoDelivery;
     RadioGroup rgRetirada;
 
     Handler handler = new Handler(){
@@ -56,7 +58,7 @@ public class RetiradaActivity extends AppCompatActivity {
 //
             switch (msg.what){
                 case 1:
-                     rdoBalcao.setText("Balcao R$ " + valor);
+                      rdoDelivery.setText("Delivery R$ " + taxa);
                     break;
                 case 2:
                     Toast.makeText(RetiradaActivity.this, "Erro de conexão", Toast.LENGTH_LONG).show();
@@ -73,7 +75,7 @@ public class RetiradaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_retirada);
         btnAvancarRetirada = (Button)findViewById(R.id.btnAvancarRetirada);
-        rdoBalcao = (RadioButton)findViewById(R.id.rdoBalcao);
+        rdoDelivery = (RadioButton)findViewById(R.id.rdoDelivery);
         rgRetirada = (RadioGroup)findViewById(R.id.rgRetirada);
 
         buscarValorEntrega("", buscarDestination());
@@ -99,16 +101,24 @@ public class RetiradaActivity extends AppCompatActivity {
 
     public void btnAvancarRetiradaClick(View v){
         {
-            Boolean d = (rgRetirada.getCheckedRadioButtonId() == 0);
-            //salvarRetirada((float) 10.00, d);
+            criarPedido();
             Intent it = new Intent(this, GrupoActivity.class);
             startActivity(it);
         }
     }
 
-    public int criarPedido(){
+    public void criarPedido(){
+        Boolean d = (rgRetirada.getCheckedRadioButtonId() == 0);
+        AppSQLDao dbDao;
+        dbDao = new AppSQLDao(getApplicationContext());
+        TCliente c = dbDao.listaCliente().get(0);
+        TPedido p = new TPedido();
+        p.setDelivery(d);
+        p.setTaxa(taxa);
+        p.setCliente(c);
 
-        return 1;
+        EnviarPedido e  = new EnviarPedido();
+        e.envia(p);
     }
 
     public void buscarValorEntrega(final String origins, final String destinations) {
@@ -139,9 +149,9 @@ public class RetiradaActivity extends AppCompatActivity {
                         JSONObject objectRoot = new JSONObject(dadosServidor);
 
                         JSONArray arrayTaxa = objectRoot.getJSONArray("RotaPreco");
-                        distancia = arrayTaxa.getJSONObject(0).getString("distancia");
-                        tempo = arrayTaxa.getJSONObject(0).getString("tempo");
-                        valor = arrayTaxa.getJSONObject(0).getString("preco");
+                        distancia = arrayTaxa.getJSONObject(0).getDouble("distancia");
+                        tempo = arrayTaxa.getJSONObject(0).getDouble("tempo");
+                        taxa = arrayTaxa.getJSONObject(0).getDouble("preco");
 
                         handler.sendEmptyMessage(1);
                     } else {

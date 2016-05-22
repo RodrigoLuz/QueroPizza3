@@ -12,8 +12,6 @@ import android.widget.EditText;
 
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.models.AppSQLDao;
-import com.pap.queropizza3.models.InternalStorage;
-import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TCliente;
 import com.pap.queropizza3.models.ViaCEP;
 

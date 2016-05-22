@@ -1,22 +1,17 @@
 package com.pap.queropizza3.models;
 
+import java.util.List;
+
 /**
  * Created by Rodrigo on 21/05/2016.
  */
 public class TPedido {
     private int id_pedido;
-    private String nome;
-    private String endereco;
-    private String numero;
-    private String complemento;
-    private String bairro;
-    private String cidade;
-    private String uf;
-    private String email;
-    private String telefone;
-    private String delivery;
-    private String taxa;
+    private boolean delivery;
+    private Double taxa;
     private String datahora;
+    private TCliente cliente;
+    private List<TPedidoItem> itens;
 
     public int getId_pedido() {
         return id_pedido;
@@ -26,91 +21,27 @@ public class TPedido {
         this.id_pedido = id_pedido;
     }
 
-    public String getNome() {
-        return nome;
+    public TCliente getCliente() {
+        return cliente;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setCliente(TCliente cliente) {
+        this.cliente = cliente;
     }
 
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getComplemento() {
-        return complemento;
-    }
-
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getUf() {
-        return uf;
-    }
-
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
-    public String getDelivery() {
+    public boolean isDelivery() {
         return delivery;
     }
 
-    public void setDelivery(String delivery) {
+    public void setDelivery(boolean delivery) {
         this.delivery = delivery;
     }
 
-    public String getTaxa() {
+    public Double getTaxa() {
         return taxa;
     }
 
-    public void setTaxa(String taxa) {
+    public void setTaxa(Double taxa) {
         this.taxa = taxa;
     }
 
@@ -120,5 +51,13 @@ public class TPedido {
 
     public void setDatahora(String datahora) {
         this.datahora = datahora;
+    }
+
+    public List<TPedidoItem> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<TPedidoItem> itens) {
+        this.itens = itens;
     }
 }

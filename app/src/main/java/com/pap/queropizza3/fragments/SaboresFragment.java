@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.adapters.TCheckAdapter;
 import com.pap.queropizza3.models.AppSQLDao;
+import com.pap.queropizza3.models.TCardapioGrupo;
 import com.pap.queropizza3.models.TCardapioItem;
-import com.pap.queropizza3.models.TSabores;
+import com.pap.queropizza3.models.TCardapioSubGrupo;
+import com.pap.queropizza3.models.TItemTela;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,6 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link SaboresFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link SaboresFragment#newInstance} factory method to
  * create an instance of this fragment.
@@ -38,7 +39,7 @@ import java.util.List;
 public class SaboresFragment extends Fragment implements AdapterView.OnItemClickListener{
 
     ListView lstvSabores;
-    List<TSabores> sabores = new ArrayList<TSabores>();
+    List<TItemTela> sabores = new ArrayList<TItemTela>();
 
     public SaboresFragment() {
         // Required empty public constructor
@@ -54,18 +55,12 @@ public class SaboresFragment extends Fragment implements AdapterView.OnItemClick
         return fragment;
     }
 
+    // rotinas para talvez ajudar quandidade de sab selecionados
     @Override
     public void onItemClick(AdapterView<?> arg0, View v, int position, long arg3) {
         TextView label = (TextView) v.getTag(R.id.txtvItemSabor);
         CheckBox checkbox = (CheckBox) v.getTag(R.id.chkbSelecao);
-        Toast.makeText(v.getContext(), label.getText().toString()+" "+isCheckedOrNot(checkbox), Toast.LENGTH_LONG).show();
-    }
-
-    private String isCheckedOrNot(CheckBox checkbox) {
-        if(checkbox.isChecked())
-            return "is checked";
-        else
-            return "is not checked";
+        Toast.makeText(v.getContext(), label.getText().toString(), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -80,31 +75,15 @@ public class SaboresFragment extends Fragment implements AdapterView.OnItemClick
         View view = inflater.inflate(R.layout.fragment_sabores, container, false);
         lstvSabores = (ListView)view.findViewById(R.id.lstvSabores);
 
-        sabores = retornarSabores();
-        ArrayAdapter<TSabores> adapter = new TCheckAdapter(getActivity(), R.layout.fragment_sabores, sabores);
+        AppSQLDao dbDao;
+        dbDao = new AppSQLDao(getActivity());
+        sabores = dbDao.retornarItensTela(1, -1);
+        ArrayAdapter<TItemTela> adapter = new TCheckAdapter(getActivity(), R.layout.fragment_sabores, sabores);
         lstvSabores.setAdapter(adapter);
         lstvSabores.setOnItemClickListener(this);
 
         return view;
     }
 
-    public List<TSabores> retornarSabores(){
-        List<TSabores> sabores = new ArrayList<TSabores>();
-        TSabores s;
-
-        AppSQLDao dbDao;
-        dbDao = new AppSQLDao(getActivity());
-        List<TCardapioItem> itens = dbDao.listaItem(null);
-
-        for(int i = 0 ; i < itens.size(); i++){
-            s = new TSabores();
-            s.setNome(itens.get(i).getNome());
-            s.setIngredientes(itens.get(i).getDescricao());
-            s.setValor(itens.get(i).getValor());
-            sabores.add(s);
-        }
-
-        return sabores;
-    }
 
 }

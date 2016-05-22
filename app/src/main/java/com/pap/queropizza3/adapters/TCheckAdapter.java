@@ -11,7 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.pap.queropizza3.R;
-import com.pap.queropizza3.models.TSabores;
+import com.pap.queropizza3.models.TItemTela;
 
 import java.util.List;
 
@@ -19,12 +19,12 @@ import java.util.List;
  * Created by Rodrigo on 17/05/2016.
  * http://lalit3686.blogspot.com.br/2012/06/today-i-am-going-to-show-how-to-deal.html
  */
-public class TCheckAdapter extends ArrayAdapter<TSabores> {
+public class TCheckAdapter extends ArrayAdapter<TItemTela> {
 
-        private final List<TSabores> list;
+        private final List<TItemTela> list;
         private final Activity context;
 
-        public TCheckAdapter(Activity context, int textViewResourceId, List<TSabores> list) {
+        public TCheckAdapter(Activity context, int textViewResourceId, List<TItemTela> list) {
             super(context, textViewResourceId, list);
             this.context = context;
             this.list = list;

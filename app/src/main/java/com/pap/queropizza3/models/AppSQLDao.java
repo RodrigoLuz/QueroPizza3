@@ -110,6 +110,7 @@ public class AppSQLDao {
             sql += " WHERE "+ AppSQLHelper.f_sub_grupo_grupo +" = ?";
             argumentos = new String[]{ String.valueOf(grupo.getCodGrupo()) };
         }
+
         sql += " ORDER BY "+ AppSQLHelper.f_sub_grupo_nome;
 
         Cursor cursor = db.rawQuery(sql, argumentos);
@@ -139,16 +140,16 @@ public class AppSQLDao {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(AppSQLHelper.f_ped_nome, p.getNome());
-        cv.put(AppSQLHelper.f_ped_endereco, p.getEndereco());
-        cv.put(AppSQLHelper.f_ped_numero, p.getNumero());
-        cv.put(AppSQLHelper.f_ped_complemento, p.getComplemento());
-        cv.put(AppSQLHelper.f_ped_bairro, p.getBairro());
-        cv.put(AppSQLHelper.f_ped_cidade, p.getCidade());;
-        cv.put(AppSQLHelper.f_ped_uf, p.getUf());;
-        cv.put(AppSQLHelper.f_ped_email, p.getEmail());;
-        cv.put(AppSQLHelper.f_ped_telefone, p.getTelefone());;
-        cv.put(AppSQLHelper.f_ped_delivery, p.getDelivery());
+        cv.put(AppSQLHelper.f_ped_nome, p.getCliente().getNome());
+        cv.put(AppSQLHelper.f_ped_endereco, p.getCliente().getEndereco());
+        cv.put(AppSQLHelper.f_ped_numero, p.getCliente().getNumero());
+        cv.put(AppSQLHelper.f_ped_complemento, p.getCliente().getComplemento());
+        cv.put(AppSQLHelper.f_ped_bairro, p.getCliente().getBairro());
+        cv.put(AppSQLHelper.f_ped_cidade, p.getCliente().getCidade());;
+        cv.put(AppSQLHelper.f_ped_uf, p.getCliente().getUf());;
+        cv.put(AppSQLHelper.f_ped_email, p.getCliente().getEmail());;
+        cv.put(AppSQLHelper.f_ped_telefone, p.getCliente().getTelefone());;
+        cv.put(AppSQLHelper.f_ped_delivery, p.isDelivery());
         cv.put(AppSQLHelper.f_ped_taxa, p.getTaxa());
         cv.put(AppSQLHelper.f_ped_datahora, p.getDatahora());
 
@@ -204,6 +205,27 @@ public class AppSQLDao {
         cursor.close();
         db.close();
         return itens;
+    }
+
+    public List<TItemTela> retornarItensTela(int id_grupo, int id_sub_grupo){
+        List<TItemTela> itenstela = new ArrayList<TItemTela>();
+
+        TCardapioGrupo g = new TCardapioGrupo();
+        g.setCodGrupo(id_grupo); // grupo de pizzas, código está fixo, verificar
+
+        List<TCardapioSubGrupo> subgrupos = listaSubGrupo(g); // percorre subgrupos de pizzas para pegar os itens
+        for(int i = 0 ; i < subgrupos.size(); i++){
+            List<TCardapioItem> itens = listaItem(subgrupos.get(i));
+            for(int j = 0 ; j < itens.size(); j++){
+                TItemTela linha = new TItemTela();
+                linha.setNome(itens.get(j).getNome());
+                linha.setIngredientes(itens.get(j).getDescricao());
+                linha.setValor(itens.get(j).getValor());
+                itenstela.add(linha);
+            }
+        }
+
+        return itenstela;
     }
 
 

@@ -9,6 +9,7 @@ import android.widget.ExpandableListView;
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.adapters.TExpandableAdapter;
 import com.pap.queropizza3.models.AppSQLDao;
+import com.pap.queropizza3.models.TCardapioGrupo;
 import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TCardapioSubGrupo;
 import com.pap.queropizza3.models.TPedidoItem;
@@ -21,7 +22,6 @@ import java.util.Map;
 public class ListaSimplesActivity extends AppCompatActivity {
 
     ExpandableListView lstvListaSimples;
-    List<TPedidoItem> pedido = new ArrayList<TPedidoItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,40 +32,18 @@ public class ListaSimplesActivity extends AppCompatActivity {
 
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
-        List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(null);
+
+        TCardapioGrupo g = new TCardapioGrupo();
+        g.setCodGrupo(2); // grupo de bebidas, código está fixo, verificar
+
+        List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(g);
         Map<String, List<TCardapioItem>> dados =  new HashMap<String, List<TCardapioItem>>();
 
         for(int i = 0 ; i < subgrupos.size(); i++){
-            //erro, não busca itens
             List<TCardapioItem> itens = dbDao.listaItem(subgrupos.get(i));
-      //      List<TCardapioItem> itens = dbDao.listaItem(null);
             dados.put(subgrupos.get(i).getNome(), itens);
         }
-
          lstvListaSimples.setAdapter(new TExpandableAdapter(dados));
-    }
-
-    public List<TPedidoItem> retornarBebidas(){
-        TPedidoItem p;
-
-        p = new TPedidoItem();
-        p.setQuantidade(0);
-        p.setDescricao("Fanta");
-        pedido.add(p);
-        p = new TPedidoItem();
-        p.setQuantidade(0);
-        p.setDescricao("Guaraná");
-        pedido.add(p);
-        p = new TPedidoItem();
-        p.setQuantidade(0);
-        p.setDescricao("Coca Cola");
-        pedido.add(p);
-        p = new TPedidoItem();
-        p.setQuantidade(0);
-        p.setDescricao("Pepsi");
-        pedido.add(p);
-
-        return pedido;
     }
 
     public void btnContinuarClick(View view) {
