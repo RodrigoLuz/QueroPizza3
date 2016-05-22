@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.models.AppSQLDao;
 import com.pap.queropizza3.models.InternalStorage;
+import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TCliente;
 import com.pap.queropizza3.models.ViaCEP;
 
@@ -62,11 +64,9 @@ public class ClienteActivity extends AppCompatActivity {
         c.setEmail(edtEmail.getText().toString());
         c.setTelefone(edtTelefone.getText().toString());
 
-        try {
-            InternalStorage.writeObject(getApplicationContext(),"user.dat", c);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        AppSQLDao dbDao;
+        dbDao = new AppSQLDao(getApplicationContext());
+        dbDao.inserirCliente(c);
     }
 
     public void btnBuscarClick(View view) {

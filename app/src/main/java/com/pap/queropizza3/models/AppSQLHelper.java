@@ -14,6 +14,19 @@ public class AppSQLHelper extends SQLiteOpenHelper {
     private static final String nome_banco = "db_app";
     private static final int versao_banco = 1;
 
+    public static final String t_cliente = "cliente"; // tabela
+    public static final String f_cli_id = "id_cliente"; // pk
+    public static final String f_cli_nome = "nome";
+    public static final String f_cli_cep = "cep";
+    public static final String f_cli_endereco = "endereco";
+    public static final String f_cli_numero = "numero";
+    public static final String f_cli_complemento = "complemento";
+    public static final String f_cli_bairro = "bairro";
+    public static final String f_cli_cidade = "cidade";
+    public static final String f_cli_uf = "uf";
+    public static final String f_cli_email = "email";
+    public static final String f_cli_telefone = "telefone";
+
     public static final String t_pedido = "pedido"; // tabela
     public static final String f_ped_id = "id_pedido"; // pk
     public static final String f_ped_nome = "nome";
@@ -66,6 +79,21 @@ public class AppSQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+        sqLiteDatabase.execSQL(
+                "create table " + t_cliente + "(" +
+                        f_cli_id + " integer primary key autoincrement, " +
+                        f_cli_nome + " text," +
+                        f_cli_cep + " text," +
+                        f_cli_endereco + " text," +
+                        f_cli_numero + " text," +
+                        f_cli_complemento + " text," +
+                        f_cli_bairro + " text," +
+                        f_cli_cidade + " text," +
+                        f_cli_uf + " text," +
+                        f_cli_email + " text," +
+                        f_cli_telefone + " text)"
+        );
 
         sqLiteDatabase.execSQL(
                 "create table " + t_pedido + "(" +
@@ -132,6 +160,3 @@ public class AppSQLHelper extends SQLiteOpenHelper {
 
     }
 }
-
-
-//  public static final String coluna_ = "";

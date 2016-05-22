@@ -7,8 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.models.AppSQLDao;
+import com.pap.queropizza3.models.TCliente;
 
 import java.io.File;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnTesteClick(View v){
-        if (fileExistance("user.dat")) {
+        if (existeCliente()) {
             Intent it = new Intent(this, EstabelecimentoActivity.class);
             startActivity(it);
         }
@@ -30,9 +33,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public boolean fileExistance(String fname){
-        File file = getBaseContext().getFileStreamPath(fname);
-        return file.exists();
+    public boolean existeCliente(){
+        AppSQLDao dbDao;
+        dbDao = new AppSQLDao(getApplicationContext());
+        List<TCliente> clientes = dbDao.listaCliente();
+        if (clientes.isEmpty()){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 }

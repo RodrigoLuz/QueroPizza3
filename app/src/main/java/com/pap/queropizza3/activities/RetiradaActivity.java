@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.models.AppSQLDao;
 import com.pap.queropizza3.models.InternalStorage;
 import com.pap.queropizza3.models.TCliente;
 
@@ -30,6 +31,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 /*
 Seleciona a forma de retirada (delivery ou balcão)
@@ -80,7 +82,10 @@ public class RetiradaActivity extends AppCompatActivity {
     public String buscarDestination(){
         TCliente c = new TCliente();
         try {
-            c = (TCliente) InternalStorage.readObject(getApplicationContext(),"user.dat");
+            AppSQLDao dbDao;
+            dbDao = new AppSQLDao(getApplicationContext());
+            List<TCliente> clientes = dbDao.listaCliente();
+            c = clientes.get(0);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -152,10 +152,58 @@ public class AppSQLDao {
         cv.put(AppSQLHelper.f_ped_taxa, p.getTaxa());
         cv.put(AppSQLHelper.f_ped_datahora, p.getDatahora());
 
-        int id = (int) db.insert(AppSQLHelper.t_item, null, cv);
-        cv.put(AppSQLHelper.f_ped_id, id);
+        int id = (int) db.insert(AppSQLHelper.t_pedido, null, cv);
+        p.setId_pedido(id);
         db.close();
         return id;
+    }
+
+    public int inserirCliente(TCliente c) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(AppSQLHelper.f_cli_nome, c.getNome());
+        cv.put(AppSQLHelper.f_cli_endereco, c.getEndereco());
+        cv.put(AppSQLHelper.f_cli_numero, c.getNumero());
+        cv.put(AppSQLHelper.f_cli_complemento, c.getComplemento());
+        cv.put(AppSQLHelper.f_cli_bairro, c.getBairro());
+        cv.put(AppSQLHelper.f_cli_cidade, c.getCidade());;
+        cv.put(AppSQLHelper.f_cli_uf, c.getUf());;
+        cv.put(AppSQLHelper.f_cli_email, c.getEmail());;
+        cv.put(AppSQLHelper.f_cli_telefone, c.getTelefone());;
+
+        int id = (int) db.insert(AppSQLHelper.t_cliente, null, cv);
+        c.setId_cliente(id);
+        db.close();
+        return id;
+    }
+
+
+    public List<TCliente> listaCliente () {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String sql = "SELECT * FROM "+ AppSQLHelper.t_cliente;
+        Cursor cursor = db.query(AppSQLHelper.t_cliente, null, null, null, null, null, null);
+        List<TCliente> itens = new ArrayList<>();
+
+        while (cursor.moveToNext()) {
+            TCliente item = new TCliente();
+            item.setId_cliente(cursor.getInt(cursor.getColumnIndex(AppSQLHelper.f_cli_id)));
+            item.setNome(cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_cli_nome)));
+            item.setCep(cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_cli_cep)));
+            item.setEndereco(cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_cli_endereco)));
+            item.setNumero(cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_cli_numero)));
+            item.setComplemento(cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_cli_complemento)));
+            item.setBairro(cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_cli_bairro)));
+            item.setCidade(cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_cli_cidade)));
+            item.setUf(cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_cli_uf)));
+            item.setEmail(cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_cli_email)));
+            item.setTelefone(cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_cli_telefone)));
+            itens.add(item);
+        }
+        cursor.close();
+        db.close();
+        return itens;
     }
 
 

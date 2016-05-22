@@ -5,7 +5,8 @@ import java.io.Serializable;
 /**
  * Created by Rodrigo on 02/04/2016.
  */
-public class TCliente implements Serializable {
+public class TCliente {
+    private int id_cliente;
     private String nome;
     private String senha;
     private String cep;
@@ -18,7 +19,12 @@ public class TCliente implements Serializable {
     private String email;
     private String telefone;
 
-    public TCliente() {
+    public int getId_cliente() {
+        return id_cliente;
+    }
+
+    public void setId_cliente(int id) {
+        this.id_cliente = id_cliente;
     }
 
     public String getNome() {

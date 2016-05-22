@@ -4,7 +4,7 @@ package com.pap.queropizza3.models;
  * Created by Rodrigo on 21/05/2016.
  */
 public class TPedido {
-    private String id_pedido;
+    private int id_pedido;
     private String nome;
     private String endereco;
     private String numero;
@@ -18,11 +18,11 @@ public class TPedido {
     private String taxa;
     private String datahora;
 
-    public String getId_pedido() {
+    public int getId_pedido() {
         return id_pedido;
     }
 
-    public void setId_pedido(String id_pedido) {
+    public void setId_pedido(int id_pedido) {
         this.id_pedido = id_pedido;
     }
 
