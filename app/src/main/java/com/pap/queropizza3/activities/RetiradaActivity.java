@@ -101,6 +101,11 @@ public class RetiradaActivity extends AppCompatActivity {
         }
     }
 
+    public int criarPedido(){
+
+        return 1;
+    }
+
     public void buscarValorEntrega(final String origins, final String destinations) {
 //        progress = new ProgressDialog(RetiradaActivity.this);
 //        progress.setTitle("Conectando");

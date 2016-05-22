@@ -135,4 +135,28 @@ public class AppSQLDao {
         return itens;
     }
 
+    public int inserirPedido(TPedido p) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(AppSQLHelper.f_ped_nome, p.getNome());
+        cv.put(AppSQLHelper.f_ped_endereco, p.getEndereco());
+        cv.put(AppSQLHelper.f_ped_numero, p.getNumero());
+        cv.put(AppSQLHelper.f_ped_complemento, p.getComplemento());
+        cv.put(AppSQLHelper.f_ped_bairro, p.getBairro());
+        cv.put(AppSQLHelper.f_ped_cidade, p.getCidade());;
+        cv.put(AppSQLHelper.f_ped_uf, p.getUf());;
+        cv.put(AppSQLHelper.f_ped_email, p.getEmail());;
+        cv.put(AppSQLHelper.f_ped_telefone, p.getTelefone());;
+        cv.put(AppSQLHelper.f_ped_delivery, p.getDelivery());
+        cv.put(AppSQLHelper.f_ped_taxa, p.getTaxa());
+        cv.put(AppSQLHelper.f_ped_datahora, p.getDatahora());
+
+        int id = (int) db.insert(AppSQLHelper.t_item, null, cv);
+        cv.put(AppSQLHelper.f_ped_id, id);
+        db.close();
+        return id;
+    }
+
+
 }
