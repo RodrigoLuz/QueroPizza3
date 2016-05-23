@@ -11,9 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.pap.queropizza3.R;
-import com.pap.queropizza3.models.AppSQLDao;
+import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCliente;
-import com.pap.queropizza3.models.ViaCEP;
+import com.pap.queropizza3.utils.ViaCEP;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

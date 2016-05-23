@@ -9,13 +9,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.pap.queropizza3.activities.CheckoutActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Finalizar"
-        android:id="@+id/btnFinalizar"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -23,7 +16,7 @@
         android:id="@+id/lstvCheckout"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnFinalizar" />
+        android:layout_above="@+id/btnAdicionar" />
 
     <Button
         android:layout_width="wrap_content"
@@ -32,4 +25,14 @@
         android:id="@+id/btnAdicionar"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finalizar"
+        android:id="@+id/btnFinalizarChk"
+        android:onClick="btnFinalizarChkClick"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

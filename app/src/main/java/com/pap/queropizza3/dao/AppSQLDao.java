@@ -1,9 +1,17 @@
-package com.pap.queropizza3.models;
+package com.pap.queropizza3.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.pap.queropizza3.models.TCardapioGrupo;
+import com.pap.queropizza3.models.TCardapioItem;
+import com.pap.queropizza3.models.TCardapioSubGrupo;
+import com.pap.queropizza3.models.TCliente;
+import com.pap.queropizza3.models.TItemTela;
+import com.pap.queropizza3.models.TPedido;
+import com.pap.queropizza3.models.TPedidoItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +50,6 @@ public class AppSQLDao {
         db.close();
         return id;
     }
-
 
     public int inserirCardapioItem(TCardapioItem item) {
         SQLiteDatabase db = helper.getWritableDatabase();
@@ -207,13 +214,13 @@ public class AppSQLDao {
         return itens;
     }
 
-    public List<TItemTela> retornarItensTela(int id_grupo, int id_sub_grupo){
+    public List<TItemTela> retornarItensPorGrupo(int id_grupo){
         List<TItemTela> itenstela = new ArrayList<TItemTela>();
 
-        TCardapioGrupo g = new TCardapioGrupo();
-        g.setCodGrupo(id_grupo); // grupo de pizzas, código está fixo, verificar
+        TCardapioGrupo grupo = new TCardapioGrupo(); // cria um obj grupo com o código enviado para poder passar para lista
+        grupo.setCodGrupo(id_grupo); // grupo de pizzas, código está fixo, verificar
 
-        List<TCardapioSubGrupo> subgrupos = listaSubGrupo(g); // percorre subgrupos de pizzas para pegar os itens
+        List<TCardapioSubGrupo> subgrupos = listaSubGrupo(grupo); // percorre subgrupos do grupo informado e retorna or itens
         for(int i = 0 ; i < subgrupos.size(); i++){
             List<TCardapioItem> itens = listaItem(subgrupos.get(i));
             for(int j = 0 ; j < itens.size(); j++){
@@ -224,8 +231,41 @@ public class AppSQLDao {
                 itenstela.add(linha);
             }
         }
-
         return itenstela;
+    }
+
+    public List<TItemTela> retornarItensPorSubGrupo(int id_subgrupo){
+        List<TItemTela> itenstela = new ArrayList<TItemTela>();
+
+        TCardapioSubGrupo subgrupo = new TCardapioSubGrupo(); // cria um obj subgrupo com o código enviado para poder passar para lista
+        subgrupo.setCodSubGrupo(id_subgrupo);
+
+        List<TCardapioItem> itens = listaItem(subgrupo);
+        for(int j = 0 ; j < itens.size(); j++){
+            TItemTela linha = new TItemTela();
+            linha.setNome(itens.get(j).getNome());
+            linha.setIngredientes(itens.get(j).getDescricao());
+            linha.setValor(itens.get(j).getValor());
+            itenstela.add(linha);
+        }
+        return itenstela;
+    }
+
+
+    public int inserirPedidoItem(TPedidoItem obj) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        ContentValues cv = new ContentValues();
+        cv.put(AppSQLHelper.f_ped_item_pedido_id, obj.getId_pedido());
+        cv.put(AppSQLHelper.f_ped_item_quantidade, obj.getQuantidade());
+        cv.put(AppSQLHelper.f_ped_item_valor, obj.getValor());
+        cv.put(AppSQLHelper.f_ped_item_tamanho, obj.getTamanho());
+        cv.put(AppSQLHelper.f_ped_item_obs, obj.getObservacao());
+
+        int id = (int) db.insert(AppSQLHelper.t_pedido_item, null, cv);
+        obj.setId_item(id);
+        db.close();
+        return id;
     }
 
 

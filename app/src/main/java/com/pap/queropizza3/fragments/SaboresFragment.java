@@ -14,10 +14,7 @@ import android.widget.Toast;
 
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.adapters.TCheckAdapter;
-import com.pap.queropizza3.models.AppSQLDao;
-import com.pap.queropizza3.models.TCardapioGrupo;
-import com.pap.queropizza3.models.TCardapioItem;
-import com.pap.queropizza3.models.TCardapioSubGrupo;
+import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TItemTela;
 
 import java.util.ArrayList;
@@ -77,7 +74,7 @@ public class SaboresFragment extends Fragment implements AdapterView.OnItemClick
 
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getActivity());
-        sabores = dbDao.retornarItensTela(1, -1);
+        sabores = dbDao.retornarItensPorGrupo(1);
         ArrayAdapter<TItemTela> adapter = new TCheckAdapter(getActivity(), R.layout.fragment_sabores, sabores);
         lstvSabores.setAdapter(adapter);
         lstvSabores.setOnItemClickListener(this);

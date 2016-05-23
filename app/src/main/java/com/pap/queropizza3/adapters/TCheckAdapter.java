@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * Created by Rodrigo on 17/05/2016.
  * http://lalit3686.blogspot.com.br/2012/06/today-i-am-going-to-show-how-to-deal.html
+ * http://www.vogella.com/tutorials/AndroidListView/article.html
  */
 public class TCheckAdapter extends ArrayAdapter<TItemTela> {
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.models.TCardapioItem;
+import com.pap.queropizza3.models.TItemTela;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,15 +22,13 @@ import java.util.Map;
  */
 public class TExpandableAdapter extends BaseExpandableListAdapter {
 
-    private Map<String, List<TCardapioItem>> dados;
+    private Map<String, List<TItemTela>> dados;
     private List<String> keys;
-    int vQuant;
+    int vQuant, childPos, groupPos;
 
-    public TExpandableAdapter(Map<String, List<TCardapioItem>> dados) {
-
+    public TExpandableAdapter(Map<String, List<TItemTela>> dados) {
         this.dados = dados;
-        this.keys = new ArrayList<String>(
-                dados.keySet());
+        this.keys = new ArrayList<String>(dados.keySet());
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,17 +53,14 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
 
     // sub categorias
     @Override
-    public View getGroupView(int groupPosition,
-                             boolean isExpanded, View convertView,
-                             ViewGroup parent) {
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(
                     parent.getContext()).inflate(
-                    android.R.layout. simple_expandable_list_item_1,
-                    null);
+                    android.R.layout. simple_expandable_list_item_1, null);
         }
-        TextView txt = (TextView)
-                convertView.findViewById(android.R.id.text1);
+
+        TextView txt = (TextView) convertView.findViewById(android.R.id.text1);
         txt.setTextColor(Color.WHITE);
         txt.setBackgroundColor(Color.GRAY);
         txt.setMinHeight(150);
@@ -74,18 +70,24 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
 
     // itens
     @Override
-    public View getChildView(int groupPosition,
-                             int childPosition, boolean isLastChild,
-                             View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+
         View vi = convertView;
         ViewHolder holder = null;
+        childPos = childPosition;
+        groupPos = groupPosition;
+
         if (vi == null) {
             vi = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_lista_simples, parent, false);
+
             holder = new ViewHolder();
+
             holder.txtvQuant = (TextView)vi.findViewById(R.id.txtvQuant);
             holder.txtvItem = (TextView)vi.findViewById(R.id.txtvItem);
-
+            holder.txtvValor = (TextView)vi.findViewById(R.id.txtvValor);
             holder.btnMenos = (Button)vi.findViewById(R.id.btnMenos);
+            holder.btnMais = (Button)vi.findViewById(R.id.btnMais);
+
             holder.btnMenos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -98,47 +100,52 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
                 }
             });
 
-            holder.btnMais = (Button)vi.findViewById(R.id.btnMais);
             holder.btnMais.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ViewHolder holder1 = (ViewHolder) v.getTag();
-                    vQuant = Integer.parseInt(holder1.txtvQuant.getText().toString());
+
+                    TItemTela i; // cria um item/linha
+                    i = dados.get(keys.get(groupPos)).get(childPos); // pega o item da listatela que será apresentado
+                    ViewHolder holder1 = (ViewHolder) v.getTag(); // pega a linha que clicou
+                    vQuant = i.getQuantidade(); // pega a quantidade
                     if (vQuant < 9) {
                         vQuant++;
-                        holder1.txtvQuant.setText(Integer.toString(vQuant));
+                        i.setQuantidade(vQuant);
+                        holder1.txtvQuant.setText(Integer.toString(vQuant)); // seta a quantidade
                     }
                 }
             });
+
             vi.setTag(holder);
+            vi.setTag(R.id.txtvQuant, holder.txtvQuant);
+            vi.setTag(R.id.txtvItem, holder.txtvItem);
+            vi.setTag(R.id.txtvValor, holder.txtvValor);
 
         }else{
             holder = (ViewHolder)vi.getTag();
         }
+
         holder.btnMais.setTag(holder);
         holder.btnMenos.setTag(holder);
 
-//        TextView txtvQuant = (TextView)vi.findViewById(R.id.txtvQuant);
-        TextView txtvItem = (TextView)vi.findViewById(R.id.txtvItem);
+        TItemTela i; // cria um item/linha
+        i = dados.get(keys.get(groupPosition)).get(childPosition); // pega o item da listatela que será apresentado
 
-        TCardapioItem p;
+        holder.txtvQuant.setText(String.valueOf(i.getQuantidade()));
+        holder.txtvItem.setText(i.getNome());
+        holder.txtvValor.setText(String.format("%.2f", (i.getValor())));
 
-        p = dados.get(keys.get(groupPosition)).get(childPosition);
-//        txtvQuant.setText(p.Integer.toString(p.getQuantidade()));
-         txtvItem.setText(p.getNome());
         return vi;
     }
 
     static class ViewHolder{
-        TextView txtvQuant, txtvItem, txtvValor;
-        Button btnMenos, btnMais;
+        protected TextView txtvQuant, txtvItem, txtvValor;
+        protected Button btnMenos, btnMais;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-
-        return dados.get(
-                keys.get(groupPosition)).get(childPosition);
+        return dados.get(keys.get(groupPosition)).get(childPosition);
     }
 
     @Override

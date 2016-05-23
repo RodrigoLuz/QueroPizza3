@@ -59,6 +59,8 @@ public class GrupoActivity extends AppCompatActivity {
         }
     }
 
-    public void btnFinalizarAvancarRetiradaClick(View view) {
+    public void btnFinalizarClick(View view) {
+        Intent it = new Intent(this, CheckoutActivity.class);
+        startActivity(it);
     }
 }

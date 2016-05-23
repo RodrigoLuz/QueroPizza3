@@ -1,4 +1,4 @@
-package com.pap.queropizza3.models;
+package com.pap.queropizza3.utils;
 
 import org.json.JSONObject;
 

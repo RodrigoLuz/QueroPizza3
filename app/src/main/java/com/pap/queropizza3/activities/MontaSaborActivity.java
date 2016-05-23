@@ -90,8 +90,6 @@ public class MontaSaborActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
-             //   case 0:
-             //       return PlaceholderFragment.newInstance(position + 1);
                 case 0:
                     return SaboresFragment.newInstance(position + 1);
                 case 1:
@@ -102,7 +100,6 @@ public class MontaSaborActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 

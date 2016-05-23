@@ -2,6 +2,7 @@ package com.pap.queropizza3.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +16,8 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.pap.queropizza3.R;
-import com.pap.queropizza3.models.AppSQLDao;
-import com.pap.queropizza3.models.EnviarPedido;
+import com.pap.queropizza3.dao.AppSQLDao;
+import com.pap.queropizza3.utils.EnviarPedido;
 import com.pap.queropizza3.models.TCliente;
 import com.pap.queropizza3.models.TPedido;
 
@@ -112,10 +113,18 @@ public class RetiradaActivity extends AppCompatActivity {
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
         TCliente c = dbDao.listaCliente().get(0);
+
         TPedido p = new TPedido();
         p.setDelivery(d);
         p.setTaxa(taxa);
         p.setCliente(c);
+        int id_pedido = dbDao.inserirPedido(p);
+
+        // grava id pedido gerado para utilizar posteriormente e controlar pedido
+        SharedPreferences prefs = getSharedPreferences("pedido", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("id_pedido", id_pedido);
+        editor.commit();
 
         EnviarPedido e  = new EnviarPedido();
         e.envia(p);

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pap.queropizza3.R;
-import com.pap.queropizza3.models.AppSQLDao;
+import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCardapioGrupo;
 import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TCardapioSubGrupo;

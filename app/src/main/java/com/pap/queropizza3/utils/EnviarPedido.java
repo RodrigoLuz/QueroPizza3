@@ -1,7 +1,9 @@
-package com.pap.queropizza3.models;
+package com.pap.queropizza3.utils;
 
 import android.os.AsyncTask;
 import android.util.Log;
+
+import com.pap.queropizza3.models.TPedido;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

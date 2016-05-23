@@ -7,10 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.pap.queropizza3.R;
-import com.pap.queropizza3.models.AppSQLDao;
+import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCliente;
 
-import java.io.File;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {

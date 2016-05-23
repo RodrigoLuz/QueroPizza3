@@ -1,4 +1,4 @@
-package com.pap.queropizza3.models;
+package com.pap.queropizza3.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -30,6 +30,7 @@ public class AppSQLHelper extends SQLiteOpenHelper {
     public static final String t_pedido = "pedido"; // tabela
     public static final String f_ped_id = "id_pedido"; // pk
     public static final String f_ped_nome = "nome";
+    public static final String f_ped_cep = "cep";
     public static final String f_ped_endereco = "endereco";
     public static final String f_ped_numero = "numero";
     public static final String f_ped_complemento = "complemento";
@@ -42,17 +43,18 @@ public class AppSQLHelper extends SQLiteOpenHelper {
     public static final String f_ped_taxa = "taxa";
     public static final String f_ped_datahora = "datahora";
 
-    public static final String t_pedido_itens = "pedido_itens"; // tabela
-    public static final String f_ped_itens_id = "id_pedido_itens"; // pk
-    public static final String f_ped_itens_pedido_id = "id_pedido"; // fk
-    public static final String f_ped_itens_tamanho = "tamanho";
-    public static final String f_ped_itens_obs = "observacao";
+    public static final String t_pedido_item = "pedido_item"; // tabela
+    public static final String f_ped_item_id = "id_pedido_itens"; // pk
+    public static final String f_ped_item_pedido_id = "id_pedido"; // fk
+    public static final String f_ped_item_quantidade = "quantidade";
+    public static final String f_ped_item_valor = "valor";
+    public static final String f_ped_item_tamanho = "tamanho";
+    public static final String f_ped_item_obs = "observacao";
 
     public static final String t_pedido_detalhe = "pedido_detalhe"; // tabela
     public static final String f_ped_detalhe_id = "id_pedido_detalhe"; // pk
     public static final String f_ped_detalhe_ped_itens_id = "id_pedido_itens"; //fk
     public static final String f_ped_detalhe_cardapio_id = "id_cardapio";
-    public static final String f_ped_detalhe_quantidade = "quantidade";
 
     public static final String t_grupo = "cardapio_grupo"; // tabela
     public static final String f_grupo_id = "id_grupo";
@@ -99,6 +101,7 @@ public class AppSQLHelper extends SQLiteOpenHelper {
                 "create table " + t_pedido + "(" +
                         f_ped_id + " integer primary key autoincrement, " +
                         f_ped_nome + " text," +
+                        f_ped_cep + " text," +
                         f_ped_endereco + " text," +
                         f_ped_numero + " text," +
                         f_ped_complemento + " text," +
@@ -113,19 +116,20 @@ public class AppSQLHelper extends SQLiteOpenHelper {
         );
 
         sqLiteDatabase.execSQL(
-                "create table " + t_pedido_itens + "(" +
-                        f_ped_itens_id + " integer primary key autoincrement, " +
-                        f_ped_itens_pedido_id + " integer," +
-                        f_ped_itens_tamanho + " integer," +
-                        f_ped_itens_obs + " text)"
+                "create table " + t_pedido_item + "(" +
+                        f_ped_item_id + " integer primary key autoincrement, " +
+                        f_ped_item_pedido_id + " integer," +
+                        f_ped_item_quantidade + " integer," +
+                        f_ped_item_valor + " real," +
+                        f_ped_item_tamanho + " integer," +
+                        f_ped_item_obs + " text)"
         );
 
         sqLiteDatabase.execSQL(
                 "create table " + t_pedido_detalhe + "(" +
                         f_ped_detalhe_id + " integer primary key autoincrement, " +
                         f_ped_detalhe_ped_itens_id + " integer," +
-                        f_ped_detalhe_cardapio_id + " integer," +
-                        f_ped_detalhe_quantidade + " real)"
+                        f_ped_detalhe_cardapio_id + " integer)"
         );
 
         sqLiteDatabase.execSQL(

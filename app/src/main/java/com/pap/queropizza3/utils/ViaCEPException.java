@@ -1,4 +1,4 @@
-package com.pap.queropizza3.models;
+package com.pap.queropizza3.utils;
 
 /**
  * Created by Rodrigo on 18/05/2016.
