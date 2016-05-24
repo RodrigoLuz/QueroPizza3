@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.pap.queropizza3.R;
-import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TItemTela;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
 
     private Map<String, List<TItemTela>> dados;
     private List<String> keys;
-    int vQuant, childPos, groupPos;
+    //int vQuant, childPos, groupPos;
 
     public TExpandableAdapter(Map<String, List<TItemTela>> dados) {
         this.dados = dados;
@@ -70,12 +69,10 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
 
     // itens
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         View vi = convertView;
         ViewHolder holder = null;
-        childPos = childPosition;
-        groupPos = groupPosition;
 
         if (vi == null) {
             vi = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_lista_simples, parent, false);
@@ -91,28 +88,35 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
             holder.btnMenos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    TItemTela i;
+                    i = dados.get(keys.get(groupPosition)).get(childPosition);
+
                     ViewHolder holder1 = (ViewHolder) v.getTag();
-                    vQuant = Integer.parseInt(holder1.txtvQuant.getText().toString());
+                    TextView txtvQuant = (TextView)v.findViewById(R.id.txtvQuant);
+                    int vQuant =  Integer.valueOf(txtvQuant.getText().toString()); // i.getQuantidade();
                     if (vQuant > 0) {
                         vQuant--;
-                        holder1.txtvQuant.setText(Integer.toString(vQuant));
+                        i.setQuantidade(vQuant);
                     }
+                    holder1.txtvQuant.setText(Integer.toString(vQuant));
                 }
             });
 
             holder.btnMais.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     TItemTela i; // cria um item/linha
-                    i = dados.get(keys.get(groupPos)).get(childPos); // pega o item da listatela que será apresentado
+                    i = dados.get(keys.get(groupPosition)).get(childPosition); // pega o item da listatela que será apresentado
                     ViewHolder holder1 = (ViewHolder) v.getTag(); // pega a linha que clicou
-                    vQuant = i.getQuantidade(); // pega a quantidade
+
+                    TextView txtvQuant = (TextView)v.findViewById(R.id.txtvQuant);
+                    int vQuant =  Integer.valueOf(txtvQuant.getText().toString()); // i.getQuantidade();
+                //    int vQuant = i.getQuantidade(); // pega a quantidade
                     if (vQuant < 9) {
                         vQuant++;
                         i.setQuantidade(vQuant);
-                        holder1.txtvQuant.setText(Integer.toString(vQuant)); // seta a quantidade
                     }
+                    holder1.txtvQuant.setText(Integer.toString(vQuant)); // seta a quantidade
                 }
             });
 
@@ -130,6 +134,8 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
 
         TItemTela i; // cria um item/linha
         i = dados.get(keys.get(groupPosition)).get(childPosition); // pega o item da listatela que será apresentado
+
+         System. out.print("GP:" + groupPosition + " " + " CP: " + childPosition + " Nome:" + i.getNome());
 
         holder.txtvQuant.setText(String.valueOf(i.getQuantidade()));
         holder.txtvItem.setText(i.getNome());
