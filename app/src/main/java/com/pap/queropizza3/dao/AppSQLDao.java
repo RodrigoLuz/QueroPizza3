@@ -12,6 +12,7 @@ import com.pap.queropizza3.models.TCliente;
 import com.pap.queropizza3.models.TItemTela;
 import com.pap.queropizza3.models.TPedido;
 import com.pap.queropizza3.models.TPedidoItem;
+import com.pap.queropizza3.models.TPedidoDetalhe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -186,7 +187,6 @@ public class AppSQLDao {
         return id;
     }
 
-
     public List<TCliente> listaCliente () {
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -268,5 +268,33 @@ public class AppSQLDao {
         return id;
     }
 
+
+    // se não existir o item irá criar
+    public int inserirPedidoSubItem(TPedidoDetalhe obj) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        int id_item;
+        ContentValues cv = new ContentValues();
+        if (obj.getId_item() == -1){
+            TPedidoItem pedidoItem = new TPedidoItem();
+            pedidoItem.setQuantidade(1);
+            pedidoItem.setTamanho(-1);
+            pedidoItem.setObservacao("");
+            pedidoItem.setValor(obj.getValor());
+            id_item = inserirPedidoItem(pedidoItem);
+        } else
+        {
+            id_item = obj.getId_item();
+        }
+
+        cv.put(AppSQLHelper.f_ped_detalhe_cardapio_id, obj.getCardapio_item().getCodCardapioItem());
+        cv.put(AppSQLHelper.f_ped_detalhe_valor, obj.getValor());
+        cv.put(AppSQLHelper.f_ped_detalhe_ped_itens_id, id_item);
+
+        int id = (int) db.insert(AppSQLHelper.t_pedido_item, null, cv);
+        obj.setId_detalhe(id);
+        db.close();
+        return id;
+    }
 
 }

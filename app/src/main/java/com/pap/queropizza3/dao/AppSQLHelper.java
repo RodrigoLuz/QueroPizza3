@@ -55,6 +55,7 @@ public class AppSQLHelper extends SQLiteOpenHelper {
     public static final String f_ped_detalhe_id = "id_pedido_detalhe"; // pk
     public static final String f_ped_detalhe_ped_itens_id = "id_pedido_itens"; //fk
     public static final String f_ped_detalhe_cardapio_id = "id_cardapio";
+    public static final String f_ped_detalhe_valor = "valor";
 
     public static final String t_grupo = "cardapio_grupo"; // tabela
     public static final String f_grupo_id = "id_grupo";
@@ -129,7 +130,8 @@ public class AppSQLHelper extends SQLiteOpenHelper {
                 "create table " + t_pedido_detalhe + "(" +
                         f_ped_detalhe_id + " integer primary key autoincrement, " +
                         f_ped_detalhe_ped_itens_id + " integer," +
-                        f_ped_detalhe_cardapio_id + " integer)"
+                        f_ped_detalhe_cardapio_id + " integer, " +
+                        f_ped_detalhe_valor + " real)"
         );
 
         sqLiteDatabase.execSQL(

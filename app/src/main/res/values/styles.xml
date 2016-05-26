@@ -8,20 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!--style name="BaggioAppTheme" parent="Theme.AppCompat.NoActionBar"-->
-    <!-- Customize your theme here. -->
-    <!--item name="colorPrimary">@color/baggioColorPrimary</item-->
-    <!--item name="colorPrimaryDark">@color/baggioColorPrimaryDark</item-->
-    <!--item name="colorAccent">@color/baggioColorAccent</item-->
-    <!--item name="android:textColorPrimary">@android:color/white</item-->
-    <!--item name="android:colorBackground">@color/baggio_background_material_light</item-->
-    <!--item name="android:textColorSecondaryInverse">@color/button_material_light</item-->
-    <!--/style-->
-
-    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@drawable/background_splash</item>
-    </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -13,7 +13,7 @@ public class TPedidoItem {
     float valor;
     int tamanho;
     String observacao;
-    private List<TPedidoSubitem> subitens;
+    private List<TPedidoDetalhe> subitens;
 
     public int getId_pedido() {
         return id_pedido;
@@ -63,11 +63,11 @@ public class TPedidoItem {
         this.observacao = observacao;
     }
 
-    public List<TPedidoSubitem> getSubitens() {
+    public List<TPedidoDetalhe> getSubitens() {
         return subitens;
     }
 
-    public void setSubitens(List<TPedidoSubitem> subitens) {
+    public void setSubitens(List<TPedidoDetalhe> subitens) {
         this.subitens = subitens;
     }
 }

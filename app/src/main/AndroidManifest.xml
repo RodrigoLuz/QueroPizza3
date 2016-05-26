@@ -31,21 +31,12 @@
         <activity android:name=".activities.TamanhoActivity" />
         <activity android:name=".activities.ListaSimplesActivity" />
         <activity
-            android:name=".SaborFragment"
-            android:label="@string/title_activity_sabor"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".activities.MontaSaborActivity"
             android:label="@string/title_activity_monta_sabor"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.Checkout" />
         <activity android:name=".activities.CheckoutActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login"></activity>
     </application>
 
