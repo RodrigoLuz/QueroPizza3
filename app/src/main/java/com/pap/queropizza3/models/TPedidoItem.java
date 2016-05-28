@@ -10,7 +10,7 @@ public class TPedidoItem {
     int id_item;
     int id_pedido;
     int quantidade;
-    float valor;
+    double valor;
     int tamanho;
     String observacao;
     private List<TPedidoDetalhe> subitens;
@@ -39,11 +39,11 @@ public class TPedidoItem {
         this.quantidade = quantidade;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

@@ -225,9 +225,7 @@ public class AppSQLDao {
             List<TCardapioItem> itens = listaItem(subgrupos.get(i));
             for(int j = 0 ; j < itens.size(); j++){
                 TItemTela linha = new TItemTela();
-                linha.setNome(itens.get(j).getNome());
-                linha.setIngredientes(itens.get(j).getDescricao());
-                linha.setValor(itens.get(j).getValor());
+                linha.setCardapio_item(itens.get(j));
                 itenstela.add(linha);
             }
         }
@@ -243,9 +241,7 @@ public class AppSQLDao {
         List<TCardapioItem> itens = listaItem(subgrupo);
         for(int j = 0 ; j < itens.size(); j++){
             TItemTela linha = new TItemTela();
-            linha.setNome(itens.get(j).getNome());
-            linha.setIngredientes(itens.get(j).getDescricao());
-            linha.setValor(itens.get(j).getValor());
+            linha.setCardapio_item(itens.get(j));
             itenstela.add(linha);
         }
         return itenstela;

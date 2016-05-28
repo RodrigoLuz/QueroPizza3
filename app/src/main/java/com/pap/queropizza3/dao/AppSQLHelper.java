@@ -119,7 +119,7 @@ public class AppSQLHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(
                 "create table " + t_pedido_item + "(" +
                         f_ped_item_id + " integer primary key autoincrement, " +
-                        f_ped_item_pedido_id + " integer," +
+                        f_ped_item_pedido_id + " integer  CONSTRAINT [fk_pedido] REFERENCES [pedido]([id_pedido]) ON DELETE CASCADE ON UPDATE CASCADE, " +
                         f_ped_item_quantidade + " integer," +
                         f_ped_item_valor + " real," +
                         f_ped_item_tamanho + " integer," +
@@ -129,7 +129,7 @@ public class AppSQLHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(
                 "create table " + t_pedido_detalhe + "(" +
                         f_ped_detalhe_id + " integer primary key autoincrement, " +
-                        f_ped_detalhe_ped_itens_id + " integer," +
+                        f_ped_detalhe_ped_itens_id + " integer CONSTRAINT [fk_pedido_item] REFERENCES [pedido_item]([id_pedido_itens]) ON DELETE CASCADE ON UPDATE CASCADE, " +
                         f_ped_detalhe_cardapio_id + " integer, " +
                         f_ped_detalhe_valor + " real)"
         );

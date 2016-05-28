@@ -71,9 +71,9 @@ public class TCheckAdapter extends ArrayAdapter<TItemTela> {
             viewHolder.chkbSelecao.setTag(position); // This line is important.
 
             viewHolder.chkbSelecao.setChecked(list.get(position).isSelecionado());
-            viewHolder.txtvItemSabor.setText(list.get(position).getNome());
-            viewHolder.txtvIngredientes.setText(list.get(position).getIngredientes());
-            viewHolder.txtvValor.setText(String.format("%.2f", (list.get(position).getValor())));
+            viewHolder.txtvItemSabor.setText(list.get(position).getCardapio_item().getNome());
+            viewHolder.txtvIngredientes.setText(list.get(position).getCardapio_item().getDescricao());
+            viewHolder.txtvValor.setText(String.format("%.2f", (list.get(position).getCardapio_item().getValor())));
 
             return convertView;
         }

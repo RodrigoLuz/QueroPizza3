@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.dao.AppSQLDao;
-import com.pap.queropizza3.utils.EnviarPedido;
 import com.pap.queropizza3.models.TCliente;
 import com.pap.queropizza3.models.TPedido;
 
@@ -33,6 +32,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
 import java.util.List;
 
 /*
@@ -118,6 +118,9 @@ public class RetiradaActivity extends AppCompatActivity {
         p.setDelivery(d);
         p.setTaxa(taxa);
         p.setCliente(c);
+
+        Date dt = new Date();
+        p.setDatahora(String.valueOf(dt.getTime()));
         int id_pedido = dbDao.inserirPedido(p);
 
         // grava id pedido gerado para utilizar posteriormente e controlar pedido
@@ -125,9 +128,6 @@ public class RetiradaActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("id_pedido", id_pedido);
         editor.commit();
-
-        EnviarPedido e  = new EnviarPedido();
-        e.envia(p);
     }
 
     public void buscarValorEntrega(final String origins, final String destinations) {

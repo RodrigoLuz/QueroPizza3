@@ -89,8 +89,8 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
         });
 
         txtvQuant.setText(String.valueOf(dados.get(keys.get(groupPosition)).get(childPosition).getQuantidade()));
-        txtvItem.setText(dados.get(keys.get(groupPosition)).get(childPosition).getNome());
-        txtvValor.setText(String.format("%.2f", (dados.get(keys.get(groupPosition)).get(childPosition).getValor())));
+        txtvItem.setText(dados.get(keys.get(groupPosition)).get(childPosition).getCardapio_item().getNome());
+        txtvValor.setText(String.format("%.2f", (dados.get(keys.get(groupPosition)).get(childPosition).getCardapio_item().getValor())));
 
         return convertView;
     }
