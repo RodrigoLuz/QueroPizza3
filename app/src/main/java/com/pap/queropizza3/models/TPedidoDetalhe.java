@@ -8,7 +8,6 @@ public class TPedidoDetalhe {
     int id_detalhe;
     int id_item;
     TCardapioItem cardapio_item;
-    double valor;
 
     public int getId_detalhe() {
         return id_detalhe;
@@ -34,11 +33,4 @@ public class TPedidoDetalhe {
         this.cardapio_item = cardapio_item;
     }
 
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
 }

@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:text="Finalizar"
         android:id="@+id/btnFinalizarChk"
-        android:onClick="btnFinalizarChkClick"
+        android:onClick="btnVai"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 

@@ -68,6 +68,10 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbDao = new AppSQLDao(getApplicationContext());
+
+//        dbDao.apagarPedido();
+        dbDao.apagarCardapio();
+
         buscarEstabelecimentos();
         buscarCardapio();
     }

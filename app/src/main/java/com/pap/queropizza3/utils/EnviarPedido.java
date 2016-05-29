@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
  * http://www.portugal-a-programar.pt/topic/61761-resolvido-android-envio-json-e-recepcao/
  * http://www.jiahaoliuliu.com/2011/09/basic-guide-of-json-on-java-and-android.html
  * http://stackoverflow.com/questions/13272516/gson-include-class-name-when-serializing-java-pojo-json
+ * https://github.com/survivingwithandroid/Surviving-with-android/blob/master/JsonTutorial/src/com/survivingwithandroid/jsontutorial/util/JsonUtil.java
  */
 public class EnviarPedido {
 
@@ -78,6 +79,8 @@ public class EnviarPedido {
 
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
+
+            json= JsonPedido.toJSon(pedido);
 
             // 5. set json to StringEntity
             StringEntity se = new StringEntity(json);

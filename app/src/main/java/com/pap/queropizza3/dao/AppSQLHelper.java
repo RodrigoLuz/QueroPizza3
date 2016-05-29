@@ -119,25 +119,27 @@ public class AppSQLHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(
                 "create table " + t_pedido_item + "(" +
                         f_ped_item_id + " integer primary key autoincrement, " +
-                        f_ped_item_pedido_id + " integer  CONSTRAINT [fk_pedido] REFERENCES [pedido]([id_pedido]) ON DELETE CASCADE ON UPDATE CASCADE, " +
+                        f_ped_item_pedido_id + " integer, " +
                         f_ped_item_quantidade + " integer," +
                         f_ped_item_valor + " real," +
                         f_ped_item_tamanho + " integer," +
-                        f_ped_item_obs + " text)"
+                        f_ped_item_obs + " text, " +
+                        "CONSTRAINT [fk_pedido] FOREIGN KEY([id_pedido]) REFERENCES pedido([id_pedido]) ON DELETE CASCADE ON UPDATE CASCADE)"
         );
 
         sqLiteDatabase.execSQL(
                 "create table " + t_pedido_detalhe + "(" +
                         f_ped_detalhe_id + " integer primary key autoincrement, " +
-                        f_ped_detalhe_ped_itens_id + " integer CONSTRAINT [fk_pedido_item] REFERENCES [pedido_item]([id_pedido_itens]) ON DELETE CASCADE ON UPDATE CASCADE, " +
+                        f_ped_detalhe_ped_itens_id + " integer, " +
                         f_ped_detalhe_cardapio_id + " integer, " +
-                        f_ped_detalhe_valor + " real)"
+                        f_ped_detalhe_valor + " real, " +
+                        " CONSTRAINT [fk_pedido_item] FOREIGN KEY([id_pedido_itens]) REFERENCES pedido_item([id_pedido_itens]) ON DELETE CASCADE ON UPDATE CASCADE)"
         );
 
         sqLiteDatabase.execSQL(
                 "create table " + t_grupo + "(" +
                         f_grupo_id + " integer primary key autoincrement, " +
-                        f_grupo_cod_grupo + " integer," +
+                        f_grupo_cod_grupo + " integer, " +
                         f_grupo_nome + " text)"
         );
 
@@ -146,7 +148,8 @@ public class AppSQLHelper extends SQLiteOpenHelper {
                         f_sub_grupo_id + " integer primary key autoincrement, " +
                         f_sub_grupo_cod_sub_grupo + " integer, " +
                         f_sub_grupo_nome + " text, " +
-                        f_sub_grupo_grupo + " integer)"
+                        f_sub_grupo_grupo + " integer, "+
+                        " CONSTRAINT [fk_cardapio_grupo] FOREIGN KEY([id_grupo]) REFERENCES cardapio_grupo([id_grupo]) ON DELETE CASCADE ON UPDATE CASCADE)"
         );
 
         sqLiteDatabase.execSQL(
@@ -156,7 +159,8 @@ public class AppSQLHelper extends SQLiteOpenHelper {
                         f_item_nome + " text, " +
                         f_item_descricao + " text, " +
                         f_item_valor + " real, " +
-                        f_item_sub_grupo + " integer)"
+                        f_item_sub_grupo + " integer, " +
+                        "CONSTRAINT [fk_cardapio_sub_grupo] FOREIGN KEY([id_sub_grupo]) REFERENCES cardapio_sub_grupo([id_sub_grupo]) ON DELETE CASCADE ON UPDATE CASCADE)"
         );
 
     }

@@ -12,6 +12,8 @@ import android.view.View;
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCliente;
+import com.pap.queropizza3.models.TPedido;
+import com.pap.queropizza3.utils.EnviarPedido;
 
 import java.util.List;
 
@@ -74,8 +76,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
 
 }
 

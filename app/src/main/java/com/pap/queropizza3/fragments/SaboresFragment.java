@@ -74,7 +74,7 @@ public class SaboresFragment extends Fragment implements AdapterView.OnItemClick
 
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getActivity());
-        sabores = dbDao.retornarItensPorGrupo(1);
+        sabores = dbDao.listaItensPorGrupo(1);
         ArrayAdapter<TItemTela> adapter = new TCheckAdapter(getActivity(), R.layout.fragment_sabores, sabores);
         lstvSabores.setAdapter(adapter);
         lstvSabores.setOnItemClickListener(this);

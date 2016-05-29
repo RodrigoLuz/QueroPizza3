@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class TPedido {
     private int id_pedido;
-    private boolean delivery;
+    private int delivery;
     private Double taxa;
     private String datahora;
     private TCliente cliente;
@@ -29,11 +29,11 @@ public class TPedido {
         this.cliente = cliente;
     }
 
-    public boolean isDelivery() {
+    public int isDelivery() {
         return delivery;
     }
 
-    public void setDelivery(boolean delivery) {
+    public void setDelivery(int delivery) {
         this.delivery = delivery;
     }
 

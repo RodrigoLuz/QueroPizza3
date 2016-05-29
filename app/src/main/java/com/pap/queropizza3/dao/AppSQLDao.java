@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.pap.queropizza3.models.TCardapioGrupo;
 import com.pap.queropizza3.models.TCardapioItem;
@@ -23,6 +24,7 @@ import java.util.List;
 public class AppSQLDao {
 
     private AppSQLHelper helper;
+    private static final String TAG_INSERT_E = "Erro de insert: ";
     public AppSQLDao(Context ctx){
         helper = new AppSQLHelper(ctx);
     }
@@ -39,29 +41,36 @@ public class AppSQLDao {
         return id;
     }
 
-    public int inserirCardapioSubGrupo(TCardapioSubGrupo subgrupo) {
+    public int inserirCardapioSubGrupo(TCardapioSubGrupo obj) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(AppSQLHelper.f_sub_grupo_cod_sub_grupo, subgrupo.getCodSubGrupo());
-        cv.put(AppSQLHelper.f_sub_grupo_nome, subgrupo.getNome());
-        cv.put(AppSQLHelper.f_sub_grupo_grupo, subgrupo.getGrupo().getCodGrupo());
+        cv.put(AppSQLHelper.f_sub_grupo_cod_sub_grupo, obj.getCodSubGrupo());
+        cv.put(AppSQLHelper.f_sub_grupo_nome, obj.getNome());
+        cv.put(AppSQLHelper.f_sub_grupo_grupo, obj.getGrupo().getCodGrupo());
 
         int id = (int) db.insert(AppSQLHelper.t_sub_grupo, null, cv);
+        if (id == -1) {
+            Log.e(TAG_INSERT_E, obj.toString());
+        }
         db.close();
         return id;
     }
 
-    public int inserirCardapioItem(TCardapioItem item) {
+    public int inserirCardapioItem(TCardapioItem obj) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(AppSQLHelper.f_item_nome, item.getNome());
-        cv.put(AppSQLHelper.f_item_descricao, item.getDescricao());
-        cv.put(AppSQLHelper.f_item_valor, item.getValor());
-        cv.put(AppSQLHelper.f_item_sub_grupo, item.getSubgrupo().getCodSubGrupo());
+        cv.put(AppSQLHelper.f_item_nome, obj.getNome());
+        cv.put(AppSQLHelper.f_item_descricao, obj.getDescricao());
+        cv.put(AppSQLHelper.f_item_valor, obj.getValor());
+        cv.put(AppSQLHelper.f_item_sub_grupo, obj.getSubgrupo().getCodSubGrupo());
 
         int id = (int) db.insert(AppSQLHelper.t_item, null, cv);
+        if (id == -1) {
+            Log.e(TAG_INSERT_E, obj.toString());
+        }
+        obj.setCodCardapioItem(id);
         db.close();
         return id;
     }
@@ -83,7 +92,7 @@ public class AppSQLDao {
         while (cursor.moveToNext()) {
             int cod_item = cursor.getInt(
                     cursor.getColumnIndex(
-                            AppSQLHelper.f_item_cod_item));
+                            AppSQLHelper.f_item_id));
             String nome = cursor.getString(
                     cursor.getColumnIndex(
                             AppSQLHelper.f_item_nome));
@@ -107,6 +116,34 @@ public class AppSQLDao {
         db.close();
 
         return itens;
+    }
+
+    public TCardapioItem buscarCardapioItem(int id_item) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String sql = "SELECT * FROM "+ AppSQLHelper.t_item;
+        String[] argumentos = null;
+        sql += " WHERE "+ AppSQLHelper.f_item_id +" = ?";
+        argumentos = new String[]{ String.valueOf(id_item) };
+        Cursor c = db.rawQuery(sql, argumentos);
+        if(c!=null){
+            c.moveToFirst();
+        }
+
+//        int cod_item = c.getInt(c.getColumnIndex(AppSQLHelper.f_item_cod_item));
+        String nome = c.getString(c.getColumnIndex(AppSQLHelper.f_item_nome));
+        String descricao = c.getString(c.getColumnIndex(AppSQLHelper.f_item_descricao));
+        double valor = c.getFloat(c.getColumnIndex(AppSQLHelper.f_item_valor));
+
+        TCardapioItem item = new TCardapioItem();
+        item.setCodCardapioItem(id_item);
+        item.setNome(nome);
+        item.setDescricao(descricao);
+        item.setValor(valor);
+        c.close();
+        db.close();
+
+        return item;
     }
 
     public List<TCardapioSubGrupo> listaSubGrupo (TCardapioGrupo grupo) {
@@ -144,45 +181,138 @@ public class AppSQLDao {
         return itens;
     }
 
-    public int inserirPedido(TPedido p) {
+    public int inserirPedido(TPedido obj) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(AppSQLHelper.f_ped_nome, p.getCliente().getNome());
-        cv.put(AppSQLHelper.f_ped_endereco, p.getCliente().getEndereco());
-        cv.put(AppSQLHelper.f_ped_numero, p.getCliente().getNumero());
-        cv.put(AppSQLHelper.f_ped_complemento, p.getCliente().getComplemento());
-        cv.put(AppSQLHelper.f_ped_bairro, p.getCliente().getBairro());
-        cv.put(AppSQLHelper.f_ped_cidade, p.getCliente().getCidade());;
-        cv.put(AppSQLHelper.f_ped_uf, p.getCliente().getUf());;
-        cv.put(AppSQLHelper.f_ped_email, p.getCliente().getEmail());;
-        cv.put(AppSQLHelper.f_ped_telefone, p.getCliente().getTelefone());;
-        cv.put(AppSQLHelper.f_ped_delivery, p.isDelivery());
-        cv.put(AppSQLHelper.f_ped_taxa, p.getTaxa());
-        cv.put(AppSQLHelper.f_ped_datahora, p.getDatahora());
+        cv.put(AppSQLHelper.f_ped_nome, obj.getCliente().getNome());
+        cv.put(AppSQLHelper.f_ped_endereco, obj.getCliente().getEndereco());
+        cv.put(AppSQLHelper.f_ped_numero, obj.getCliente().getNumero());
+        cv.put(AppSQLHelper.f_ped_complemento, obj.getCliente().getComplemento());
+        cv.put(AppSQLHelper.f_ped_bairro, obj.getCliente().getBairro());
+        cv.put(AppSQLHelper.f_ped_cidade, obj.getCliente().getCidade());;
+        cv.put(AppSQLHelper.f_ped_uf, obj.getCliente().getUf());;
+        cv.put(AppSQLHelper.f_ped_email, obj.getCliente().getEmail());;
+        cv.put(AppSQLHelper.f_ped_telefone, obj.getCliente().getTelefone());;
+        cv.put(AppSQLHelper.f_ped_delivery, obj.isDelivery());
+        cv.put(AppSQLHelper.f_ped_taxa, obj.getTaxa());
+        cv.put(AppSQLHelper.f_ped_datahora, obj.getDatahora());
 
         int id = (int) db.insert(AppSQLHelper.t_pedido, null, cv);
-        p.setId_pedido(id);
+        if (id == -1) {
+            Log.e(TAG_INSERT_E, obj.toString());
+        }
+        obj.setId_pedido(id);
         db.close();
         return id;
     }
 
-    public int inserirCliente(TCliente c) {
+    public TPedido buscarPedido(int id_pedido) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String sql = "SELECT * FROM "+ AppSQLHelper.t_pedido;
+        String[] argumentos = null;
+        sql += " WHERE "+ AppSQLHelper.f_ped_id +" = ?";
+        argumentos = new String[]{ String.valueOf(id_pedido) };
+        Cursor c = db.rawQuery(sql, argumentos);
+        if(c!=null){
+            c.moveToFirst();
+        }
+        TPedido p = new TPedido();
+        p.setId_pedido(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_id)));
+        p.setDelivery(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_delivery)));
+        p.setTaxa(c.getDouble(c.getColumnIndex(AppSQLHelper.f_ped_taxa)));
+        p.setDatahora(c.getString(c.getColumnIndex(AppSQLHelper.f_ped_delivery)));
+
+        TCliente cli = new TCliente();
+//        cli.setId_cliente(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_delivery)));
+        cli.setNome(c.getString(c.getColumnIndex(AppSQLHelper.f_cli_nome)));
+//        cli.setSenha(c.getString(c.getColumnIndex(AppSQLHelper.f_ped_delivery)));
+        cli.setCep(c.getString(c.getColumnIndex(AppSQLHelper.f_cli_cep)));
+        cli.setEndereco(c.getString(c.getColumnIndex(AppSQLHelper.f_cli_endereco)));
+        cli.setNumero(c.getString(c.getColumnIndex(AppSQLHelper.f_cli_numero)));
+        cli.setComplemento(c.getString(c.getColumnIndex(AppSQLHelper.f_cli_complemento)));
+        cli.setBairro(c.getString(c.getColumnIndex(AppSQLHelper.f_cli_bairro)));
+        cli.setCidade(c.getString(c.getColumnIndex(AppSQLHelper.f_cli_cidade)));
+        cli.setUf(c.getString(c.getColumnIndex(AppSQLHelper.f_cli_uf)));
+        cli.setEmail(c.getString(c.getColumnIndex(AppSQLHelper.f_cli_email)));
+        cli.setTelefone(c.getString(c.getColumnIndex(AppSQLHelper.f_cli_telefone)));
+
+        p.setCliente(cli);
+        p.setItens(listaPedidoItem(p));
+        return p;
+    }
+
+    public List<TPedidoItem> listaPedidoItem (TPedido pedido) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String sql = "SELECT * FROM "+ AppSQLHelper.t_pedido_item;
+        String[] argumentos = null;
+        sql += " WHERE "+ AppSQLHelper.f_ped_item_pedido_id +" = ?";
+        argumentos = new String[]{ String.valueOf(pedido.getId_pedido()) };
+        sql += " ORDER BY "+ AppSQLHelper.f_ped_item_id;
+        Cursor c = db.rawQuery(sql, argumentos);
+
+        List<TPedidoItem> itens = new ArrayList<>();
+        while (c.moveToNext()) {
+            TPedidoItem item = new TPedidoItem();
+            item.setId_item(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_item_id)));
+            item.setId_pedido(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_item_pedido_id)));
+            item.setQuantidade(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_item_quantidade)));
+            item.setValor(c.getDouble(c.getColumnIndex(AppSQLHelper.f_ped_item_valor)));
+            item.setTamanho(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_item_tamanho)));
+            item.setObservacao(c.getString(c.getColumnIndex(AppSQLHelper.f_ped_item_obs)));
+            item.setSubitens(listaPedidoDetalhe(item));
+            itens.add(item);
+        }
+        c.close();
+        db.close();
+        return itens;
+    }
+
+    public List<TPedidoDetalhe> listaPedidoDetalhe (TPedidoItem pedidoitem) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String sql = "SELECT * FROM "+ AppSQLHelper.t_pedido_detalhe;
+        String[] argumentos = null;
+        sql += " WHERE "+ AppSQLHelper.f_ped_detalhe_ped_itens_id +" = ?";
+        argumentos = new String[]{ String.valueOf(pedidoitem.getId_item()) };
+        sql += " ORDER BY "+ AppSQLHelper.f_ped_detalhe_id;
+        Cursor c = db.rawQuery(sql, argumentos);
+
+        List<TPedidoDetalhe> itens = new ArrayList<>();
+        while (c.moveToNext()) {
+            TPedidoDetalhe item = new TPedidoDetalhe();
+            item.setId_detalhe(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_detalhe_id)));
+            item.setId_item(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_detalhe_ped_itens_id)));
+            int id_item = c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_detalhe_cardapio_id));
+            item.setCardapio_item(buscarCardapioItem(id_item));
+            itens.add(item);
+        }
+        c.close();
+        db.close();
+        return itens;
+    }
+
+    public int inserirCliente(TCliente obj) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(AppSQLHelper.f_cli_nome, c.getNome());
-        cv.put(AppSQLHelper.f_cli_endereco, c.getEndereco());
-        cv.put(AppSQLHelper.f_cli_numero, c.getNumero());
-        cv.put(AppSQLHelper.f_cli_complemento, c.getComplemento());
-        cv.put(AppSQLHelper.f_cli_bairro, c.getBairro());
-        cv.put(AppSQLHelper.f_cli_cidade, c.getCidade());;
-        cv.put(AppSQLHelper.f_cli_uf, c.getUf());;
-        cv.put(AppSQLHelper.f_cli_email, c.getEmail());;
-        cv.put(AppSQLHelper.f_cli_telefone, c.getTelefone());;
+        cv.put(AppSQLHelper.f_cli_nome, obj.getNome());
+        cv.put(AppSQLHelper.f_cli_endereco, obj.getEndereco());
+        cv.put(AppSQLHelper.f_cli_numero, obj.getNumero());
+        cv.put(AppSQLHelper.f_cli_complemento, obj.getComplemento());
+        cv.put(AppSQLHelper.f_cli_bairro, obj.getBairro());
+        cv.put(AppSQLHelper.f_cli_cidade, obj.getCidade());;
+        cv.put(AppSQLHelper.f_cli_uf, obj.getUf());;
+        cv.put(AppSQLHelper.f_cli_email, obj.getEmail());;
+        cv.put(AppSQLHelper.f_cli_telefone, obj.getTelefone());;
 
         int id = (int) db.insert(AppSQLHelper.t_cliente, null, cv);
-        c.setId_cliente(id);
+        if (id == -1) {
+            Log.e(TAG_INSERT_E, obj.toString());
+        }
+        obj.setId_cliente(id);
         db.close();
         return id;
     }
@@ -214,7 +344,7 @@ public class AppSQLDao {
         return itens;
     }
 
-    public List<TItemTela> retornarItensPorGrupo(int id_grupo){
+    public List<TItemTela> listaItensPorGrupo(int id_grupo){
         List<TItemTela> itenstela = new ArrayList<TItemTela>();
 
         TCardapioGrupo grupo = new TCardapioGrupo(); // cria um obj grupo com o código enviado para poder passar para lista
@@ -232,7 +362,7 @@ public class AppSQLDao {
         return itenstela;
     }
 
-    public List<TItemTela> retornarItensPorSubGrupo(int id_subgrupo){
+    public List<TItemTela> listaItensPorSubGrupo(int id_subgrupo){
         List<TItemTela> itenstela = new ArrayList<TItemTela>();
 
         TCardapioSubGrupo subgrupo = new TCardapioSubGrupo(); // cria um obj subgrupo com o código enviado para poder passar para lista
@@ -247,7 +377,6 @@ public class AppSQLDao {
         return itenstela;
     }
 
-
     public int inserirPedidoItem(TPedidoItem obj) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
@@ -259,38 +388,42 @@ public class AppSQLDao {
         cv.put(AppSQLHelper.f_ped_item_obs, obj.getObservacao());
 
         int id = (int) db.insert(AppSQLHelper.t_pedido_item, null, cv);
+        if (id == -1) {
+            Log.e(TAG_INSERT_E, obj.toString());
+        }
         obj.setId_item(id);
         db.close();
         return id;
     }
 
-
-    // se não existir o item irá criar
     public int inserirPedidoSubItem(TPedidoDetalhe obj) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
-        int id_item;
         ContentValues cv = new ContentValues();
-        if (obj.getId_item() == -1){
-            TPedidoItem pedidoItem = new TPedidoItem();
-            pedidoItem.setQuantidade(1);
-            pedidoItem.setTamanho(-1);
-            pedidoItem.setObservacao("");
-            pedidoItem.setValor(obj.getValor());
-            id_item = inserirPedidoItem(pedidoItem);
-        } else
-        {
-            id_item = obj.getId_item();
-        }
-
+        cv.put(AppSQLHelper.f_ped_detalhe_ped_itens_id, obj.getId_item());
         cv.put(AppSQLHelper.f_ped_detalhe_cardapio_id, obj.getCardapio_item().getCodCardapioItem());
-        cv.put(AppSQLHelper.f_ped_detalhe_valor, obj.getValor());
-        cv.put(AppSQLHelper.f_ped_detalhe_ped_itens_id, id_item);
+        cv.put(AppSQLHelper.f_ped_detalhe_valor, obj.getCardapio_item().getValor());
 
-        int id = (int) db.insert(AppSQLHelper.t_pedido_item, null, cv);
+        int id = (int) db.insert(AppSQLHelper.t_pedido_detalhe, null, cv);
+        if (id == -1) {
+            Log.v(TAG_INSERT_E, obj.toString());
+        }
         obj.setId_detalhe(id);
         db.close();
         return id;
     }
+
+    public void apagarCardapio(){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete(AppSQLHelper.t_grupo, null, null);
+        db.close();
+    }
+
+    public void apagarPedido(){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete(AppSQLHelper.t_pedido, null, null);
+        db.close();
+    }
+
 
 }

@@ -12,10 +12,13 @@ import com.pap.queropizza3.R;
 import com.pap.queropizza3.adapters.TExpandableAdapter;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCardapioGrupo;
+import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TCardapioSubGrupo;
 import com.pap.queropizza3.models.TItemTela;
+import com.pap.queropizza3.models.TPedido;
 import com.pap.queropizza3.models.TPedidoDetalhe;
 import com.pap.queropizza3.models.TPedidoItem;
+import com.pap.queropizza3.utils.EnviarPedido;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,8 +50,8 @@ public class ListaSimplesActivity extends AppCompatActivity {
         List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(g); // pega sibgrupos de bebida
 
         for(int i = 0 ; i < subgrupos.size(); i++){
-            List<TItemTela> itens = dbDao.retornarItensPorSubGrupo(subgrupos.get(i).getCodSubGrupo());
-            dados.put(subgrupos.get(i).getNome(), itens);
+            List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i).getCodSubGrupo());  // busca itens dos subgrupos
+            dados.put(subgrupos.get(i).getNome(), itens);  // insere chave (= cabeçalho = subgrupo)
         }
          lstvListaSimples.setAdapter(new TExpandableAdapter(dados));
     }
@@ -83,15 +86,15 @@ public class ListaSimplesActivity extends AppCompatActivity {
 
                     TPedidoDetalhe detalhe = new TPedidoDetalhe();
                     detalhe.setId_item(id_item);
-                    detalhe.setCardapio_item(dados.get(keys.get(i)).get(j).getCardapio_item());
-                    detalhe.setValor(dados.get(keys.get(i)).get(j).getCardapio_item().getValor());
+
+                    TCardapioItem c = dados.get(keys.get(i)).get(j).getCardapio_item();
+                    detalhe.setCardapio_item(c);
+                    dbDao.inserirPedidoSubItem(detalhe);
 
                     Log.v(TAG, String.valueOf(dados.get(keys.get(i)).get(j).getQuantidade()));
                 }
             }
         }
-
-
     }
 
 }

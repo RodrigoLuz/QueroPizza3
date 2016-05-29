@@ -19,6 +19,7 @@ import com.pap.queropizza3.R;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCliente;
 import com.pap.queropizza3.models.TPedido;
+import com.pap.queropizza3.utils.EnviarPedido;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -102,14 +103,30 @@ public class RetiradaActivity extends AppCompatActivity {
 
     public void btnAvancarRetiradaClick(View v){
         {
+
+            AppSQLDao dbDao;
+            dbDao = new AppSQLDao(getApplicationContext());
+            TPedido p;
+            p = dbDao.buscarPedido(1);
+
+            EnviarPedido e = new EnviarPedido();
+            e.envia(p);
+
+            /*
             criarPedido();
             Intent it = new Intent(this, GrupoActivity.class);
             startActivity(it);
+            */
         }
     }
 
     public void criarPedido(){
-        Boolean d = (rgRetirada.getCheckedRadioButtonId() == 0);
+        int d;
+        if ((rgRetirada.getCheckedRadioButtonId() == 0)){
+            d = 1;
+        }else{
+            d = 0;
+        }
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
         TCliente c = dbDao.listaCliente().get(0);
