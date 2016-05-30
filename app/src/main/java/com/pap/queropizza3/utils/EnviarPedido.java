@@ -32,7 +32,8 @@ public class EnviarPedido {
     TPedido p = new TPedido();
     public void envia(TPedido pedido) {
         p = pedido;
-        new HttpAsyncTask().execute("http://queropizzaweb.azurewebsites.net/api/ApiPedidos");
+        //new HttpAsyncTask().execute("http://queropizzaweb.azurewebsites.net/api/ApiPedidos");
+        new HttpAsyncTask().execute("10.0.0.2:55537/api/ApiPedidos");
     }
 
         public class HttpAsyncTask extends AsyncTask <String, Void, String> {
@@ -80,7 +81,7 @@ public class EnviarPedido {
             // 4. convert JSONObject to JSON to String
             json = jsonObject.toString();
 
-            json= JsonPedido.toJSon(pedido);
+//            json= JsonPedido.toJSon(pedido);
 
             // 5. set json to StringEntity
             StringEntity se = new StringEntity(json);
