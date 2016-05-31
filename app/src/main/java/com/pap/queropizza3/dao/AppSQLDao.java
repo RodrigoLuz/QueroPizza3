@@ -29,14 +29,18 @@ public class AppSQLDao {
         helper = new AppSQLHelper(ctx);
     }
 
-    public int inserirCardapioGrupo(TCardapioGrupo grupo) {
+    public int inserirCardapioGrupo(TCardapioGrupo obj) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(AppSQLHelper.f_grupo_cod_grupo, grupo.getCodGrupo());
-        cv.put(AppSQLHelper.f_grupo_nome, grupo.getNome());
+        cv.put(AppSQLHelper.f_grupo_cod_grupo, obj.getId_grupo());
+        cv.put(AppSQLHelper.f_grupo_nome, obj.getNome());
 
         int id = (int) db.insert(AppSQLHelper.t_grupo, null, cv);
+        if (id == -1) {
+            Log.e(TAG_INSERT_E, obj.toString());
+        }
+        obj.setId_grupo(id);
         db.close();
         return id;
     }
@@ -45,14 +49,15 @@ public class AppSQLDao {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(AppSQLHelper.f_sub_grupo_cod_sub_grupo, obj.getCodSubGrupo());
+        cv.put(AppSQLHelper.f_sub_grupo_cod_sub_grupo, obj.getId_subgrupo());
         cv.put(AppSQLHelper.f_sub_grupo_nome, obj.getNome());
-        cv.put(AppSQLHelper.f_sub_grupo_grupo, obj.getGrupo().getCodGrupo());
+        cv.put(AppSQLHelper.f_sub_grupo_grupo, obj.getGrupo().getId_grupo());
 
         int id = (int) db.insert(AppSQLHelper.t_sub_grupo, null, cv);
         if (id == -1) {
             Log.e(TAG_INSERT_E, obj.toString());
         }
+        obj.setId_subgrupo(id);
         db.close();
         return id;
     }
@@ -61,16 +66,17 @@ public class AppSQLDao {
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
+        cv.put(AppSQLHelper.f_item_cod_item, obj.getCod_item());
         cv.put(AppSQLHelper.f_item_nome, obj.getNome());
         cv.put(AppSQLHelper.f_item_descricao, obj.getDescricao());
         cv.put(AppSQLHelper.f_item_valor, obj.getValor());
-        cv.put(AppSQLHelper.f_item_sub_grupo, obj.getSubgrupo().getCodSubGrupo());
+        cv.put(AppSQLHelper.f_item_sub_grupo, obj.getSubgrupo().getId_subgrupo());
 
         int id = (int) db.insert(AppSQLHelper.t_item, null, cv);
         if (id == -1) {
             Log.e(TAG_INSERT_E, obj.toString());
         }
-        obj.setCodCardapioItem(id);
+        obj.setId_item(id);
         db.close();
         return id;
     }
@@ -82,7 +88,7 @@ public class AppSQLDao {
         String[] argumentos = null;
         if (subgrupo != null) {
             sql += " WHERE "+ AppSQLHelper.f_item_sub_grupo +" = ?";
-            argumentos = new String[]{ String.valueOf(subgrupo.getCodSubGrupo()) };
+            argumentos = new String[]{ String.valueOf(subgrupo.getId_subgrupo()) };
         }
         sql += " ORDER BY "+ AppSQLHelper.f_item_nome;
 
@@ -105,7 +111,7 @@ public class AppSQLDao {
 
             TCardapioItem item = new TCardapioItem();
             item.setSubgrupo(subgrupo);
-            item.setCodCardapioItem(cod_item);
+            item.setId_item(cod_item);
             item.setNome(nome);
             item.setDescricao(descricao);
             item.setValor(valor);
@@ -136,7 +142,7 @@ public class AppSQLDao {
         double valor = c.getFloat(c.getColumnIndex(AppSQLHelper.f_item_valor));
 
         TCardapioItem item = new TCardapioItem();
-        item.setCodCardapioItem(id_item);
+        item.setId_item(id_item);
         item.setNome(nome);
         item.setDescricao(descricao);
         item.setValor(valor);
@@ -153,7 +159,7 @@ public class AppSQLDao {
         String[] argumentos = null;
         if (grupo != null) {
             sql += " WHERE "+ AppSQLHelper.f_sub_grupo_grupo +" = ?";
-            argumentos = new String[]{ String.valueOf(grupo.getCodGrupo()) };
+            argumentos = new String[]{ String.valueOf(grupo.getId_grupo()) };
         }
 
         sql += " ORDER BY "+ AppSQLHelper.f_sub_grupo_nome;
@@ -162,17 +168,15 @@ public class AppSQLDao {
 
         List<TCardapioSubGrupo> itens = new ArrayList<>();
         while (cursor.moveToNext()) {
-            int cod_sub_grupo = cursor.getInt(
-                    cursor.getColumnIndex(
-                            AppSQLHelper.f_sub_grupo_cod_sub_grupo));
-            String nome = cursor.getString(
-                    cursor.getColumnIndex(
-                            AppSQLHelper.f_sub_grupo_nome));
+            int id_sub_grupo = cursor.getInt(cursor.getColumnIndex(AppSQLHelper.f_sub_grupo_id));
+            int cod_sub_grupo = cursor.getInt(cursor.getColumnIndex(AppSQLHelper.f_sub_grupo_cod_sub_grupo));
+            String nome = cursor.getString(cursor.getColumnIndex(AppSQLHelper.f_sub_grupo_nome));
 
             TCardapioSubGrupo item = new TCardapioSubGrupo();
-            item.setGrupo(grupo);
-            item.setCodSubGrupo(cod_sub_grupo);
+            item.setId_subgrupo(id_sub_grupo);
+            item.setCod_subgrupo(cod_sub_grupo);
             item.setNome(nome);
+            item.setGrupo(grupo);
             itens.add(item);
         }
         cursor.close();
@@ -270,6 +274,30 @@ public class AppSQLDao {
         return itens;
     }
 
+    public List<TPedidoItem> listaTodosPedidoItem () {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String sql = "SELECT * FROM "+ AppSQLHelper.t_pedido_item;
+        Cursor c = db.rawQuery(sql, null);
+
+        List<TPedidoItem> itens = new ArrayList<>();
+        while (c.moveToNext()) {
+            TPedidoItem item = new TPedidoItem();
+            item.setId_item(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_item_id)));
+            item.setId_pedido(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_item_pedido_id)));
+            item.setQuantidade(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_item_quantidade)));
+            item.setValor(c.getDouble(c.getColumnIndex(AppSQLHelper.f_ped_item_valor)));
+            item.setTamanho(c.getInt(c.getColumnIndex(AppSQLHelper.f_ped_item_tamanho)));
+            item.setObservacao(c.getString(c.getColumnIndex(AppSQLHelper.f_ped_item_obs)));
+            item.setSubitens(listaPedidoDetalhe(item));
+            itens.add(item);
+        }
+        c.close();
+        db.close();
+        return itens;
+    }
+
+
     public List<TPedidoDetalhe> listaPedidoDetalhe (TPedidoItem pedidoitem) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -348,7 +376,7 @@ public class AppSQLDao {
         List<TItemTela> itenstela = new ArrayList<TItemTela>();
 
         TCardapioGrupo grupo = new TCardapioGrupo(); // cria um obj grupo com o código enviado para poder passar para lista
-        grupo.setCodGrupo(id_grupo); // grupo de pizzas, código está fixo, verificar
+        grupo.setId_grupo(id_grupo); // grupo de pizzas, código está fixo, verificar
 
         List<TCardapioSubGrupo> subgrupos = listaSubGrupo(grupo); // percorre subgrupos do grupo informado e retorna or itens
         for(int i = 0 ; i < subgrupos.size(); i++){
@@ -366,7 +394,7 @@ public class AppSQLDao {
         List<TItemTela> itenstela = new ArrayList<TItemTela>();
 
         TCardapioSubGrupo subgrupo = new TCardapioSubGrupo(); // cria um obj subgrupo com o código enviado para poder passar para lista
-        subgrupo.setCodSubGrupo(id_subgrupo);
+        subgrupo.setId_subgrupo(id_subgrupo);
 
         List<TCardapioItem> itens = listaItem(subgrupo);
         for(int j = 0 ; j < itens.size(); j++){
@@ -401,7 +429,7 @@ public class AppSQLDao {
 
         ContentValues cv = new ContentValues();
         cv.put(AppSQLHelper.f_ped_detalhe_ped_itens_id, obj.getId_item());
-        cv.put(AppSQLHelper.f_ped_detalhe_cardapio_id, obj.getCardapio_item().getCodCardapioItem());
+        cv.put(AppSQLHelper.f_ped_detalhe_cardapio_id, obj.getCardapio_item().getId_item());
         cv.put(AppSQLHelper.f_ped_detalhe_valor, obj.getCardapio_item().getValor());
 
         int id = (int) db.insert(AppSQLHelper.t_pedido_detalhe, null, cv);
@@ -425,5 +453,29 @@ public class AppSQLDao {
         db.close();
     }
 
+    public TCardapioGrupo buscarGrupo(int cod_grupo) {
+        SQLiteDatabase db = helper.getReadableDatabase();
+
+        String sql = "SELECT * FROM "+ AppSQLHelper.t_grupo;
+        String[] argumentos = null;
+        sql += " WHERE "+ AppSQLHelper.f_grupo_cod_grupo +" = ?";
+        argumentos = new String[]{ String.valueOf(cod_grupo) };
+        Cursor c = db.rawQuery(sql, argumentos);
+        if(c!=null){
+            c.moveToFirst();
+        }
+
+        int id_grupo = c.getInt(c.getColumnIndex(AppSQLHelper.f_grupo_id));
+        String nome = c.getString(c.getColumnIndex(AppSQLHelper.f_grupo_nome));
+
+        TCardapioGrupo grupo = new TCardapioGrupo();
+        grupo.setId_grupo(id_grupo);
+        grupo.setCod_grupo(cod_grupo);
+        grupo.setNome(nome);
+        c.close();
+        db.close();
+
+        return grupo;
+    }
 
 }

@@ -1,7 +1,9 @@
 package com.pap.queropizza3.utils;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.pap.queropizza3.models.TPedido;
 
@@ -29,86 +31,61 @@ import java.io.InputStreamReader;
  */
 public class EnviarPedido {
 
-    TPedido p = new TPedido();
-    public void envia(TPedido pedido) {
-        p = pedido;
-        //new HttpAsyncTask().execute("http://queropizzaweb.azurewebsites.net/api/ApiPedidos");
-        new HttpAsyncTask().execute("10.0.0.2:55537/api/ApiPedidos");
+    private TPedido p;
+    private Context context;
+
+    public void envia(TPedido pedido, Context context) {
+        this.p = pedido;
+        this.context = context;
+        new HttpAsyncTask().execute("http://queropizzaweb.azurewebsites.net/api/ApiPedidos");
+        //new HttpAsyncTask().execute("10.0.0.2:55537/api/ApiPedidos");
     }
 
-        public class HttpAsyncTask extends AsyncTask <String, Void, String> {
-            @Override
-            public String doInBackground(String... urls) {
+    public class HttpAsyncTask extends AsyncTask <String, Void, String> {
+        @Override
+        public String doInBackground(String... urls) {
                 return POST(urls[0], p);
             }
 
-            // onPostExecute displays the results of the AsyncTask.
-            @Override
-            protected void onPostExecute(String result) {
-                // Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+                Toast.makeText(context, result, Toast.LENGTH_LONG).show();
             }
-        }
+    }
 
     public static String POST(String url, TPedido pedido){
         InputStream inputStream = null;
         String result = "";
         try {
-
             // 1. create HttpClient
             HttpClient httpclient = new DefaultHttpClient();
-
             // 2. make POST request to the given URL
             HttpPost httpPost = new HttpPost(url);
-
-            String json = "";
-
             // 3. build jsonObject
             JSONObject jsonObject = new JSONObject();
-            jsonObject.accumulate("delivery", pedido.isDelivery());
-            jsonObject.accumulate("taxa", pedido.getTaxa());
-            jsonObject.accumulate("datahora", pedido.getDatahora());
-            jsonObject.accumulate("nome", pedido.getCliente().getNome());
-            jsonObject.accumulate("cep", pedido.getCliente().getCep());
-            jsonObject.accumulate("endereco", pedido.getCliente().getEndereco());
-            jsonObject.accumulate("numero", pedido.getCliente().getNumero());
-            jsonObject.accumulate("complemento", pedido.getCliente().getComplemento());
-            jsonObject.accumulate("bairro", pedido.getCliente().getBairro());
-            jsonObject.accumulate("cidade", pedido.getCliente().getCidade());
-            jsonObject.accumulate("uf", pedido.getCliente().getUf());
-            jsonObject.accumulate("email", pedido.getCliente().getEmail());
-            jsonObject.accumulate("telefone", pedido.getCliente().getTelefone());
-
             // 4. convert JSONObject to JSON to String
-            json = jsonObject.toString();
-
-//            json= JsonPedido.toJSon(pedido);
-
+            String json = JsonPedido.toJSon(pedido);
             // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-
+            StringEntity se = new StringEntity(json, "UTF-8");
             // 6. set httpPost Entity
             httpPost.setEntity(se);
-
             // 7. Set some headers to inform server about the type of the content
             httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
-
+            httpPost.setHeader("Content-type", "application/json;charset=UTF-8");
             // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
-
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
-
             // 10. convert inputstream to string
             if(inputStream != null)
                 result = convertInputStreamToString(inputStream);
             else
-                result = "Did not work!";
+                result = "Erro ao enviar pedido";
 
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
         }
-
         // 11. return result
         return result;
     }

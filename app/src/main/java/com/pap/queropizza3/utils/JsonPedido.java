@@ -21,7 +21,7 @@ public class JsonPedido {
 
             jsonObject.put("delivery", true); //pedido.isDelivery());
             jsonObject.put("taxa", pedido.getTaxa());
-//            jsonObject.put("datahora", pedido.getDatahora());
+            jsonObject.put("datahora", pedido.getDatahora());
             jsonObject.put("nome", pedido.getCliente().getNome());
             jsonObject.put("cep", pedido.getCliente().getCep());
             jsonObject.put("endereco", pedido.getCliente().getEndereco());
@@ -32,7 +32,7 @@ public class JsonPedido {
             jsonObject.put("uf", pedido.getCliente().getUf());
             jsonObject.put("email", pedido.getCliente().getEmail());
             jsonObject.put("telefone", pedido.getCliente().getTelefone());
-/*
+
             // In this case we need a json array to hold the java list
             JSONArray jsonPedidoItem = new JSONArray();
             JSONArray jsonPedidoDetalhe = new JSONArray();
@@ -48,7 +48,7 @@ public class JsonPedido {
                 for (TPedidoDetalhe pedidodetalhe : pedidoitem.getSubitens() ) {
                     JSONObject detalheObj = new JSONObject();
                     detalheObj.put("id_detalhe", pedidodetalhe.getId_detalhe());
-                    detalheObj.put("id_cardapio", pedidodetalhe.getCardapio_item().getCodCardapioItem());
+                    detalheObj.put("id_cardapio", pedidodetalhe.getCardapio_item().getId_item());
                     detalheObj.put("valor", pedidodetalhe.getCardapio_item().getValor());
                     jsonPedidoDetalhe.put(detalheObj);
                 }
@@ -56,7 +56,7 @@ public class JsonPedido {
                 jsonPedidoItem.put(itemObj);
             }
             jsonObject.put("item", jsonPedidoItem);
-*/
+
             return jsonObject.toString();
 
         }

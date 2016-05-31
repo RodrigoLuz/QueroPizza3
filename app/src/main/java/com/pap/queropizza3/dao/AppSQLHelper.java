@@ -76,6 +76,12 @@ public class AppSQLHelper extends SQLiteOpenHelper {
     public static final String f_item_valor = "valor";
     public static final String f_item_sub_grupo = "id_sub_grupo";
 
+    @Override
+    public void onOpen(SQLiteDatabase db){
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys=ON");
+    }
+
     public AppSQLHelper(Context context) {
         super(context, nome_banco, null, versao_banco);
     }

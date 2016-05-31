@@ -13,7 +13,8 @@
     <RadioGroup
         android:id="@+id/rgRetirada"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
       <RadioButton
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -21,8 +22,8 @@
           android:id="@+id/rdoDelivery"
           android:layout_alignParentTop="true"
           android:layout_centerHorizontal="true"
-          android:layout_marginTop="59dp"
-          android:checked="true"/>
+          android:checked="true"
+          android:layout_margin="15dp" />
 
       <RadioButton
           android:layout_width="wrap_content"
@@ -30,7 +31,8 @@
           android:text="Balcão"
           android:id="@+id/rdoBalcao"
           android:layout_below="@+id/rdoEntrega"
-          android:layout_centerHorizontal="true" />
+          android:layout_centerHorizontal="true"
+          android:layout_margin="15dp" />
     </RadioGroup>
 
 

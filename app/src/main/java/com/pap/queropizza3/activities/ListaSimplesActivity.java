@@ -15,10 +15,8 @@ import com.pap.queropizza3.models.TCardapioGrupo;
 import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TCardapioSubGrupo;
 import com.pap.queropizza3.models.TItemTela;
-import com.pap.queropizza3.models.TPedido;
 import com.pap.queropizza3.models.TPedidoDetalhe;
 import com.pap.queropizza3.models.TPedidoItem;
-import com.pap.queropizza3.utils.EnviarPedido;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,13 +42,14 @@ public class ListaSimplesActivity extends AppCompatActivity {
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
 
-        TCardapioGrupo g = new TCardapioGrupo();
-        g.setCodGrupo(2); // grupo de bebidas, código está fixo, verificar
+        TCardapioGrupo g = dbDao.buscarGrupo(2);
+        //g.setCod_grupo(2); // grupo de bebidas, código está fixo, verificar
 
+        // não pode listar pelo id pois é variável, tem que ser pelo cod do servidor api
         List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(g); // pega sibgrupos de bebida
 
         for(int i = 0 ; i < subgrupos.size(); i++){
-            List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i).getCodSubGrupo());  // busca itens dos subgrupos
+            List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i).getId_subgrupo());  // busca itens dos subgrupos
             dados.put(subgrupos.get(i).getNome(), itens);  // insere chave (= cabeçalho = subgrupo)
         }
          lstvListaSimples.setAdapter(new TExpandableAdapter(dados));

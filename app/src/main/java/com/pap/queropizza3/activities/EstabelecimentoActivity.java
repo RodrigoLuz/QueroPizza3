@@ -69,10 +69,9 @@ public class EstabelecimentoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         dbDao = new AppSQLDao(getApplicationContext());
 
-//        dbDao.apagarPedido();
-        dbDao.apagarCardapio();
-
         buscarEstabelecimentos();
+
+        dbDao.apagarCardapio();
         buscarCardapio();
     }
 
@@ -112,8 +111,6 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent it = new Intent(EstabelecimentoActivity.this, RetiradaActivity.class);
-                        String message = "teste";
-                        it.putExtra("EXTRA_MESSAGE", message);
                         startActivity(it);
                     }
                 });
@@ -141,8 +138,8 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             @Override
             public void run() {
                 HttpClient client = AndroidHttpClient.newInstance("HttpAndroid");
-                 url = "http://www.digibyte.com.br/particular/json.txt";
-                // url = "http://queropizzaweb.azurewebsites.net/api/apipizzarias";
+                url = "http://www.digibyte.com.br/particular/json.txt";
+                //url = "http://queropizzaweb.azurewebsites.net/api/apipizzarias";
                 HttpGet get = new HttpGet(url);
 
                 try {
@@ -198,7 +195,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                         for(int i = 0; i < arrayCardapioGrupo.length(); i++) {
                             TCardapioGrupo cardapiogrupo = new TCardapioGrupo();
                             JSONObject objectgrupo = arrayCardapioGrupo.getJSONObject(i);
-                            cardapiogrupo.setCodGrupo(objectgrupo.getInt("ClasseCardapioID"));
+                            cardapiogrupo.setId_grupo(objectgrupo.getInt("ClasseCardapioID"));
                             cardapiogrupo.setNome(objectgrupo.getString("Nome")); // pizza, bebidas
                             dbDao.inserirCardapioGrupo(cardapiogrupo);
 
@@ -206,7 +203,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                             for(int j = 0; j < arrayCardapioSubGrupo.length(); j++) {
                                 TCardapioSubGrupo cardapiosubgrupo = new TCardapioSubGrupo();
                                 JSONObject objectsubgrupo = arrayCardapioSubGrupo.getJSONObject(j);
-                                cardapiosubgrupo.setCodSubGrupo(objectsubgrupo.getInt("SubClasseCardapioID"));
+                                cardapiosubgrupo.setId_subgrupo(objectsubgrupo.getInt("SubClasseCardapioID"));
                                 cardapiosubgrupo.setNome(objectsubgrupo.getString("Nome")); // pizza doce, pizza salgada, refrigerantes, vinho
                                 cardapiosubgrupo.setGrupo(cardapiogrupo);
                                 dbDao.inserirCardapioSubGrupo(cardapiosubgrupo);
@@ -215,7 +212,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                                 for(int k = 0; k < arrayCardapioItem.length(); k++) {
                                     TCardapioItem cardapioitem = new TCardapioItem();
                                     JSONObject objectitem = arrayCardapioItem.getJSONObject(k);
-                                    cardapioitem.setCodCardapioItem(objectitem.getInt("ItemCardapioID"));
+                                    cardapioitem.setCod_item(objectitem.getInt("ItemCardapioID"));
                                     cardapioitem.setNome(objectitem.getString("Nome")); // calabresa, mussarela, guaraná
                                     cardapioitem.setValor(objectitem.getDouble("Preco"));
                                     cardapioitem.setDescricao(objectitem.getString("Insumos"));

@@ -16,22 +16,23 @@
         android:id="@+id/lstvCheckout"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnAdicionar" />
+        android:layout_above="@+id/btnAdicionarItens" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Adicionar itens"
-        android:id="@+id/btnAdicionar"
+        android:id="@+id/btnAdicionarItens"
+        android:onClick="btnAdicionarItensClick"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Finalizar"
+        android:text="Enviar pedido"
         android:id="@+id/btnFinalizarChk"
-        android:onClick="btnVai"
+        android:onClick="btnFinalizarChkClick"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 

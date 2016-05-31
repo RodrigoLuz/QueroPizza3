@@ -54,13 +54,13 @@ public class RetiradaActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-//            if(progress != null){
-//                progress.dismiss();
-//            }
-//
+            if(progress != null){
+                progress.dismiss();
+            }
+
             switch (msg.what){
                 case 1:
-                      rdoDelivery.setText("Delivery R$ " + taxa);
+                      rdoDelivery.setText("Delivery (taxa de entrega R$ " + String.format( "%.2f", taxa) + ")");
                     break;
                 case 2:
                     Toast.makeText(RetiradaActivity.this, "Erro de conexão", Toast.LENGTH_LONG).show();
@@ -83,6 +83,7 @@ public class RetiradaActivity extends AppCompatActivity {
         buscarValorEntrega("", buscarDestination());
     }
 
+    // busca endereço do cliente cadastrado
     public String buscarDestination(){
         TCliente c = new TCliente();
         try {
@@ -103,27 +104,19 @@ public class RetiradaActivity extends AppCompatActivity {
 
     public void btnAvancarRetiradaClick(View v){
         {
-
-            AppSQLDao dbDao;
-            dbDao = new AppSQLDao(getApplicationContext());
-            TPedido p;
-            p = dbDao.buscarPedido(1);
-
-            EnviarPedido e = new EnviarPedido();
-            e.envia(p);
-
-            /*
+            AppSQLDao dbDao = new AppSQLDao(getApplicationContext());
+            dbDao.apagarPedido();
             criarPedido();
+
             Intent it = new Intent(this, GrupoActivity.class);
             startActivity(it);
-            */
         }
     }
 
     public void criarPedido(){
         int d;
         if ((rgRetirada.getCheckedRadioButtonId() == 0)){
-            d = 1;
+            d = 1; // delivery
         }else{
             d = 0;
         }
@@ -147,11 +140,12 @@ public class RetiradaActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    // busca valor da entrega no ws ApiEntrega
     public void buscarValorEntrega(final String origins, final String destinations) {
-//        progress = new ProgressDialog(RetiradaActivity.this);
-//        progress.setTitle("Conectando");
-//        progress.setMessage("Aguarde");
-//        progress.show();  só se levar tempo para acessar WS
+        progress = new ProgressDialog(RetiradaActivity.this);
+        progress.setTitle("Calculando taxa de entrega");
+        progress.setMessage("Aguarde");
+        progress.show();
         Thread trd = new Thread(new Runnable() {
             @Override
             public void run() {
