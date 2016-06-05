@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Rodrigo on 02/04/2016.
  */
-public class TCliente {
+public class TCliente implements Serializable {
     private int id_cliente;
     private String nome;
     private String senha;

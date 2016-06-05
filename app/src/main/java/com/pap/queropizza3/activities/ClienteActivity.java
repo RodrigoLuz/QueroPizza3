@@ -39,6 +39,23 @@ public class ClienteActivity extends AppCompatActivity {
         edtUf = (EditText)findViewById(R.id.edtUf);
         edtEmail = (EditText)findViewById(R.id.edtEmail);
         edtTelefone = (EditText)findViewById(R.id.edtTelefone);
+
+
+        if(getIntent().hasExtra("cliente")){
+            TCliente c = (TCliente)getIntent().getSerializableExtra("cliente");
+
+            edtNome.setText(c.getNome());
+            edtCep.setText(c.getCep());
+            edtEndereco.setText(c.getEndereco());
+            edtNumero.setText(c.getNumero());
+            edtComplemento.setText(c.getComplemento());
+            edtBairro.setText(c.getBairro());
+            edtCidade.setText(c.getCidade());
+            edtUf.setText(c.getUf());
+            edtEmail.setText(c.getEmail());
+            edtTelefone.setText(c.getTelefone());
+        }
+
     }
 
 
@@ -58,7 +75,9 @@ public class ClienteActivity extends AppCompatActivity {
         c.setComplemento(edtComplemento.getText().toString());
         c.setBairro(edtBairro.getText().toString());
         c.setCidade(edtCidade.getText().toString());
-        c.setUf(edtUf.getText().toString());
+        String input = edtUf.getText().toString();
+        input = input.toUpperCase(); //converts the string to uppercase
+        c.setUf(input);
         c.setEmail(edtEmail.getText().toString());
         c.setTelefone(edtTelefone.getText().toString());
 
@@ -85,7 +104,7 @@ public class ClienteActivity extends AppCompatActivity {
             String cep = this.edtCep.getText().toString();
 
             // verifica se o CEP é válido
-            Pattern pattern = Pattern.compile("^[0-9]{5}-[0-9]{3}$");
+            Pattern pattern = Pattern.compile("^[0-9]{5}-?[0-9]{3}$");
             Matcher matcher = pattern.matcher(cep);
 
             if (matcher.find()) {

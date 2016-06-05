@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,8 +13,6 @@ import android.view.View;
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCliente;
-import com.pap.queropizza3.models.TPedido;
-import com.pap.queropizza3.utils.EnviarPedido;
 
 import java.util.List;
 
@@ -24,18 +23,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (existeCliente()) {
-                    Intent it = new Intent(getApplicationContext(), EstabelecimentoActivity.class);
+                if (buscaCliente() == null) {
+                    Intent it = new Intent(getApplicationContext(), ClienteActivity.class);
                     startActivity(it);
                 }
                 else
                 {
-                    Intent it = new Intent(getApplicationContext(), ClienteActivity.class);
+                    Intent it = new Intent(getApplicationContext(), EstabelecimentoActivity.class);
                     startActivity(it);
                 }
             }
@@ -43,15 +44,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public boolean existeCliente(){
+    public TCliente buscaCliente(){
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
         List<TCliente> clientes = dbDao.listaCliente();
         if (clientes.isEmpty()){
-            return false;
+            return null;
         }
         else{
-            return true;
+            return clientes.get(0);
         }
     }
 
@@ -71,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent it = new Intent(this, ClienteActivity.class);
+            TCliente c = buscaCliente();  // se já existir cliente envia para preencher tela
+            if (c != null){
+                it.putExtra("cliente", c);
+            }
+            startActivity(it);
             return true;
         }
 

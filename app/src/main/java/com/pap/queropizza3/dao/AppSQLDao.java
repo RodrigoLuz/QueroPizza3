@@ -327,6 +327,7 @@ public class AppSQLDao {
 
         ContentValues cv = new ContentValues();
         cv.put(AppSQLHelper.f_cli_nome, obj.getNome());
+        cv.put(AppSQLHelper.f_cli_cep, obj.getCep());
         cv.put(AppSQLHelper.f_cli_endereco, obj.getEndereco());
         cv.put(AppSQLHelper.f_cli_numero, obj.getNumero());
         cv.put(AppSQLHelper.f_cli_complemento, obj.getComplemento());
