@@ -40,42 +40,43 @@ public class TCheckAdapter extends ArrayAdapter<TItemTela> {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder = null;
+            View vi = convertView;
 
-            ViewHolder viewHolder = null;
-            if (convertView == null) {
+            if (vi == null) {
                 final LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.layout_item_sabor, parent, false);
+                vi = inflater.inflate(R.layout.layout_item_sabor, parent, false);
 
-                viewHolder = new ViewHolder();
+                holder = new ViewHolder();
 
-                viewHolder.chkbSelecao = (CheckBox)convertView.findViewById(R.id.chkbSelecao);
-                viewHolder.txtvItemSabor = (TextView)convertView.findViewById(R.id.txtvItemSabor);
-                viewHolder.txtvIngredientes = (TextView)convertView.findViewById(R.id.txtvIngredientes);
-                viewHolder.txtvValor = (TextView)convertView.findViewById(R.id.txtvValor);
+                holder.chkbSelecao = (CheckBox)vi.findViewById(R.id.chkbSelecao);
+                holder.txtvItemSabor = (TextView)vi.findViewById(R.id.txtvItemSabor);
+                holder.txtvIngredientes = (TextView)vi.findViewById(R.id.txtvIngredientes);
+                holder.txtvValor = (TextView)vi.findViewById(R.id.txtvValor);
 
-                viewHolder.chkbSelecao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                holder.chkbSelecao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         int getPosition = (Integer) buttonView.getTag();  // Here we get the position that we have set for the checkbox using setTag.
                         list.get(getPosition).setSelecionado(buttonView.isChecked()); // Set the value of checkbox to maintain its state.
                     }
                 });
-                convertView.setTag(viewHolder);
-                convertView.setTag(R.id.chkbSelecao, viewHolder.chkbSelecao);
-                convertView.setTag(R.id.txtvItemSabor, viewHolder.txtvItemSabor);
-                convertView.setTag(R.id.txtvIngredientes, viewHolder.txtvIngredientes);
-                convertView.setTag(R.id.txtvValor, viewHolder.txtvValor);
+                vi.setTag(holder);
+                vi.setTag(R.id.chkbSelecao, holder.chkbSelecao);
+                vi.setTag(R.id.txtvItemSabor, holder.txtvItemSabor);
+                vi.setTag(R.id.txtvIngredientes, holder.txtvIngredientes);
+                vi.setTag(R.id.txtvValor, holder.txtvValor);
             } else {
-                viewHolder = (ViewHolder) convertView.getTag();
+                holder = (ViewHolder)vi.getTag();
             }
-            viewHolder.chkbSelecao.setTag(position); // This line is important.
+            holder.chkbSelecao.setTag(position); // This line is important.
 
-            viewHolder.chkbSelecao.setChecked(list.get(position).isSelecionado());
-            viewHolder.txtvItemSabor.setText(list.get(position).getCardapio_item().getNome());
-            viewHolder.txtvIngredientes.setText(list.get(position).getCardapio_item().getDescricao());
-            viewHolder.txtvValor.setText(String.format("%.2f", (list.get(position).getCardapio_item().getValor())));
+            holder.chkbSelecao.setChecked(list.get(position).isSelecionado());
+            holder.txtvItemSabor.setText(list.get(position).getCardapio_item().getNome());
+            holder.txtvIngredientes.setText(list.get(position).getCardapio_item().getDescricao());
+            holder.txtvValor.setText(String.format("%.2f", (list.get(position).getCardapio_item().getValor())));
 
-            return convertView;
+            return vi;
         }
 
 }

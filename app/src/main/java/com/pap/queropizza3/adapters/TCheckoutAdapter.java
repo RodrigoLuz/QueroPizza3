@@ -28,32 +28,37 @@ public class TCheckoutAdapter extends ArrayAdapter<TPedidoItem> {
     }
 
     static class ViewHolder {
-        protected TextView txtvItem;
-        protected TextView txtvValor;
+        protected TextView txtvChkItem;
+        protected TextView txtvChkQuantidade;
+        protected TextView txtvChkValor;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder = null;
+        View vi = convertView;
 
-        ViewHolder viewHolder = null;
-        if (convertView == null) {
+        if (vi == null) {
+            holder = new ViewHolder();
+            TPedidoItem p = getItem(position);
             final LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.layout_item_checkout, parent, false);
+            vi = inflater.inflate(R.layout.layout_item_checkout, parent, false);
 
-            viewHolder = new ViewHolder();
-            viewHolder.txtvItem = (TextView)convertView.findViewById(R.id.txtvItemSabor);
-            viewHolder.txtvValor = (TextView)convertView.findViewById(R.id.txtvValor);
-
-            convertView.setTag(viewHolder);
-            convertView.setTag(R.id.txtvItem, viewHolder.txtvItem);
-            convertView.setTag(R.id.txtvValor, viewHolder.txtvValor);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
+            holder.txtvChkItem = (TextView)vi.findViewById(R.id.txtvChkItem);
+            holder.txtvChkQuantidade = (TextView)vi.findViewById(R.id.txtvChkQuantidade);
+            holder.txtvChkValor = (TextView)vi.findViewById(R.id.txtvChkValor);
+            vi.setTag(holder);
+        }
+        else
+        {
+            holder = (ViewHolder)vi.getTag();
         }
 
-        viewHolder.txtvItem.setText(list.get(position).getQuantidade());
-        viewHolder.txtvValor.setText(String.format("%.2f", (list.get(position).getValor())));
+        TPedidoItem p = getItem(position);
+        holder.txtvChkItem.setText(p.getSubitens().get(0).getCardapio_item().getNome());
+        holder.txtvChkQuantidade.setText(String.valueOf(p.getQuantidade()));
+        holder.txtvChkValor.setText(String.format( "%.2f", p.getValor()));
 
-        return convertView;
+        return vi;
     }
 }

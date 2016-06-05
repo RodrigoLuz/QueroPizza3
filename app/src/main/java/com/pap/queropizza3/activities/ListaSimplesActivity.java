@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 
@@ -31,22 +30,18 @@ public class ListaSimplesActivity extends AppCompatActivity {
 
     ExpandableListView lstvListaSimples;
     Map<String, List<TItemTela>> dados =  new HashMap<String, List<TItemTela>>();
-    private static final String TAG = "Quant";
+    // private static final String TAG = "Quant";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_simples);
-
         lstvListaSimples = (ExpandableListView)findViewById(R.id.lstvListaSimples);
 
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
 
-        TCardapioGrupo g = dbDao.buscarGrupo(2);
-        //g.setCod_grupo(2); // grupo de bebidas, código está fixo, verificar
-
-        // não pode listar pelo id pois é variável, tem que ser pelo cod do servidor api
-        List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(g); // pega sibgrupos de bebida
+        TCardapioGrupo g = dbDao.buscarGrupo(2); //g.setCod_grupo(2); // grupo de bebidas, código está fixo, verificar
+        List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(g); // pega sibgrupos de bebida // não pode listar pelo id pois é variável, tem que ser pelo cod do servidor api
 
         for(int i = 0 ; i < subgrupos.size(); i++){
             List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i).getId_subgrupo());  // busca itens dos subgrupos
@@ -56,12 +51,12 @@ public class ListaSimplesActivity extends AppCompatActivity {
     }
 
     public void btnContinuarClick(View view) {
-        gravarBebidas();
+        gravarLista();
         Intent it = new Intent(this, GrupoActivity.class);
         startActivity(it);
     }
 
-    public void gravarBebidas() {
+    public void gravarLista() {
 
         //Restaura id_pedido gravado
         SharedPreferences prefs = getSharedPreferences("pedido", MODE_PRIVATE);
@@ -90,7 +85,7 @@ public class ListaSimplesActivity extends AppCompatActivity {
                     detalhe.setCardapio_item(c);
                     dbDao.inserirPedidoSubItem(detalhe);
 
-                    Log.v(TAG, String.valueOf(dados.get(keys.get(i)).get(j).getQuantidade()));
+                    // Log.d(TAG, String.valueOf(dados.get(keys.get(i)).get(j).getQuantidade()));
                 }
             }
         }
