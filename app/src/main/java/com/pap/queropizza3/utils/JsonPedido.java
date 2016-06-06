@@ -35,7 +35,7 @@ public class JsonPedido {
 
             // In this case we need a json array to hold the java list
             JSONArray jsonPedidoItem = new JSONArray();
-            JSONArray jsonPedidoDetalhe = new JSONArray();
+
 
             for (TPedidoItem pedidoitem : pedido.getItens() ) {
                 JSONObject itemObj = new JSONObject();
@@ -44,7 +44,7 @@ public class JsonPedido {
                 itemObj.put("valor", pedidoitem.getValor());
                 itemObj.put("tamanho", pedidoitem.getTamanho());
                 itemObj.put("observacao", pedidoitem.getObservacao());
-
+                JSONArray jsonPedidoDetalhe = new JSONArray();
                 for (TPedidoDetalhe pedidodetalhe : pedidoitem.getSubitens() ) {
                     JSONObject detalheObj = new JSONObject();
                     detalheObj.put("id_detalhe", pedidodetalhe.getId_detalhe());

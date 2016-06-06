@@ -23,7 +23,8 @@
         android:ems="16"
         android:id="@+id/edtNome"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:maxLength="60" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,13 +38,13 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPostalAddress"
+        android:inputType="number|textPostalAddress"
         android:ems="10"
         android:id="@+id/edtCep"
         android:layout_below="@+id/txtvNome"
         android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
-        android:maxLength="9" />
+        android:maxLength="8" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,7 +62,8 @@
         android:layout_below="@+id/txtvCep"
         android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
-        android:layout_toStartOf="@+id/edtUf" />
+        android:layout_toStartOf="@+id/edtUf"
+        android:maxLength="100" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -96,7 +98,8 @@
         android:ems="30"
         android:id="@+id/edtEmail"
         android:layout_below="@+id/txtvBairro"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:maxLength="60" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -154,7 +157,8 @@
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/edtUf"
         android:layout_marginTop="5dp"
-        android:ems="5"/>
+        android:ems="5"
+        android:maxLength="60" />
 
     <EditText
         android:layout_width="50dp"
@@ -163,7 +167,8 @@
         android:ems="2"
         android:layout_alignEnd="@+id/edtNumero"
         android:layout_alignBottom="@+id/edtCidade"
-        android:maxLength="2" />
+        android:maxLength="2"
+        android:capitalize="characters" />
 
     <Button
         android:layout_width="wrap_content"
@@ -180,7 +185,8 @@
         android:id="@+id/edtComplemento"
         android:layout_below="@+id/txtvUf"
         android:layout_alignEnd="@+id/edtUf"
-        android:layout_marginTop="5dp" />
+        android:layout_marginTop="5dp"
+        android:maxLength="20" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -189,7 +195,8 @@
         android:layout_below="@+id/txtvCidade"
         android:layout_alignParentStart="true"
         android:layout_marginTop="5dp"
-        android:layout_toStartOf="@+id/edtComplemento" />
+        android:layout_toStartOf="@+id/edtComplemento"
+        android:maxLength="60" />
 
     <EditText
         android:layout_width="50dp"

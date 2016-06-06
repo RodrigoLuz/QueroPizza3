@@ -51,12 +51,13 @@ public class ListaSimplesActivity extends AppCompatActivity {
     }
 
     public void btnContinuarClick(View view) {
-        gravarLista();
+        gravarLista(dados);
         Intent it = new Intent(this, GrupoActivity.class);
         startActivity(it);
     }
 
-    public void gravarLista() {
+    public void gravarLista(Map<String, List<TItemTela>> dados) {
+        this.dados = dados;
 
         //Restaura id_pedido gravado
         SharedPreferences prefs = getSharedPreferences("pedido", MODE_PRIVATE);
@@ -65,27 +66,27 @@ public class ListaSimplesActivity extends AppCompatActivity {
 
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
-        List<String> keys = new ArrayList<String>(dados.keySet());
+        List<String> keys = new ArrayList<String>(this.dados.keySet());
 
         for(int i = 0 ; i < keys.size(); i++) {
 
-            for(int j = 0 ; j < dados.get(keys.get(i)).size(); j++) {
-                int quant = dados.get(keys.get(i)).get(j).getQuantidade();
+            for(int j = 0 ; j < this.dados.get(keys.get(i)).size(); j++) {
+                int quant = this.dados.get(keys.get(i)).get(j).getQuantidade();
                 if (quant > 0) {
                     TPedidoItem item = new TPedidoItem();
                     item.setId_pedido(id_pedido);
                     item.setQuantidade(quant);
-                    item.setValor(dados.get(keys.get(i)).get(j).getCardapio_item().getValor());
+                    item.setValor(this.dados.get(keys.get(i)).get(j).getCardapio_item().getValor());
                     id_item =  dbDao.inserirPedidoItem(item);
 
                     TPedidoDetalhe detalhe = new TPedidoDetalhe();
                     detalhe.setId_item(id_item);
 
-                    TCardapioItem c = dados.get(keys.get(i)).get(j).getCardapio_item();
+                    TCardapioItem c = this.dados.get(keys.get(i)).get(j).getCardapio_item();
                     detalhe.setCardapio_item(c);
                     dbDao.inserirPedidoSubItem(detalhe);
 
-                    // Log.d(TAG, String.valueOf(dados.get(keys.get(i)).get(j).getQuantidade()));
+                    // Log.d(TAG, String.valueOf(this.dados.get(keys.get(i)).get(j).getQuantidade()));
                 }
             }
         }

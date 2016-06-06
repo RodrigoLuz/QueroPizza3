@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.adapters.TCheckAdapter;
 import com.pap.queropizza3.dao.AppSQLDao;
+import com.pap.queropizza3.models.TCardapioGrupo;
+import com.pap.queropizza3.models.TCardapioSubGrupo;
 import com.pap.queropizza3.models.TItemTela;
 
 import java.util.ArrayList;
@@ -35,8 +37,6 @@ import java.util.List;
  */
 public class SaboresFragment extends Fragment implements AdapterView.OnItemClickListener{
 
-    ListView lstvSabores;
-    List<TItemTela> sabores = new ArrayList<TItemTela>();
 
     public SaboresFragment() {
         // Required empty public constructor
@@ -70,11 +70,24 @@ public class SaboresFragment extends Fragment implements AdapterView.OnItemClick
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_sabores, container, false);
+        ListView lstvSabores;
         lstvSabores = (ListView)view.findViewById(R.id.lstvSabores);
 
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getActivity());
-        sabores = dbDao.listaItensPorGrupo(1);
+        List<TItemTela> sabores = new ArrayList<TItemTela>();
+
+        TCardapioGrupo g = dbDao.buscarGrupo(1);
+        List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(g);
+
+        for(int i = 0 ; i < subgrupos.size(); i++){
+            List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i).getId_subgrupo());
+
+            for(int j = 0 ; j < itens.size(); j++) {
+                sabores.add(itens.get(j));
+            }
+        }
+
         ArrayAdapter<TItemTela> adapter = new TCheckAdapter(getActivity(), R.layout.fragment_sabores, sabores);
         lstvSabores.setAdapter(adapter);
         lstvSabores.setOnItemClickListener(this);

@@ -75,9 +75,7 @@ public class ClienteActivity extends AppCompatActivity {
         c.setComplemento(edtComplemento.getText().toString());
         c.setBairro(edtBairro.getText().toString());
         c.setCidade(edtCidade.getText().toString());
-        String input = edtUf.getText().toString();
-        input = input.toUpperCase(); //converts the string to uppercase
-        c.setUf(input);
+        c.setUf(edtUf.getText().toString());
         c.setEmail(edtEmail.getText().toString());
         c.setTelefone(edtTelefone.getText().toString());
 

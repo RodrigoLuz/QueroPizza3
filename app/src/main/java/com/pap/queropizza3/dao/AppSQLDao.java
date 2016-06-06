@@ -274,6 +274,7 @@ public class AppSQLDao {
         return itens;
     }
 
+    // busca os itens do pedido e seus detalhes
     public List<TPedidoItem> listaTodosPedidoItem () {
         SQLiteDatabase db = helper.getReadableDatabase();
 
