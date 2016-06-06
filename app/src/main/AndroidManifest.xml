@@ -21,6 +21,7 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,14 +31,12 @@
         <activity android:name=".activities.GrupoActivity" />
         <activity android:name=".activities.TamanhoActivity" />
         <activity android:name=".activities.ListaSimplesActivity" />
-        <activity
-            android:name=".activities.MontaSaborActivity"
-            android:label="@string/title_activity_monta_sabor"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".activities.CheckoutActivity" />
         <activity
             android:name=".activities.LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login" />
+        <activity android:name=".activities.SaborActivity" />
+        <activity android:name=".activities.ComplementoActivity"></activity>
     </application>
 
 </manifest>

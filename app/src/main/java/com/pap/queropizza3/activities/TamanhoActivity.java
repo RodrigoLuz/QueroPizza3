@@ -36,7 +36,7 @@ public class TamanhoActivity extends AppCompatActivity {
                 throw new RuntimeException("Opção inválida");
         }
 
-        Intent it = new Intent(this, MontaSaborActivity.class);
+        Intent it = new Intent(this, SaborActivity.class);
         startActivity(it);
     }
 
