@@ -1,9 +1,11 @@
 package com.pap.queropizza3.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Rodrigo on 16/05/2016.
  */
-public class TCardapioSubGrupo {
+public class TCardapioSubGrupo implements Serializable {
     private int id_subgrupo;
     private int cod_subgrupo;
     private String nome;

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.pap.queropizza3.R;
@@ -31,22 +32,33 @@ public class TCheckoutAdapter extends ArrayAdapter<TPedidoItem> {
         protected TextView txtvChkItem;
         protected TextView txtvChkQuantidade;
         protected TextView txtvChkValor;
+        protected Button btnExcluir;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         View vi = convertView;
 
         if (vi == null) {
             holder = new ViewHolder();
-            TPedidoItem p = getItem(position);
             final LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             vi = inflater.inflate(R.layout.layout_item_checkout, parent, false);
 
             holder.txtvChkItem = (TextView)vi.findViewById(R.id.txtvChkItem);
             holder.txtvChkQuantidade = (TextView)vi.findViewById(R.id.txtvChkQuantidade);
             holder.txtvChkValor = (TextView)vi.findViewById(R.id.txtvChkValor);
+            holder.btnExcluir = (Button)vi.findViewById(R.id.btnExcluir);
+
+            holder.btnExcluir.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    //do something
+                    list.remove(position); //or some other task
+                    notifyDataSetChanged();
+                }
+            });
+
             vi.setTag(holder);
         }
         else

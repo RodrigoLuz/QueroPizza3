@@ -17,12 +17,18 @@ import com.pap.queropizza3.adapters.TExpandableAdapter;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCardapioGrupo;
 import com.pap.queropizza3.models.TCardapioSubGrupo;
+import com.pap.queropizza3.models.TCliente;
 import com.pap.queropizza3.models.TItemTela;
+import com.pap.queropizza3.models.TPedidoItem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SaborActivity extends AppCompatActivity {
+
+    List<TItemTela> sabores = new ArrayList<TItemTela>();
+    List<TItemTela> saboresSelecionados = new ArrayList<TItemTela>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +40,6 @@ public class SaborActivity extends AppCompatActivity {
 
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getBaseContext());
-        List<TItemTela> sabores = new ArrayList<TItemTela>();
 
         TCardapioGrupo g = dbDao.buscarGrupo(1);
         List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(g);
@@ -53,6 +58,21 @@ public class SaborActivity extends AppCompatActivity {
 
     public void btnContinuarSabClick(View view) {
         Intent it = new Intent(this, ComplementoActivity.class);
+
+        // por enquanto estou fazendo aqui depois
+        // saboresSelecionados tem que ser preenchido ao selecionar
+
+        for(int j = 0 ; j < sabores.size(); j++) {
+            if (sabores.get(j).isSelecionado())
+            saboresSelecionados.add(sabores.get(j));
+        }
+
+        if (saboresSelecionados.size() > 0 ){
+            Bundle bundleObject = new Bundle();
+            bundleObject.putSerializable("saboresSelecionados", (Serializable) saboresSelecionados);
+            it.putExtras(bundleObject);
+        }
+
         startActivity(it);
     }
 }

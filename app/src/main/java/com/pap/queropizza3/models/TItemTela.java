@@ -1,9 +1,11 @@
 package com.pap.queropizza3.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Rodrigo on 17/05/2016.
  */
-public class TItemTela {
+public class TItemTela implements Serializable{
     int idCardapioItem;
     TCardapioItem cardapio_item;
     boolean selecionado = false;
