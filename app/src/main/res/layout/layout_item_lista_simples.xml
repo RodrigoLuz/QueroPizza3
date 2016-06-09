@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="0dp">
+    android:padding="10dp">
 
     <TextView
         android:padding="1dip"
@@ -27,6 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_toEndOf="@+id/txtvQuant" />
 
     <TextView
@@ -37,26 +38,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtvItem"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_toEndOf="@+id/txtvQuant" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:text="-"
         android:id="@+id/btnMenos"
         android:onClick="clkBtnMenos"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/btnMais" />
+        android:layout_toStartOf="@+id/btnMais"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:text="+"
         android:id="@+id/btnMais"
         android:onClick="clkBtnMais"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

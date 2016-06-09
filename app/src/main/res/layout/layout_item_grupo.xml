@@ -15,14 +15,15 @@
     <TextView
         android:padding="1dip"
         android:id="@+id/txtvPrincipalGrp"
-        android:text="Sabor"
+        android:text="Pizzas"
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textSize="40dp"
+        android:textSize="30dp"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/imageViewGrp" />
+        android:layout_toEndOf="@+id/imageViewGrp"
+        android:textIsSelectable="true" />
 
 </RelativeLayout>
 
