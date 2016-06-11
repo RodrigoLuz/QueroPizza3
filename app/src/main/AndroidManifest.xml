@@ -14,7 +14,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="Quero Baggio"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/BaggioTheme">
         <activity
             android:name=".activities.MainActivity"
             android:label="Quero Baggio"
@@ -36,7 +36,8 @@
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login" />
         <activity android:name=".activities.SaborActivity" />
-        <activity android:name=".activities.ComplementoActivity"></activity>
+        <activity android:name=".activities.ComplementoActivity" />
+        <activity android:name=".activities.EstabelecimentoDetalheActivity"></activity>
     </application>
 
 </manifest>

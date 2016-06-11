@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.pap.queropizza3.activities.EstabelecimentoActivity"
+    android:descendantFocusability="blocksDescendants">
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,5 +28,14 @@
         android:id="@+id/txtvInfo2"
         android:layout_below="@+id/txtvInfo1"
         android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imgBtnInfoEstabelecimento"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_info"
+        android:onClick="imgBtnInfoEstabelecimentoClick"/>
 
 </RelativeLayout>

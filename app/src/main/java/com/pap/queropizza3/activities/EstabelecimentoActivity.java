@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,7 +72,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
 
         buscarEstabelecimentos();
 
-        dbDao.apagarCardapio();
+        dbDao.limparCardapio();
         buscarCardapio();
     }
 
@@ -104,7 +105,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                 holder.txtvNome = (TextView)vi.findViewById(R.id.txtvNome);
                 holder.txtvInfo1 = (TextView)vi.findViewById(R.id.txtvInfo1);
                 holder.txtvInfo2 = (TextView)vi.findViewById(R.id.txtvInfo2);
-                vi.setTag(holder);
+                holder.imgBtnInfoEstabelecimento = (ImageButton)vi.findViewById(R.id.imgBtnInfoEstabelecimento);
 
                 ListView l = (ListView) findViewById(R.id.lstvEstabelecimentos);
                 l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -114,6 +115,16 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                         startActivity(it);
                     }
                 });
+
+                holder.imgBtnInfoEstabelecimento.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        Intent it = new Intent(EstabelecimentoActivity.this, EstabelecimentoDetalheActivity.class);
+                        startActivity(it);
+                    }
+                });
+
+                vi.setTag(holder);
             }
             else
             {
@@ -131,6 +142,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
 
     private static class ViewHolder{
         TextView txtvNome, txtvInfo1, txtvInfo2;
+        ImageButton imgBtnInfoEstabelecimento;
     }
 
     public void buscarEstabelecimentos() {
@@ -220,57 +232,6 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                                     dbDao.inserirCardapioItem(cardapioitem);
                                 }
                             }
-                        }
-
-                        handler.sendEmptyMessage(1);
-                    } else {
-                        handler.sendEmptyMessage(2);
-                    }
-                } catch (IOException e) {
-                    handler.sendEmptyMessage(2);
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    handler.sendEmptyMessage(2);
-                    e.printStackTrace();
-                }
-            }
-        });
-        trd.start();
-    }
-
-    public void enviarCliente() {
-        Thread trd = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-
-                //http://stackoverflow.com/questions/13870161/sending-json-object-to-web-api
-//http://android-developers.blogspot.com.br/2011/03/identifying-app-installations.html
-                //http://developer.android.com/intl/pt-br/training/articles/user-data-ids.html
-                //http://android-developers.blogspot.com.br/2011/03/identifying-app-installations.html
-                //http://hmkcode.com/android-send-json-data-to-server/
-                //http://stackoverflow.com/questions/6218143/how-to-send-post-request-in-json-using-httpclient
-                //http://stackoverflow.com/questions/20484467/android-java-http-post-json-to-server-but-the-server-tells-me-no-post-variabl
-
-
-                HttpClient client = AndroidHttpClient.newInstance("HttpAndroid");
-                url = "http://queropizzaweb.azurewebsites.net/api/apipizzarias";
-                HttpGet get = new HttpGet(url);
-
-                try {
-                    HttpResponse response = client.execute(get);
-                    if (response.getStatusLine().getStatusCode() == 200) {
-                        HttpEntity entity = response.getEntity();
-                        String dadosServidor = EntityUtils.toString(entity);
-
-                        JSONObject objectRoot = new JSONObject(dadosServidor);
-                        JSONArray arrayEstabelecimentos = objectRoot.getJSONArray("Pizzarias");
-                        for(int i = 0; i < arrayEstabelecimentos.length(); i++) {
-                            TEstabelecimento e = new TEstabelecimento();
-                            JSONObject object = arrayEstabelecimentos.getJSONObject(i);
-                            e.setNome(object.getString("Nome"));
-                            e.setEndereco(object.getString("Endereco"));
-                            estabelecimentos.add(e);
                         }
 
                         handler.sendEmptyMessage(1);

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TPedidoItem;
 
 import java.util.List;
@@ -53,7 +54,11 @@ public class TCheckoutAdapter extends ArrayAdapter<TPedidoItem> {
             holder.btnExcluir.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    //do something
+
+                    AppSQLDao dbDao;
+                    dbDao = new AppSQLDao(context);
+                    dbDao.listaTodosPedidoItem();
+
                     list.remove(position); //or some other task
                     notifyDataSetChanged();
                 }

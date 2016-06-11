@@ -19,7 +19,6 @@ import com.pap.queropizza3.R;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCliente;
 import com.pap.queropizza3.models.TPedido;
-import com.pap.queropizza3.utils.EnviarPedido;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -105,7 +104,7 @@ public class RetiradaActivity extends AppCompatActivity {
     public void btnAvancarRetiradaClick(View v){
         {
             AppSQLDao dbDao = new AppSQLDao(getApplicationContext());
-            dbDao.apagarPedido();
+            dbDao.limparPedido();
             criarPedido();
 
             Intent it = new Intent(this, GrupoActivity.class);

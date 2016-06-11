@@ -298,7 +298,6 @@ public class AppSQLDao {
         return itens;
     }
 
-
     public List<TPedidoDetalhe> listaPedidoDetalhe (TPedidoItem pedidoitem) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
@@ -443,13 +442,19 @@ public class AppSQLDao {
         return id;
     }
 
-    public void apagarCardapio(){
+    public void limparCardapio(){
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(AppSQLHelper.t_grupo, null, null);
         db.close();
     }
 
-    public void apagarPedido(){
+    public void limparPedido(){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete(AppSQLHelper.t_pedido, null, null);
+        db.close();
+    }
+
+    public void apagarPedidoItem(TPedidoItem obj){
         SQLiteDatabase db = helper.getWritableDatabase();
         db.delete(AppSQLHelper.t_pedido, null, null);
         db.close();
