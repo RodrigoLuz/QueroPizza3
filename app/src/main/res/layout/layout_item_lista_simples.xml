@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:padding="10dp">
 
     <TextView
@@ -16,7 +15,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:padding="1dip"
@@ -41,24 +41,26 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_toEndOf="@+id/txtvQuant" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="-"
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/btnMenos"
+        android:src="@drawable/ic_action_menos"
+        android:background="@android:color/transparent"
         android:onClick="clkBtnMenos"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/btnMais"/>
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/btnMais"
+        android:layout_marginRight="20dp" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="+"
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/btnMais"
+        android:src="@drawable/ic_action_mais"
+        android:background="@android:color/transparent"
         android:onClick="clkBtnMais"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>

@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pap.queropizza3.R;
@@ -45,7 +45,7 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
         TextView txt = (TextView) convertView.findViewById(android.R.id.text1);
         txt.setText(keys.get(groupPosition));
         txt.setTextColor(Color.WHITE);
-        txt.setBackgroundColor(Color.GRAY);
+        txt.setBackgroundColor(Color.rgb(180, 0, 0));
         txt.setMinHeight(150);
         return convertView;
     }
@@ -61,8 +61,8 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
         final TextView txtvQuant = (TextView)convertView.findViewById(R.id.txtvQuant);
         TextView txtvItem = (TextView)convertView.findViewById(R.id.txtvItem);
         TextView txtvValor = (TextView)convertView.findViewById(R.id.txtvValor);
-        Button btnMenos = (Button)convertView.findViewById(R.id.btnMenos);
-        Button btnMais = (Button)convertView.findViewById(R.id.btnMais);
+        ImageButton btnMenos = (ImageButton)convertView.findViewById(R.id.btnMenos);
+        ImageButton btnMais = (ImageButton)convertView.findViewById(R.id.btnMais);
 
         btnMenos.setOnClickListener(new View.OnClickListener() {
             @Override

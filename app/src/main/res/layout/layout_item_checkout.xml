@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,11 +28,14 @@
         android:layout_below="@+id/txtvChkItem"
         android:layout_alignParentStart="true" />
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Excluir"
-        android:id="@+id/btnExcluir"
-        android:layout_alignParentTop="true"
+        android:id="@+id/btnExcluirChk"
+        android:src="@drawable/ic_action_excluir"
+        android:background="@android:color/transparent"
+        android:onClick="clkBtnExcluirChk"
+        android:layout_centerVertical="true"
         android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

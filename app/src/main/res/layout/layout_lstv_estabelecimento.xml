@@ -36,6 +36,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_info"
-        android:onClick="imgBtnInfoEstabelecimentoClick"/>
+        android:background="@android:color/transparent"
+        android:onClick="imgBtnInfoEstabelecimentoClick"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>

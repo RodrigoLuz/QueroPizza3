@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pap.queropizza3.R;
@@ -33,7 +33,7 @@ public class TCheckoutAdapter extends ArrayAdapter<TPedidoItem> {
         protected TextView txtvChkItem;
         protected TextView txtvChkQuantidade;
         protected TextView txtvChkValor;
-        protected Button btnExcluir;
+        protected ImageButton btnExcluirChk;
     }
 
     @Override
@@ -49,17 +49,17 @@ public class TCheckoutAdapter extends ArrayAdapter<TPedidoItem> {
             holder.txtvChkItem = (TextView)vi.findViewById(R.id.txtvChkItem);
             holder.txtvChkQuantidade = (TextView)vi.findViewById(R.id.txtvChkQuantidade);
             holder.txtvChkValor = (TextView)vi.findViewById(R.id.txtvChkValor);
-            holder.btnExcluir = (Button)vi.findViewById(R.id.btnExcluir);
+            holder.btnExcluirChk = (ImageButton)vi.findViewById(R.id.btnExcluirChk);
 
-            holder.btnExcluir.setOnClickListener(new View.OnClickListener(){
+            holder.btnExcluirChk.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
 
                     AppSQLDao dbDao;
                     dbDao = new AppSQLDao(context);
-                    dbDao.listaTodosPedidoItem();
+                    dbDao.apagarPedidoItem(list.get(position));
 
-                    list.remove(position); //or some other task
+                    list.remove(position); // substituir adapter por cursor ?
                     notifyDataSetChanged();
                 }
             });

@@ -456,13 +456,14 @@ public class AppSQLDao {
 
     public void apagarPedidoItem(TPedidoItem obj){
         SQLiteDatabase db = helper.getWritableDatabase();
-        db.delete(AppSQLHelper.t_pedido, null, null);
+        String sql = AppSQLHelper.f_ped_item_id +" = ?";
+        String[] argumentos = new String[]{ String.valueOf(obj.getId_item()) };
+        db.delete(AppSQLHelper.t_pedido_item, sql, argumentos);
         db.close();
     }
 
     public TCardapioGrupo buscarGrupo(int cod_grupo) {
         SQLiteDatabase db = helper.getReadableDatabase();
-
         String sql = "SELECT * FROM "+ AppSQLHelper.t_grupo;
         String[] argumentos = null;
         sql += " WHERE "+ AppSQLHelper.f_grupo_cod_grupo +" = ?";
