@@ -17,7 +17,10 @@
         android:text="Pizza"
         android:id="@+id/btnGrupo1"
         android:layout_gravity="center_horizontal"
-        android:onClick="btnGrupo1Click"/>
+        android:onClick="btnGrupo1Click"
+        android:background="@drawable/bkg_verde"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="20dp" />
 
     <Button
         android:layout_width="match_parent"
@@ -27,7 +30,9 @@
         android:layout_gravity="center_horizontal"
         android:onClick="btnGrupo5Click"
         android:layout_below="@+id/btnGrupo1"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/bkg_verde"
+        android:textColor="#ffffff" />
 
 
     <Button

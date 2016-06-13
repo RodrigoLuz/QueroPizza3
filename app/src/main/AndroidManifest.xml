@@ -14,11 +14,13 @@
         android:icon="@drawable/pizza_icon"
         android:label="Quero Baggio"
         android:supportsRtl="true"
-        android:theme="@style/BaggioTheme">
+        android:theme="@style/BaggioTheme"
+        android:background="@drawable/fundo_vermelho_textura">
         <activity
             android:name=".activities.MainActivity"
             android:label="Quero Baggio"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:background="@drawable/fundo_vermelho_textura">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

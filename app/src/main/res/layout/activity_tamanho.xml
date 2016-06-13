@@ -14,32 +14,51 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gigante"
+        android:text="  Gigante"
         android:id="@+id/btnTamanho1"
         android:layout_weight="1"
-        android:onClick="btnTamanhoClick"/>
+        android:onClick="btnTamanhoClick"
+        android:drawableLeft="@drawable/g12"
+        android:textSize="@dimen/abc_text_size_display_1_material"
+        android:background="#00ffffff"
+        android:textAlignment="textStart" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Grande"
+        android:text="   Grande"
         android:id="@+id/btnTamanho2"
         android:layout_weight="1"
-        android:onClick="btnTamanhoClick"/>
+        android:onClick="btnTamanhoClick"
+        android:drawableLeft="@drawable/g8"
+        android:textSize="@dimen/abc_text_size_display_1_material"
+        android:background="#00ffffff"
+        android:paddingLeft="@dimen/abc_button_padding_vertical_material"
+        android:textAlignment="textStart" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Média"
+        android:text="    Média"
         android:id="@+id/btnTamanho3"
         android:layout_weight="1"
-        android:onClick="btnTamanhoClick"/>
+        android:onClick="btnTamanhoClick"
+        android:drawableLeft="@drawable/m6"
+        android:textSize="@dimen/abc_text_size_display_1_material"
+        android:background="#00ffffff"
+        android:paddingLeft="@dimen/abc_action_bar_icon_vertical_padding_material"
+        android:textAlignment="textStart" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pequena"
+        android:text="    Pequena"
         android:id="@+id/btnTamanho4"
         android:layout_weight="1"
-        android:onClick="btnTamanhoClick"/>
+        android:onClick="btnTamanhoClick"
+        android:drawableLeft="@drawable/p4"
+        android:textSize="@dimen/abc_text_size_display_1_material"
+        android:background="#00ffffff"
+        android:paddingLeft="24dp"
+        android:textAlignment="textStart" />
 </LinearLayout>
