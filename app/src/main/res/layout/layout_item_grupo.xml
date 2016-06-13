@@ -5,25 +5,18 @@
     android:orientation="horizontal"
     android:padding="2dip">
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:id="@+id/imageViewGrp"
-        android:src="@drawable/pizza_icon"
-        android:layout_margin="10dp" />
-
     <TextView
         android:padding="1dip"
         android:id="@+id/txtvPrincipalGrp"
-        android:text="Pizzas"
+        android:text="Sabor"
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:textStyle="bold"
-        android:textSize="30dp"
+        android:textSize="40dp"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/imageViewGrp"
-        android:textIsSelectable="true" />
+        android:background="@drawable/bkg_splashscreen"
+        android:textColor="#ffffff"/>
 
 </RelativeLayout>
 
