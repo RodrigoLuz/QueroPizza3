@@ -1,16 +1,20 @@
 package com.pap.queropizza3.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.dao.AppSQLDao;
+import com.pap.queropizza3.models.TPedidoItem;
+
+import java.util.List;
 
 public class GrupoActivity extends AppCompatActivity {
 
-    Button btnGrupo1, btnGrupo2, btnGrupo3, btnGrupo4, btnGrupo5;
+    Button btnGrupo1, btnGrupo2, btnGrupo3, btnGrupo4, btnGrupo5, btnFinalizar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,15 @@ public class GrupoActivity extends AppCompatActivity {
 //        btnGrupo3 = (Button)findViewById(R.id.btnGrupo3);
 //        btnGrupo4 = (Button)findViewById(R.id.btnGrupo4);
         btnGrupo5 = (Button)findViewById(R.id.btnGrupo5);
+
+
+        AppSQLDao dbDao;
+        dbDao = new AppSQLDao(getApplicationContext());
+        List<TPedidoItem> itens = dbDao.listaTodosPedidoItem();
+        if (itens.size() == 0){
+            btnFinalizar = (Button)findViewById(R.id.btnFinalizar);
+            btnFinalizar.setVisibility(View.GONE);
+        }
     }
 
     public void btnGrupo1Click(View v){
@@ -63,4 +76,5 @@ public class GrupoActivity extends AppCompatActivity {
         Intent it = new Intent(this, CheckoutActivity.class);
         startActivity(it);
     }
+
 }

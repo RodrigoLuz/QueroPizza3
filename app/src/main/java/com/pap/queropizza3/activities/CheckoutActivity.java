@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -41,6 +42,11 @@ public class CheckoutActivity extends AppCompatActivity {
         dbDao = new AppSQLDao(getApplicationContext());
         itens = dbDao.listaTodosPedidoItem();
 
+        if (itens.size() == 0){
+            Button btnFinalizarChk = (Button)findViewById(R.id.btnFinalizarChk);
+            btnFinalizarChk.setVisibility(View.GONE);
+        }
+
         ArrayAdapter<TPedidoItem> adapter = new TCheckoutAdapter(this, 0, itens);
         listView.setAdapter(adapter);
     }
@@ -49,7 +55,7 @@ public class CheckoutActivity extends AppCompatActivity {
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
         SharedPreferences prefs = getSharedPreferences("pedido", MODE_PRIVATE);
-        int id_pedido = prefs.getInt("id_pedido", -1); // se retornar -1 tem algo
+        int id_pedido = prefs.getInt("id_pedido", -1); // se retornar -1 tem algo errado
         TPedido p;
         p = dbDao.buscarPedido(id_pedido);
 
