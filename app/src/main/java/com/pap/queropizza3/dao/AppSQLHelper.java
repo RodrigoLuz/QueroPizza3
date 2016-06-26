@@ -40,6 +40,8 @@ public class AppSQLHelper extends SQLiteOpenHelper {
     public static final String f_ped_email = "email";
     public static final String f_ped_telefone = "telefone";
     public static final String f_ped_delivery = "delivery";
+    public static final String f_ped_f_pagamento = "f_pagamento";
+    public static final String f_ped_troco_para = "troco_para";
     public static final String f_ped_taxa = "taxa";
     public static final String f_ped_datahora = "datahora";
 
@@ -118,6 +120,8 @@ public class AppSQLHelper extends SQLiteOpenHelper {
                         f_ped_email + " text," +
                         f_ped_telefone + " text," +
                         f_ped_delivery + " integer," +
+                        f_ped_f_pagamento + " integer," +
+                        f_ped_troco_para + " real," +
                         f_ped_taxa + " real," +
                         f_ped_datahora + " text)"
         );

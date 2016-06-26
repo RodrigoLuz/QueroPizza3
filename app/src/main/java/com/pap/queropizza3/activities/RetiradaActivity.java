@@ -48,6 +48,7 @@ public class RetiradaActivity extends AppCompatActivity {
     Double taxa, distancia, tempo;
     RadioButton rdoDelivery;
     RadioGroup rgRetirada;
+    String urlWeb = "http://queropizza.azurewebsites.net";
 
     Handler handler = new Handler(){
         @Override
@@ -79,11 +80,11 @@ public class RetiradaActivity extends AppCompatActivity {
         rdoDelivery = (RadioButton)findViewById(R.id.rdoDelivery);
         rgRetirada = (RadioGroup)findViewById(R.id.rgRetirada);
 
-        buscarValorEntrega("", buscarDestination());
+        buscarValorEntrega("", buscarEnderecoUsuario());
     }
 
     // busca endereço do cliente cadastrado
-    public String buscarDestination(){
+    public String buscarEnderecoUsuario(){
         TCliente c = new TCliente();
         try {
             AppSQLDao dbDao;
@@ -153,7 +154,7 @@ public class RetiradaActivity extends AppCompatActivity {
                 // verificar se passa o endereço 100% correto no formato url
                 URI uri = null;
                 try {
-                    uri = new URI("http","queropizzaweb.azurewebsites.net","/api/ApiEntrega/json?","destino=" + destinations,null);
+                    uri = new URI("http", urlWeb, "/api/ApiEntrega/json?","destino=" + destinations,null);
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }

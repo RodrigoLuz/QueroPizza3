@@ -8,6 +8,8 @@ import java.util.List;
 public class TPedido {
     private int id_pedido;
     private int delivery;
+    private Integer f_pagamento;
+    private Double troco_para;
     private Double taxa;
     private String datahora;
     private TCliente cliente;
@@ -29,12 +31,28 @@ public class TPedido {
         this.cliente = cliente;
     }
 
-    public int isDelivery() {
+    public int getDelivery() {
         return delivery;
     }
 
     public void setDelivery(int delivery) {
         this.delivery = delivery;
+    }
+
+    public Integer getF_pagamento() {
+        return f_pagamento;
+    }
+
+    public void setF_pagamento(Integer f_pagamento) {
+        this.f_pagamento = f_pagamento;
+    }
+
+    public Double getTroco_para() {
+        return troco_para;
+    }
+
+    public void setTroco_para(Double troco_para) {
+        this.troco_para = troco_para;
     }
 
     public Double getTaxa() {

@@ -198,7 +198,7 @@ public class AppSQLDao {
         cv.put(AppSQLHelper.f_ped_uf, obj.getCliente().getUf());;
         cv.put(AppSQLHelper.f_ped_email, obj.getCliente().getEmail());;
         cv.put(AppSQLHelper.f_ped_telefone, obj.getCliente().getTelefone());;
-        cv.put(AppSQLHelper.f_ped_delivery, obj.isDelivery());
+        cv.put(AppSQLHelper.f_ped_delivery, obj. getDelivery());
         cv.put(AppSQLHelper.f_ped_taxa, obj.getTaxa());
         cv.put(AppSQLHelper.f_ped_datahora, obj.getDatahora());
 

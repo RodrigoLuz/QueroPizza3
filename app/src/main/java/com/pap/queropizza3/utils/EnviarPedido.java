@@ -33,11 +33,12 @@ public class EnviarPedido {
 
     private TPedido p;
     private Context context;
+    String urlWeb = "http://queropizza.azurewebsites.net";
 
     public void envia(TPedido pedido, Context context) {
         this.p = pedido;
         this.context = context;
-        new HttpAsyncTask().execute("http://queropizzaweb.azurewebsites.net/api/ApiPedidos");
+        new HttpAsyncTask().execute(urlWeb +  "/api/ApiPedidos");
         //new HttpAsyncTask().execute("10.0.0.2:55537/api/ApiPedidos");
     }
 

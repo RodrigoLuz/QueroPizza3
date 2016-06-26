@@ -7,26 +7,25 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/backrepeat"
-    tools:context="com.pap.queropizza3.activities.CheckoutActivity">
+    tools:context=".activities.PagamentoActivity">
 
-
-    <ListView
+    <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/lstvCheckout"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/btnAdicionarItens" />
+        android:text="Pag"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/btnAdicionarItens"
+        android:onClick="pagSeguroClick"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Adicionar itens"
-        android:id="@+id/btnAdicionarItens"
-        android:onClick="btnAdicionarItensClick"
+        android:text="Enviar pedido"
+        android:id="@+id/btnFinalizarChk"
+        android:onClick="btnFinalizarChkClick"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
-
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

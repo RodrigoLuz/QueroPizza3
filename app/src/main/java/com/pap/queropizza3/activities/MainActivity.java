@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        // se não existir cadastro de usuário chama o cadastro, senão estabelecimento
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -47,6 +47,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     String url;
     List<TEstabelecimento> estabelecimentos = new ArrayList<TEstabelecimento>();
     AppSQLDao dbDao;
+    String urlWeb = "http://queropizza.azurewebsites.net";
 
     Handler handler = new Handler(){
         @Override
@@ -69,11 +70,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbDao = new AppSQLDao(getApplicationContext());
-
         buscarEstabelecimentos();
-
-        dbDao.limparCardapio();
-        buscarCardapio();
     }
 
     private void montaLista() {
@@ -111,6 +108,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                 l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        buscarCardapio(); // busca cardápio do estabelecimento selecionado e grava no banco
                         Intent it = new Intent(EstabelecimentoActivity.this, RetiradaActivity.class);
                         startActivity(it);
                     }
@@ -150,8 +148,8 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             @Override
             public void run() {
                 HttpClient client = AndroidHttpClient.newInstance("HttpAndroid");
-                url = "http://www.digibyte.com.br/particular/json.txt";
-                //url = "http://queropizzaweb.azurewebsites.net/api/apipizzarias";
+                // url = "http://www.digibyte.com.br/particular/json.txt";
+                url = urlWeb + "/api/apipizzarias";
                 HttpGet get = new HttpGet(url);
 
                 try {
@@ -161,13 +159,13 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                         String dadosServidor = EntityUtils.toString(entity);
 
                         JSONObject objectRoot = new JSONObject(dadosServidor);
-                    //    JSONArray arrayEstabelecimentos = objectRoot.getJSONArray("Pizzarias");
-                        JSONArray arrayEstabelecimentos = objectRoot.getJSONArray("estabelecimentos");
+                        JSONArray arrayEstabelecimentos = objectRoot.getJSONArray("Pizzarias");
+                    //    JSONArray arrayEstabelecimentos = objectRoot.getJSONArray("estabelecimentos");
                         for(int i = 0; i < arrayEstabelecimentos.length(); i++) {
                             TEstabelecimento e = new TEstabelecimento();
                             JSONObject object = arrayEstabelecimentos.getJSONObject(i);
-                            e.setNome(object.getString("nome"));
-                            e.setEndereco(object.getString("endereco"));
+                            e.setNome(object.getString("Nome"));
+                            e.setEndereco(object.getString("Endereco"));
                             estabelecimentos.add(e);
                         }
 
@@ -191,8 +189,9 @@ public class EstabelecimentoActivity extends AppCompatActivity {
         Thread trd = new Thread(new Runnable() {
             @Override
             public void run() {
+                dbDao.limparCardapio();
                 HttpClient client = AndroidHttpClient.newInstance("HttpAndroid");
-                url = "http://queropizzaweb.azurewebsites.net/api/ApiCardapios";
+                url = urlWeb +  "/api/ApiCardapios";
                 HttpGet get = new HttpGet(url);
 
                 try {
@@ -249,7 +248,6 @@ public class EstabelecimentoActivity extends AppCompatActivity {
         });
         trd.start();
     }
-
 
 }
 
