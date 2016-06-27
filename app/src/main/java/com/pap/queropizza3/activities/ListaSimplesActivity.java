@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ExpandableListView;
 
 import com.pap.queropizza3.R;
-import com.pap.queropizza3.adapters.TExpandableAdapter;
+import com.pap.queropizza3.adapters.TBebidaAdapter;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCardapioGrupo;
 import com.pap.queropizza3.models.TCardapioItem;
@@ -47,7 +47,7 @@ public class ListaSimplesActivity extends AppCompatActivity {
             List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i).getId_subgrupo());  // busca itens dos subgrupos
             dados.put(subgrupos.get(i).getNome(), itens);  // insere chave (= cabeçalho = subgrupo)
         }
-         lstvListaSimples.setAdapter(new TExpandableAdapter(dados));
+         lstvListaSimples.setAdapter(new TBebidaAdapter(dados));
     }
 
     public void btnContinuarClick(View view) {

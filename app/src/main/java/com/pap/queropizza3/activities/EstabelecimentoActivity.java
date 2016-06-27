@@ -84,71 +84,56 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     }
 
     public class MyAdapter extends ArrayAdapter<TEstabelecimento> {
-        public MyAdapter(Context context, final List<TEstabelecimento> objects) {
+        public MyAdapter(Context context, List<TEstabelecimento> objects) {
             super(context, 0, objects);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder holder = null;
-            View vi = convertView;
 
-            if (vi == null) {
-                holder = new ViewHolder();
-                LayoutInflater inflater=getLayoutInflater();
-                vi = inflater.inflate(R.layout.layout_lstv_estabelecimento, parent, false);
-
-                holder.txtvNome = (TextView)vi.findViewById(R.id.txtvNome);
-                holder.txtvInfo1 = (TextView)vi.findViewById(R.id.txtvInfo1);
-                holder.txtvInfo2 = (TextView)vi.findViewById(R.id.txtvInfo2);
-                holder.imgBtnInfoEstabelecimento = (ImageButton)vi.findViewById(R.id.imgBtnInfoEstabelecimento);
-                final TEstabelecimento e = getItem(position);
-                holder.delivery = e.getDelivery();
-
-                ListView l = (ListView) findViewById(R.id.lstvEstabelecimentos);
-                l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        buscarCardapio(); // busca cardápio do estabelecimento selecionado e grava no banco
-                        Intent it = new Intent(EstabelecimentoActivity.this, RetiradaActivity.class);
-
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean("delivery", e.getDelivery());
-                        it.putExtras(bundle);
-
-                        startActivity(it);
-                    }
-                });
-
-                holder.imgBtnInfoEstabelecimento.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        Intent it = new Intent(EstabelecimentoActivity.this, EstabelecimentoDetalheActivity.class);
-                        startActivity(it);
-                    }
-                });
-
-                vi.setTag(holder);
-            }
-            else
-            {
-                holder = (ViewHolder)vi.getTag();
+            if (convertView == null) {
+                convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_lstv_estabelecimento, parent, false);
             }
 
             TEstabelecimento e = getItem(position);
-            holder.delivery = e.getDelivery();
-            holder.txtvNome.setText(e.getNome());
-            holder.txtvInfo1.setText(e.getEndereco());
-            holder.txtvInfo2.setText(e.getCidade());
 
-            return vi;
+            TextView txtvNome = (TextView)convertView.findViewById(R.id.txtvNome);
+            TextView txtvInfo1 = (TextView)convertView.findViewById(R.id.txtvInfo1);
+            TextView txtvInfo2 = (TextView)convertView.findViewById(R.id.txtvInfo2);
+            ImageButton imgBtnInfoEstabelecimento = (ImageButton)convertView.findViewById(R.id.imgBtnInfoEstabelecimento);
+            ListView l = (ListView) findViewById(R.id.lstvEstabelecimentos);
+            l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    buscarCardapio(); // busca cardápio do estabelecimento selecionado e grava no banco
+                    Intent it = new Intent(EstabelecimentoActivity.this, RetiradaActivity.class);
+                    TEstabelecimento eClick = getItem(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("delivery", eClick.getDelivery());
+                    it.putExtras(bundle);
+
+                    startActivity(it);
+                }
+                });
+
+            imgBtnInfoEstabelecimento.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                    Intent it = new Intent(EstabelecimentoActivity.this, EstabelecimentoDetalheActivity.class);
+                    startActivity(it);
+                }
+                });
+
+            txtvNome.setText(e.getNome());
+            txtvInfo1.setText(e.getEndereco());
+            if (e.getDelivery() == true){
+                txtvInfo2.setText("balcão / delivery");
+            }else{
+                txtvInfo2.setText("balcão");
+            }
+
+            return convertView;
         }
-    }
-
-    private static class ViewHolder{
-        TextView txtvNome, txtvInfo1, txtvInfo2;
-        ImageButton imgBtnInfoEstabelecimento;
-        boolean delivery;
     }
 
     public void buscarEstabelecimentos() {

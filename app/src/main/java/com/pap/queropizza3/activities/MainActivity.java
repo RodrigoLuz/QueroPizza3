@@ -1,4 +1,11 @@
 // http://blog.smartlogic.io/2013/07/09/organizing-your-android-development-code-structure
+// http://www.vogella.com/tutorials/AndroidActionBar/article.html
+// https://developer.android.com/training/appbar/index.html
+// http://www.androidhive.info/2013/11/android-working-with-action-bar/
+// https://www.sitepoint.com/better-user-interfaces-android-action-bar/
+// https://material.google.com/components/bottom-navigation.html#bottom-navigation-specs
+// https://material.google.com/layout/structure.html#
+
 package com.pap.queropizza3.activities;
 
 import android.content.Intent;

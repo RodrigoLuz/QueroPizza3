@@ -95,7 +95,7 @@ public class RetiradaActivity extends AppCompatActivity {
             buscarValorEntrega("", buscarEnderecoUsuario());
             txtvInfoDelivery.setVisibility(View.GONE);
         } else {
-            rdoDelivery.setVisibility(View.GONE);
+            rdoDelivery.setVisibility(View.INVISIBLE);
             rdoBalcao.setChecked(true);
         }
     }
@@ -129,11 +129,13 @@ public class RetiradaActivity extends AppCompatActivity {
     }
 
     public void criarPedido(){
+        int id = rgRetirada.getCheckedRadioButtonId();
         int d;
-        if ((rgRetirada.getCheckedRadioButtonId() == 0)){
+        if (id == R.id.rdoBalcao){
+            d = 0; // balcão
+        }
+        else{
             d = 1; // delivery
-        }else{
-            d = 0;
         }
 
         TCliente c = dbDao.listaCliente().get(0);

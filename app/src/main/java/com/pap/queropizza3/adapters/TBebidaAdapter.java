@@ -20,12 +20,12 @@ import java.util.Map;
  * Created by Rodrigo on 22/04/2016.
  * http://www.thiengo.com.br/expandablelistview-no-android-entendendo-e-utilizando
  */
-public class TExpandableAdapter extends BaseExpandableListAdapter {
+public class TBebidaAdapter extends BaseExpandableListAdapter {
 
     private List<String> keys;
     private Map<String, List<TItemTela>> dados;
 
-    public TExpandableAdapter(Map<String, List<TItemTela>> dados) {
+    public TBebidaAdapter(Map<String, List<TItemTela>> dados) {
         this.dados = dados;
         this.keys = new ArrayList<String>(dados.keySet());
     }
@@ -45,7 +45,7 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
         TextView txt = (TextView) convertView.findViewById(android.R.id.text1);
         txt.setText(keys.get(groupPosition));
         txt.setTextColor(Color.WHITE);
-        txt.setBackgroundColor(Color.rgb(180, 0, 0));
+        txt.setBackgroundColor(Color.rgb(178, 34, 34));
         txt.setMinHeight(150);
         return convertView;
     }
@@ -88,9 +88,10 @@ public class TExpandableAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        txtvQuant.setText(String.valueOf(dados.get(keys.get(groupPosition)).get(childPosition).getQuantidade()));
-        txtvItem.setText(dados.get(keys.get(groupPosition)).get(childPosition).getCardapio_item().getNome());
-        txtvValor.setText(String.format("%.2f", (dados.get(keys.get(groupPosition)).get(childPosition).getCardapio_item().getValor())));
+        TItemTela item = dados.get(keys.get(groupPosition)).get(childPosition);
+        txtvQuant.setText(String.valueOf(item.getQuantidade()));
+        txtvItem.setText(item.getCardapio_item().getNome());
+        txtvValor.setText(String.format("%.2f", (item.getCardapio_item().getValor())));
 
         return convertView;
     }
