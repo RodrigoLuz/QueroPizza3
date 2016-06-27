@@ -28,7 +28,7 @@ public class TamanhoActivity extends AppCompatActivity {
         TPedido p;
         p = dbDao.buscarPedido(id_pedido);
 
-        if (p.isDelivery() == 1 ){
+        if (p.getDelivery() == 1 ){
             btnTamanho1 = (Button)findViewById(R.id.btnTamanho1);
             btnTamanho1.setVisibility(View.GONE);
         }

@@ -44,9 +44,8 @@ import java.util.List;
 
 public class EstabelecimentoActivity extends AppCompatActivity {
 
-    String url;
-    List<TEstabelecimento> estabelecimentos = new ArrayList<TEstabelecimento>();
     AppSQLDao dbDao;
+    List<TEstabelecimento> estabelecimentos = new ArrayList<TEstabelecimento>();
     String urlWeb = "http://queropizza.azurewebsites.net";
 
     Handler handler = new Handler(){
@@ -70,6 +69,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dbDao = new AppSQLDao(getApplicationContext());
+        buscarCardapio();
         buscarEstabelecimentos();
     }
 
@@ -84,7 +84,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     }
 
     public class MyAdapter extends ArrayAdapter<TEstabelecimento> {
-        public MyAdapter(Context context, List<TEstabelecimento> objects) {
+        public MyAdapter(Context context, final List<TEstabelecimento> objects) {
             super(context, 0, objects);
         }
 
@@ -95,7 +95,6 @@ public class EstabelecimentoActivity extends AppCompatActivity {
 
             if (vi == null) {
                 holder = new ViewHolder();
-                TEstabelecimento e = getItem(position);
                 LayoutInflater inflater=getLayoutInflater();
                 vi = inflater.inflate(R.layout.layout_lstv_estabelecimento, parent, false);
 
@@ -103,13 +102,20 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                 holder.txtvInfo1 = (TextView)vi.findViewById(R.id.txtvInfo1);
                 holder.txtvInfo2 = (TextView)vi.findViewById(R.id.txtvInfo2);
                 holder.imgBtnInfoEstabelecimento = (ImageButton)vi.findViewById(R.id.imgBtnInfoEstabelecimento);
+                final TEstabelecimento e = getItem(position);
+                holder.delivery = e.getDelivery();
 
                 ListView l = (ListView) findViewById(R.id.lstvEstabelecimentos);
                 l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        buscarCardapio(); // busca cardápio do estabelecimento selecionado e grava no banco
+//                        buscarCardapio(); // busca cardápio do estabelecimento selecionado e grava no banco
                         Intent it = new Intent(EstabelecimentoActivity.this, RetiradaActivity.class);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("delivery", e.getDelivery());
+                        it.putExtras(bundle);
+
                         startActivity(it);
                     }
                 });
@@ -130,6 +136,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             }
 
             TEstabelecimento e = getItem(position);
+            holder.delivery = e.getDelivery();
             holder.txtvNome.setText(e.getNome());
             holder.txtvInfo1.setText(e.getEndereco());
             holder.txtvInfo2.setText(e.getCidade());
@@ -141,6 +148,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     private static class ViewHolder{
         TextView txtvNome, txtvInfo1, txtvInfo2;
         ImageButton imgBtnInfoEstabelecimento;
+        boolean delivery;
     }
 
     public void buscarEstabelecimentos() {
@@ -148,8 +156,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             @Override
             public void run() {
                 HttpClient client = AndroidHttpClient.newInstance("HttpAndroid");
-                // url = "http://www.digibyte.com.br/particular/json.txt";
-                url = urlWeb + "/api/apipizzarias";
+                String url = urlWeb + "/api/ApiPizzarias";
                 HttpGet get = new HttpGet(url);
 
                 try {
@@ -160,12 +167,12 @@ public class EstabelecimentoActivity extends AppCompatActivity {
 
                         JSONObject objectRoot = new JSONObject(dadosServidor);
                         JSONArray arrayEstabelecimentos = objectRoot.getJSONArray("Pizzarias");
-                    //    JSONArray arrayEstabelecimentos = objectRoot.getJSONArray("estabelecimentos");
                         for(int i = 0; i < arrayEstabelecimentos.length(); i++) {
                             TEstabelecimento e = new TEstabelecimento();
                             JSONObject object = arrayEstabelecimentos.getJSONObject(i);
                             e.setNome(object.getString("Nome"));
                             e.setEndereco(object.getString("Endereco"));
+                            e.setDelivery(object.getBoolean("Delivery"));
                             estabelecimentos.add(e);
                         }
 
@@ -191,7 +198,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             public void run() {
                 dbDao.limparCardapio();
                 HttpClient client = AndroidHttpClient.newInstance("HttpAndroid");
-                url = urlWeb +  "/api/ApiCardapios";
+                String url = urlWeb +  "/api/ApiCardapios";
                 HttpGet get = new HttpGet(url);
 
                 try {

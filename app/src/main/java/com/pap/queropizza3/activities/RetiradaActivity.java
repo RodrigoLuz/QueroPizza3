@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pap.queropizza3.R;
@@ -46,9 +47,11 @@ public class RetiradaActivity extends AppCompatActivity {
     ProgressDialog progress;
     String url;
     Double taxa, distancia, tempo;
-    RadioButton rdoDelivery;
+    RadioButton rdoDelivery, rdoBalcao;
     RadioGroup rgRetirada;
-    String urlWeb = "http://queropizza.azurewebsites.net";
+    TextView txtvInfoDelivery;
+    String urlWeb = "queropizza.azurewebsites.net";
+    AppSQLDao dbDao;
 
     Handler handler = new Handler(){
         @Override
@@ -78,17 +81,29 @@ public class RetiradaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_retirada);
         btnAvancarRetirada = (Button)findViewById(R.id.btnAvancarRetirada);
         rdoDelivery = (RadioButton)findViewById(R.id.rdoDelivery);
+        rdoBalcao = (RadioButton)findViewById(R.id.rdoBalcao);
         rgRetirada = (RadioGroup)findViewById(R.id.rgRetirada);
+        txtvInfoDelivery = (TextView)findViewById(R.id.txtvInfoDelivery);
+        dbDao = new AppSQLDao(getApplicationContext());
+        Bundle b = new Bundle();
 
-        buscarValorEntrega("", buscarEnderecoUsuario());
+        if(getIntent().hasExtra("delivery")) {
+            b = getIntent().getExtras();
+        }
+
+        if (b.getBoolean("delivery")){
+            buscarValorEntrega("", buscarEnderecoUsuario());
+            txtvInfoDelivery.setVisibility(View.GONE);
+        } else {
+            rdoDelivery.setVisibility(View.GONE);
+            rdoBalcao.setChecked(true);
+        }
     }
 
     // busca endereço do cliente cadastrado
     public String buscarEnderecoUsuario(){
         TCliente c = new TCliente();
         try {
-            AppSQLDao dbDao;
-            dbDao = new AppSQLDao(getApplicationContext());
             List<TCliente> clientes = dbDao.listaCliente();
             c = clientes.get(0);
         } catch (Exception e) {
@@ -104,7 +119,7 @@ public class RetiradaActivity extends AppCompatActivity {
 
     public void btnAvancarRetiradaClick(View v){
         {
-            AppSQLDao dbDao = new AppSQLDao(getApplicationContext());
+            // limpa banco - pedidos
             dbDao.limparPedido();
             criarPedido();
 
@@ -120,8 +135,7 @@ public class RetiradaActivity extends AppCompatActivity {
         }else{
             d = 0;
         }
-        AppSQLDao dbDao;
-        dbDao = new AppSQLDao(getApplicationContext());
+
         TCliente c = dbDao.listaCliente().get(0);
 
         TPedido p = new TPedido();

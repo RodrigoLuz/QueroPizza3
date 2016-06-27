@@ -5,17 +5,18 @@ package com.pap.queropizza3.models;
  */
 public class TEstabelecimento {
     int idEstabelecimento;
-    String nome;
-    String endereco;
-    String numero;
-    String bairro;
-    String cidade;
-    String uf;
-    String email;
-    String telefone;
-    String horario;
-    Float distancia;
-    Float taxa;
+    private String nome;
+    private String endereco;
+    private String numero;
+    private String bairro;
+    private String cidade;
+    private String uf;
+    private String email;
+    private String telefone;
+    private String horario;
+    private Float distancia;
+    private Float taxa;
+    private Boolean delivery;
 
     public TEstabelecimento() {
     }
@@ -114,5 +115,13 @@ public class TEstabelecimento {
 
     public void setTaxa(Float taxa) {
         this.taxa = taxa;
+    }
+
+    public Boolean getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Boolean delivery) {
+        this.delivery = delivery;
     }
 }
