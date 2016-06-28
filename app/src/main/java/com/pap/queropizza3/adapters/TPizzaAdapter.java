@@ -1,6 +1,5 @@
 package com.pap.queropizza3.adapters;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pap.queropizza3.R;
@@ -64,16 +62,15 @@ public class TPizzaAdapter extends BaseExpandableListAdapter {
         TextView txtvItemSabor = (TextView)convertView.findViewById(R.id.txtvItemSabor);
         TextView txtvIngredientes = (TextView)convertView.findViewById(R.id.txtvIngredientes);
         TextView txtvValor = (TextView)convertView.findViewById(R.id.txtvValor);
+        final TItemTela item = dados.get(keys.get(groupPosition)).get(childPosition);
 
         chkbSelecao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                int getPosition = (Integer) buttonView.getTag();  // Here we get the position that we have set for the checkbox using setTag.
-//                dados.get(keys.get(groupPosition)).get(childPosition).setSelecionado(buttonView.isChecked()); // Set the value of checkbox to maintain its state.
+                item.setSelecionado(buttonView.isChecked());
            }
          });
 
-        TItemTela item = dados.get(keys.get(groupPosition)).get(childPosition);
         chkbSelecao.setChecked(item.isSelecionado());
         txtvItemSabor.setText(item.getCardapio_item().getNome());
         txtvIngredientes.setText(item.getCardapio_item().getDescricao());

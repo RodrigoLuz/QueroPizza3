@@ -19,4 +19,13 @@
 
     <style name="BaggioTheme" parent="AppTheme" />
 
+    <style name="BaggioTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="BaggioTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="BaggioTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>

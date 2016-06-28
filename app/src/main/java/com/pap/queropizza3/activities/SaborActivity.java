@@ -1,16 +1,12 @@
 package com.pap.queropizza3.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 import com.pap.queropizza3.R;
-import com.pap.queropizza3.adapters.TBebidaAdapter;
-import com.pap.queropizza3.adapters.TCheckAdapter;
 import com.pap.queropizza3.adapters.TPizzaAdapter;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCardapioGrupo;
@@ -24,9 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 public class SaborActivity extends AppCompatActivity {
-
-    List<TItemTela> sabores = new ArrayList<TItemTela>();
-    List<TItemTela> saboresSelecionados = new ArrayList<TItemTela>();
 
     ExpandableListView lstvSabores;
     Map<String, List<TItemTela>> dados =  new HashMap<String, List<TItemTela>>();
@@ -54,14 +47,7 @@ public class SaborActivity extends AppCompatActivity {
     public void btnContinuarSabClick(View view) {
         Intent it = new Intent(this, ComplementoActivity.class);
 
-        // por enquanto estou fazendo aqui depois
-        // saboresSelecionados tem que ser preenchido ao selecionar
-
-        for(int j = 0 ; j < sabores.size(); j++) {
-            if (sabores.get(j).isSelecionado())
-            saboresSelecionados.add(sabores.get(j));
-        }
-
+        List<TItemTela> saboresSelecionados = gravarLista(dados);
         if (saboresSelecionados.size() > 0 ){
             Bundle bundleObject = new Bundle();
             bundleObject.putSerializable("saboresSelecionados", (Serializable) saboresSelecionados);
@@ -70,4 +56,22 @@ public class SaborActivity extends AppCompatActivity {
 
         startActivity(it);
     }
+
+    public List<TItemTela> gravarLista(Map<String, List<TItemTela>> dados) {
+        this.dados = dados;
+
+        List<TItemTela> saboresSelecionados = new ArrayList<TItemTela>();
+        List<String> keys = new ArrayList<String>(this.dados.keySet());
+
+        for(int i = 0 ; i < keys.size(); i++) {
+
+            for(int j = 0 ; j < this.dados.get(keys.get(i)).size(); j++) {
+                if (this.dados.get(keys.get(i)).get(j).isSelecionado()) {
+                    saboresSelecionados.add(this.dados.get(keys.get(i)).get(j));
+                 }
+            }
+        }
+        return saboresSelecionados;
+    }
+
 }

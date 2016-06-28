@@ -40,7 +40,16 @@
         <activity android:name=".activities.SaborActivity" />
         <activity android:name=".activities.ComplementoActivity" />
         <activity android:name=".activities.EstabelecimentoDetalheActivity" />
-        <activity android:name=".activities.PagamentoActivity"></activity>
+        <activity android:name=".activities.PagamentoActivity" />
+        <activity
+            android:name=".activities.CheckActivity"
+            android:label="@string/title_activity_check"
+            android:parentActivityName=".activities.GrupoActivity"
+            android:theme="@style/BaggioTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pap.queropizza3.activities.GrupoActivity" />
+        </activity>
     </application>
 
 </manifest>
