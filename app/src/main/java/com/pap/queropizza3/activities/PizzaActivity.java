@@ -10,8 +10,10 @@ import com.pap.queropizza3.R;
 import com.pap.queropizza3.adapters.TPizzaAdapter;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCardapioGrupo;
+import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TCardapioSubGrupo;
 import com.pap.queropizza3.models.TItemTela;
+import com.pap.queropizza3.models.TPedidoItem;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SaborActivity extends AppCompatActivity {
+public class PizzaActivity extends AppCompatActivity {
 
     ExpandableListView lstvSabores;
     Map<String, List<TItemTela>> dados =  new HashMap<String, List<TItemTela>>();
@@ -38,7 +40,7 @@ public class SaborActivity extends AppCompatActivity {
         List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(g); // pega sibgrupos de bebida // não pode listar pelo id pois é variável, tem que ser pelo cod do servidor api
 
         for(int i = 0 ; i < subgrupos.size(); i++){
-            List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i).getId_subgrupo());  // busca itens dos subgrupos
+            List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i));  // busca itens dos subgrupos
             dados.put(subgrupos.get(i).getNome(), itens);  // insere chave (= cabeçalho = subgrupo)
         }
         lstvSabores.setAdapter(new TPizzaAdapter(dados));
@@ -67,7 +69,8 @@ public class SaborActivity extends AppCompatActivity {
 
             for(int j = 0 ; j < this.dados.get(keys.get(i)).size(); j++) {
                 if (this.dados.get(keys.get(i)).get(j).isSelecionado()) {
-                    saboresSelecionados.add(this.dados.get(keys.get(i)).get(j));
+                    TItemTela itemTela = this.dados.get(keys.get(i)).get(j);
+                    saboresSelecionados.add(itemTela);
                  }
             }
         }

@@ -55,14 +55,18 @@ public class ComplementoActivity extends AppCompatActivity {
             TPedidoItem item = new TPedidoItem();
             item.setId_pedido(id_pedido);
             item.setQuantidade(1);
-            item.setValor(dados.get(j).getCardapio_item().getValor());
+
+            TCardapioItem cardapioItem = dados.get(j).getCardapio_item();
+
+            item.setValor(cardapioItem.getValor());
+            item.setGrupo(cardapioItem.getSubgrupo().getGrupo().getCod_grupo());
+            item.setSubgrupo(cardapioItem.getSubgrupo().getCod_subgrupo());
             id_item = dbDao.inserirPedidoItem(item);
 
             TPedidoDetalhe detalhe = new TPedidoDetalhe();
             detalhe.setId_item(id_item);
 
-            TCardapioItem c = dados.get(j).getCardapio_item();
-            detalhe.setCardapio_item(c);
+            detalhe.setCardapio_item(cardapioItem);
             dbDao.inserirPedidoSubItem(detalhe);
         }
     }

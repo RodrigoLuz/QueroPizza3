@@ -6,8 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.pap.queropizza3.R;
@@ -18,14 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Rodrigo on 27/06/2016.
+ * Created by Rodrigo on 28/06/2016.
  */
-public class TPizzaAdapter extends BaseExpandableListAdapter {
+public class TCheckPizzaAdapter extends BaseExpandableListAdapter {
 
     private List<String> keys;
     private Map<String, List<TItemTela>> dados;
 
-    public TPizzaAdapter(Map<String, List<TItemTela>> dados) {
+    public TCheckPizzaAdapter(Map<String, List<TItemTela>> dados) {
         this.dados = dados;
         this.keys = new ArrayList<String>(dados.keySet());
     }
@@ -55,26 +54,29 @@ public class TPizzaAdapter extends BaseExpandableListAdapter {
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_pizza, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_checkout_pizza, parent, false);
         }
 
-        CheckBox chkbSelecao = (CheckBox)convertView.findViewById(R.id.chkbSelecao);
-        TextView txtvItemSabor = (TextView)convertView.findViewById(R.id.txtvItemSabor);
-        TextView txtvIngredientes = (TextView)convertView.findViewById(R.id.txtvIngredientes);
-        TextView txtvValor = (TextView)convertView.findViewById(R.id.txtvValor);
-        final TItemTela item = dados.get(keys.get(groupPosition)).get(childPosition);
+        final TextView txtvQuant = (TextView)convertView.findViewById(R.id.txtvQuant);
+        TextView txtvChkItem = (TextView)convertView.findViewById(R.id.txtvChkItem);
+        TextView txtvChkDescricao = (TextView)convertView.findViewById(R.id.txtvChkDescricao);
+        ImageButton btnExcluirChk = (ImageButton)convertView.findViewById(R.id.btnExcluirChk);
 
-        chkbSelecao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        btnExcluirChk.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                item.setSelecionado(buttonView.isChecked());
-           }
-         });
+            public void onClick(View v) {
+                int vQuant = dados.get(keys.get(groupPosition)).get(childPosition).getQuantidade();
+                if (vQuant > 0) {
+                    vQuant--;
+                    dados.get(keys.get(groupPosition)).get(childPosition).setQuantidade(vQuant);
+                }
+                txtvQuant.setText(String.valueOf(dados.get(keys.get(groupPosition)).get(childPosition).getQuantidade()));
+            }
+        });
 
-        chkbSelecao.setChecked(item.isSelecionado());
-        txtvItemSabor.setText(item.getCardapio_item().getNome());
-        txtvIngredientes.setText(item.getCardapio_item().getDescricao());
-        txtvValor.setText(String.format("%.2f", (item.getCardapio_item().getValor())));
+        TItemTela item = dados.get(keys.get(groupPosition)).get(childPosition);
+        txtvChkItem.setText(String.valueOf(item.getQuantidade()));
+        txtvChkDescricao.setText(item.getCardapio_item().getNome());
 
         return convertView;
     }

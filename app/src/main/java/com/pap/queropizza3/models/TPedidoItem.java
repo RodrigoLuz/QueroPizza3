@@ -13,6 +13,8 @@ public class TPedidoItem {
     double valor;
     int tamanho;
     String observacao;
+    int grupo;
+    int subgrupo;
     private List<TPedidoDetalhe> subitens;
 
     public int getId_pedido() {
@@ -61,6 +63,22 @@ public class TPedidoItem {
 
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    public int getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(int grupo) {
+        this.grupo = grupo;
+    }
+
+    public int getSubgrupo() {
+        return subgrupo;
+    }
+
+    public void setSubgrupo(int subgrupo) {
+        this.subgrupo = subgrupo;
     }
 
     public List<TPedidoDetalhe> getSubitens() {

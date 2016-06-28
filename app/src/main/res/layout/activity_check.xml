@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@drawable/backrepeat"
     tools:context="com.pap.queropizza3.activities.CheckActivity">
 
     <android.support.design.widget.AppBarLayout

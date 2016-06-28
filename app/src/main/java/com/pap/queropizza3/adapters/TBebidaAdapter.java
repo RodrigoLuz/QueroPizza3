@@ -55,7 +55,7 @@ public class TBebidaAdapter extends BaseExpandableListAdapter {
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_lista_simples, parent, false);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_bebida, parent, false);
         }
 
         final TextView txtvQuant = (TextView)convertView.findViewById(R.id.txtvQuant);

@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.pap.queropizza3.activities.EstabelecimentoActivity"
+    android:padding="10dp"
     android:descendantFocusability="blocksDescendants">
 
     <TextView

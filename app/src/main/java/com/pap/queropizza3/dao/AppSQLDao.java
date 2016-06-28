@@ -275,11 +275,17 @@ public class AppSQLDao {
     }
 
     // busca os itens do pedido e seus detalhes
-    public List<TPedidoItem> listaTodosPedidoItem () {
+    public List<TPedidoItem> listaTodosPedidoItem (Integer grupo) {
         SQLiteDatabase db = helper.getReadableDatabase();
-
+        String[] argumentos = null;
         String sql = "SELECT * FROM "+ AppCriaTabelas.t_pedido_item;
-        Cursor c = db.rawQuery(sql, null);
+        if (grupo != null) {
+            sql += " WHERE "+ AppCriaTabelas.f_ped_item_grupo +" = ?";
+            argumentos = new String[]{ String.valueOf(grupo) };
+            sql += " ORDER BY "+ AppCriaTabelas.f_ped_item_subgrupo;
+        }
+
+        Cursor c = db.rawQuery(sql, argumentos);
 
         List<TPedidoItem> itens = new ArrayList<>();
         while (c.moveToNext()) {
@@ -391,13 +397,10 @@ public class AppSQLDao {
         return itenstela;
     }
 
-    public List<TItemTela> listaItensPorSubGrupo(int id_subgrupo){
+    public List<TItemTela> listaItensPorSubGrupo(TCardapioSubGrupo obj){
         List<TItemTela> itenstela = new ArrayList<TItemTela>();
 
-        TCardapioSubGrupo subgrupo = new TCardapioSubGrupo(); // cria um obj subgrupo com o código enviado para poder passar para lista
-        subgrupo.setId_subgrupo(id_subgrupo);
-
-        List<TCardapioItem> itens = listaItem(subgrupo);
+        List<TCardapioItem> itens = listaItem(obj);
         for(int j = 0 ; j < itens.size(); j++){
             TItemTela linha = new TItemTela();
             linha.setCardapio_item(itens.get(j));
@@ -415,6 +418,8 @@ public class AppSQLDao {
         cv.put(AppCriaTabelas.f_ped_item_valor, obj.getValor());
         cv.put(AppCriaTabelas.f_ped_item_tamanho, obj.getTamanho());
         cv.put(AppCriaTabelas.f_ped_item_obs, obj.getObservacao());
+        cv.put(AppCriaTabelas.f_ped_item_grupo, obj.getGrupo());
+        cv.put(AppCriaTabelas.f_ped_item_subgrupo, obj.getSubgrupo());
 
         int id = (int) db.insert(AppCriaTabelas.t_pedido_item, null, cv);
         if (id == -1) {

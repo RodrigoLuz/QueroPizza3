@@ -32,12 +32,12 @@
         <activity android:name=".activities.ClienteActivity" />
         <activity android:name=".activities.GrupoActivity" />
         <activity android:name=".activities.TamanhoActivity" />
-        <activity android:name=".activities.ListaSimplesActivity" />
+        <activity android:name=".activities.BebidaActivity" />
         <activity android:name=".activities.CheckoutActivity" />
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".activities.SaborActivity" />
+        <activity android:name=".activities.PizzaActivity" />
         <activity android:name=".activities.ComplementoActivity" />
         <activity android:name=".activities.EstabelecimentoDetalheActivity" />
         <activity android:name=".activities.PagamentoActivity" />

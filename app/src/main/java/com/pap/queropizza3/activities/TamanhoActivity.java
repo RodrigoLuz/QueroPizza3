@@ -53,7 +53,7 @@ public class TamanhoActivity extends AppCompatActivity {
                 throw new RuntimeException("Opção inválida");
         }
 
-        Intent it = new Intent(this, SaborActivity.class);
+        Intent it = new Intent(this, PizzaActivity.class);
         startActivity(it);
     }
 

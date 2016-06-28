@@ -45,6 +45,8 @@ public class AppCriaTabelas {
     public static final String f_ped_item_valor = "valor";
     public static final String f_ped_item_tamanho = "tamanho";
     public static final String f_ped_item_obs = "observacao";
+    public static final String f_ped_item_grupo = "grupo";
+    public static final String f_ped_item_subgrupo = "subgrupo";
 
     public static final String t_pedido_detalhe = "pedido_detalhe"; // tabela
     public static final String f_ped_detalhe_id = "id_pedido_detalhe"; // pk
@@ -115,6 +117,8 @@ public class AppCriaTabelas {
                         f_ped_item_valor + " real," +
                         f_ped_item_tamanho + " integer," +
                         f_ped_item_obs + " text, " +
+                        f_ped_item_grupo + " integer," +
+                        f_ped_item_subgrupo + " integer," +
                         "CONSTRAINT [fk_pedido] FOREIGN KEY([id_pedido]) REFERENCES pedido([id_pedido]) ON DELETE CASCADE ON UPDATE CASCADE)"
         );
 

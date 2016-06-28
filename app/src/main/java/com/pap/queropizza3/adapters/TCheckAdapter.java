@@ -45,7 +45,7 @@ public class TCheckAdapter extends ArrayAdapter<TItemTela> {
 
             if (vi == null) {
                 final LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                vi = inflater.inflate(R.layout.layout_item_sabor, parent, false);
+                vi = inflater.inflate(R.layout.layout_item_pizza, parent, false);
 
                 holder = new ViewHolder();
 

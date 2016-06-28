@@ -18,12 +18,12 @@ import java.util.List;
 /**
  * Created by Rodrigo on 28/05/2016.
  */
-public class TCheckoutAdapter extends ArrayAdapter<TPedidoItem> {
+public class TCheckBebidaAdapter extends ArrayAdapter<TPedidoItem> {
 
     private final List<TPedidoItem> list;
     private final Activity context;
 
-    public TCheckoutAdapter(Activity context, int textViewResourceId, List<TPedidoItem> list) {
+    public TCheckBebidaAdapter(Activity context, int textViewResourceId, List<TPedidoItem> list) {
         super(context, textViewResourceId, list);
         this.context = context;
         this.list = list;
@@ -44,7 +44,7 @@ public class TCheckoutAdapter extends ArrayAdapter<TPedidoItem> {
         if (vi == null) {
             holder = new ViewHolder();
             final LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            vi = inflater.inflate(R.layout.layout_item_checkout, parent, false);
+            vi = inflater.inflate(R.layout.layout_checkout_bebida, parent, false);
 
             holder.txtvChkItem = (TextView)vi.findViewById(R.id.txtvChkItem);
             holder.txtvChkQuantidade = (TextView)vi.findViewById(R.id.txtvChkQuantidade);

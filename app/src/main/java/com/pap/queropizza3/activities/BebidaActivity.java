@@ -26,7 +26,7 @@ import java.util.Map;
 // http://stackoverflow.com/questions/4777003/how-do-i-load-and-save-listview-items-to-an-sqlitedatabase
  //https://www.youtube.com/watch?v=PA4A9IesyCg
 
-public class ListaSimplesActivity extends AppCompatActivity {
+public class BebidaActivity extends AppCompatActivity {
 
     ExpandableListView lstvListaSimples;
     Map<String, List<TItemTela>> dados =  new HashMap<String, List<TItemTela>>();
@@ -44,7 +44,7 @@ public class ListaSimplesActivity extends AppCompatActivity {
         List<TCardapioSubGrupo> subgrupos = dbDao.listaSubGrupo(g); // pega sibgrupos de bebida // não pode listar pelo id pois é variável, tem que ser pelo cod do servidor api
 
         for(int i = 0 ; i < subgrupos.size(); i++){
-            List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i).getId_subgrupo());  // busca itens dos subgrupos
+            List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i));  // busca itens dos subgrupos
             dados.put(subgrupos.get(i).getNome(), itens);  // insere chave (= cabeçalho = subgrupo)
         }
          lstvListaSimples.setAdapter(new TBebidaAdapter(dados));
@@ -76,7 +76,12 @@ public class ListaSimplesActivity extends AppCompatActivity {
                     TPedidoItem item = new TPedidoItem();
                     item.setId_pedido(id_pedido);
                     item.setQuantidade(quant);
-                    item.setValor(this.dados.get(keys.get(i)).get(j).getCardapio_item().getValor());
+
+                    TCardapioItem cardapioItem = this.dados.get(keys.get(i)).get(j).getCardapio_item();
+
+                    item.setValor(cardapioItem.getValor());
+                    item.setGrupo(cardapioItem.getSubgrupo().getGrupo().getCod_grupo());
+                    item.setSubgrupo(cardapioItem.getSubgrupo().getCod_subgrupo());
                     id_item =  dbDao.inserirPedidoItem(item);
 
                     TPedidoDetalhe detalhe = new TPedidoDetalhe();
@@ -86,7 +91,6 @@ public class ListaSimplesActivity extends AppCompatActivity {
                     detalhe.setCardapio_item(c);
                     dbDao.inserirPedidoSubItem(detalhe);
 
-                    // Log.d(TAG, String.valueOf(this.dados.get(keys.get(i)).get(j).getQuantidade()));
                 }
             }
         }

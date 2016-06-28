@@ -1,8 +1,8 @@
 package com.pap.queropizza3.activities;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -17,9 +17,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.TextView;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.adapters.TCheckBebidaAdapter;
+import com.pap.queropizza3.dao.AppSQLDao;
+import com.pap.queropizza3.models.TPedidoItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CheckActivity extends AppCompatActivity {
 
@@ -61,8 +69,7 @@ public class CheckActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
         });
 
@@ -94,22 +101,16 @@ public class CheckActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        public PlaceholderFragment() {
+    public static class CheckPizzaFragment extends Fragment {
+
+        private static final String ARG_SECTION_NUMBER = "1";
+
+        public CheckPizzaFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static CheckPizzaFragment newInstance(int sectionNumber) {
+            CheckPizzaFragment fragment = new CheckPizzaFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -119,11 +120,67 @@ public class CheckActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_check, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
+            View rootView = inflater.inflate(R.layout.fragment_check_pizza, container, false);
+            ListView listView = (ExpandableListView) rootView.findViewById(R.id.lstvCheckoutPizza);
+
+            AppSQLDao dbDao;
+            dbDao = new AppSQLDao(getActivity().getApplicationContext());
+            List<TPedidoItem> itens = new ArrayList<TPedidoItem>();
+            itens = dbDao.listaTodosPedidoItem(1); // grupo pizzas
+
+ /*           if (itens.size() == 0){
+                Button btnFinalizarChk = (Button) rootView.findViewById(R.id.btnFinalizarChk);
+                btnFinalizarChk.setVisibility(View.GONE);
+            }
+*/
+            ArrayAdapter<TPedidoItem> adapter = new TCheckBebidaAdapter(getActivity(), 0, itens);
+            listView.setAdapter(adapter);
+
             return rootView;
         }
+    }
+
+    public static class CheckBebidaFragment extends Fragment {
+
+        private static final String ARG_SECTION_NUMBER = "2";
+
+        public CheckBebidaFragment() {
+        }
+
+        public static CheckBebidaFragment newInstance(int sectionNumber) {
+            CheckBebidaFragment fragment = new CheckBebidaFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_check_bebida, container, false);
+            ListView listView = (ListView) rootView.findViewById(R.id.lstvCheckoutBebida);
+
+            AppSQLDao dbDao;
+            dbDao = new AppSQLDao(getActivity().getApplicationContext());
+            List<TPedidoItem> itens = new ArrayList<TPedidoItem>();
+            itens = dbDao.listaTodosPedidoItem(2); // grupo bebidas
+
+ /*           if (itens.size() == 0){
+                Button btnFinalizarChk = (Button) rootView.findViewById(R.id.btnFinalizarChk);
+                btnFinalizarChk.setVisibility(View.GONE);
+            }
+*/
+            ArrayAdapter<TPedidoItem> adapter = new TCheckBebidaAdapter(getActivity(), 0, itens);
+            listView.setAdapter(adapter);
+
+            return rootView;
+        }
+    }
+
+    public void btnAdicionarItensClick(View view) {
+        Intent it = new Intent(this, GrupoActivity.class);
+        startActivity(it);
     }
 
     /**
@@ -140,24 +197,27 @@ public class CheckActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case 0:
+                    return CheckPizzaFragment.newInstance(position + 1);
+                case 1:
+                    return CheckBebidaFragment.newInstance(position + 2);
+            }
+            return null;
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "Pizzas";
                 case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
+                    return "Bebidas";
             }
             return null;
         }

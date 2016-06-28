@@ -22,15 +22,12 @@ public class GrupoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_grupo);
 
         btnGrupo1 = (Button)findViewById(R.id.btnGrupo1);
-//        btnGrupo2 = (Button)findViewById(R.id.btnGrupo2);
-//        btnGrupo3 = (Button)findViewById(R.id.btnGrupo3);
-//        btnGrupo4 = (Button)findViewById(R.id.btnGrupo4);
         btnGrupo5 = (Button)findViewById(R.id.btnGrupo5);
 
 
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
-        List<TPedidoItem> itens = dbDao.listaTodosPedidoItem();
+        List<TPedidoItem> itens = dbDao.listaTodosPedidoItem(null);
         if (itens.size() == 0){
             btnFinalizar = (Button)findViewById(R.id.btnFinalizar);
             btnFinalizar.setVisibility(View.GONE);
@@ -44,36 +41,15 @@ public class GrupoActivity extends AppCompatActivity {
         }
     }
 
-    public void btnGrupo2Click(View v){
-        {
-            Intent it = new Intent(this, GrupoActivity.class);
-            startActivity(it);
-        }
-    }
-
-    public void btnGrupo3Click(View v){
-        {
-            Intent it = new Intent(this, GrupoActivity.class);
-            startActivity(it);
-        }
-    }
-
-    public void btnGrupo4Click(View v){
-        {
-            Intent it = new Intent(this, GrupoActivity.class);
-            startActivity(it);
-        }
-    }
-
     public void btnGrupo5Click(View v){
         {
-            Intent it = new Intent(this, ListaSimplesActivity.class);
+            Intent it = new Intent(this, BebidaActivity.class);
             startActivity(it);
         }
     }
 
     public void btnFinalizarClick(View view) {
-        Intent it = new Intent(this, CheckoutActivity.class);
+        Intent it = new Intent(this, CheckActivity.class);
         startActivity(it);
     }
 
