@@ -20,7 +20,7 @@
         android:layout_below="@+id/txtvChkItem"
         android:layout_alignParentStart="true" />
 
-    <ImageButton
+    <!--ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/btnExcluirChk"
@@ -28,6 +28,6 @@
         android:background="@android:color/transparent"
         android:onClick="clkBtnExcluirChk"
         android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true" />
-
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp" /-->
 </RelativeLayout>

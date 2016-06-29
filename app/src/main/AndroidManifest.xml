@@ -18,6 +18,7 @@
         android:theme="@style/BaggioTheme">
         <activity
             android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"
             android:background="@drawable/fundo_vermelho_textura"
             android:label="Quero Baggio"
             android:theme="@style/AppTheme.NoActionBar">
@@ -27,22 +28,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.EstabelecimentoActivity" />
-        <activity android:name=".activities.RetiradaActivity" />
-        <activity android:name=".activities.ClienteActivity" />
-        <activity android:name=".activities.GrupoActivity" />
-        <activity android:name=".activities.TamanhoActivity" />
-        <activity android:name=".activities.BebidaActivity" />
-        <activity android:name=".activities.CheckoutActivity" />
+        <activity android:name=".activities.EstabelecimentoActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activities.RetiradaActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activities.ClienteActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activities.GrupoActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activities.TamanhoActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activities.BebidaActivity"  android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_login" />
-        <activity android:name=".activities.PizzaActivity" />
-        <activity android:name=".activities.ComplementoActivity" />
-        <activity android:name=".activities.EstabelecimentoDetalheActivity" />
-        <activity android:name=".activities.PagamentoActivity" />
+        <activity android:name=".activities.PizzaActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activities.ComplementoActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activities.EstabelecimentoDetalheActivity"  android:screenOrientation="portrait"/>
+        <activity android:name=".activities.PagamentoActivity"  android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.CheckActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_check"
             android:parentActivityName=".activities.GrupoActivity"
             android:theme="@style/BaggioTheme.NoActionBar">

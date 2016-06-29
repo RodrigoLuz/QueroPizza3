@@ -10,10 +10,8 @@ import com.pap.queropizza3.R;
 import com.pap.queropizza3.adapters.TPizzaAdapter;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCardapioGrupo;
-import com.pap.queropizza3.models.TCardapioItem;
 import com.pap.queropizza3.models.TCardapioSubGrupo;
 import com.pap.queropizza3.models.TItemTela;
-import com.pap.queropizza3.models.TPedidoItem;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,11 +23,18 @@ public class PizzaActivity extends AppCompatActivity {
 
     ExpandableListView lstvSabores;
     Map<String, List<TItemTela>> dados =  new HashMap<String, List<TItemTela>>();
+    int tamanho;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sabor);
+        setContentView(R.layout.activity_lista_pizzas);
+
+        if(getIntent().hasExtra("tamanho")) {
+            Bundle b = new Bundle();
+            b = getIntent().getExtras();
+            tamanho = b.getInt("tamanho");
+        }
 
         lstvSabores = (ExpandableListView)findViewById(R.id.lstvSabores);
 
@@ -55,6 +60,10 @@ public class PizzaActivity extends AppCompatActivity {
             bundleObject.putSerializable("saboresSelecionados", (Serializable) saboresSelecionados);
             it.putExtras(bundleObject);
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("tamanho", tamanho);
+        it.putExtras(bundle);
 
         startActivity(it);
     }

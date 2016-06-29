@@ -54,6 +54,9 @@ public class TamanhoActivity extends AppCompatActivity {
         }
 
         Intent it = new Intent(this, PizzaActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt("tamanho", tamanho);
+        it.putExtras(bundle);
         startActivity(it);
     }
 

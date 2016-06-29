@@ -15,6 +15,7 @@ public class TPedidoItem {
     String observacao;
     int grupo;
     int subgrupo;
+    String descricao;
     private List<TPedidoDetalhe> subitens;
 
     public int getId_pedido() {
@@ -79,6 +80,14 @@ public class TPedidoItem {
 
     public void setSubgrupo(int subgrupo) {
         this.subgrupo = subgrupo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public List<TPedidoDetalhe> getSubitens() {

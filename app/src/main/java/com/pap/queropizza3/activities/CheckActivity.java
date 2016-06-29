@@ -22,12 +22,18 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.adapters.TBebidaAdapter;
 import com.pap.queropizza3.adapters.TCheckBebidaAdapter;
+import com.pap.queropizza3.adapters.TCheckPizzaAdapter;
 import com.pap.queropizza3.dao.AppSQLDao;
+import com.pap.queropizza3.models.TItemTela;
+import com.pap.queropizza3.models.TPedidoDetalhe;
 import com.pap.queropizza3.models.TPedidoItem;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CheckActivity extends AppCompatActivity {
 
@@ -121,20 +127,22 @@ public class CheckActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_check_pizza, container, false);
-            ListView listView = (ExpandableListView) rootView.findViewById(R.id.lstvCheckoutPizza);
+
+            ExpandableListView lstvCheckoutPizza;
+            Map<String, List<TPedidoDetalhe>> dados =  new HashMap<String, List<TPedidoDetalhe>>();
+
+            lstvCheckoutPizza = (ExpandableListView) rootView.findViewById(R.id.lstvCheckoutPizza);
 
             AppSQLDao dbDao;
             dbDao = new AppSQLDao(getActivity().getApplicationContext());
             List<TPedidoItem> itens = new ArrayList<TPedidoItem>();
             itens = dbDao.listaTodosPedidoItem(1); // grupo pizzas
 
- /*           if (itens.size() == 0){
-                Button btnFinalizarChk = (Button) rootView.findViewById(R.id.btnFinalizarChk);
-                btnFinalizarChk.setVisibility(View.GONE);
+            for(int i = 0 ; i < itens.size(); i++){
+                dados.put(itens.get(i).getDescricao(), itens.get(i).getSubitens());  // insere chave (= cabeçalho = subgrupo)
             }
-*/
-            ArrayAdapter<TPedidoItem> adapter = new TCheckBebidaAdapter(getActivity(), 0, itens);
-            listView.setAdapter(adapter);
+
+            lstvCheckoutPizza.setAdapter(new TCheckPizzaAdapter(dados));
 
             return rootView;
         }

@@ -11,6 +11,7 @@
     android:layout_height="match_parent"
     android:id="@+id/lstvSabores"
     android:layout_gravity="center"
+    android:groupIndicator="@drawable/expandable_selector"
     android:layout_above="@+id/btnContinuarSab" />
 
 <Button

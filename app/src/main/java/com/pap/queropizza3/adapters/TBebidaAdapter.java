@@ -46,7 +46,7 @@ public class TBebidaAdapter extends BaseExpandableListAdapter {
         txt.setText(keys.get(groupPosition));
         txt.setTextColor(Color.WHITE);
         txt.setBackgroundColor(Color.rgb(178, 34, 34));
-        txt.setMinHeight(150);
+        txt.setMinHeight(130);
         return convertView;
     }
 

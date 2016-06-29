@@ -34,7 +34,7 @@ public class BebidaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_simples);
+        setContentView(R.layout.activity_lista_bebidas);
         lstvListaSimples = (ExpandableListView)findViewById(R.id.lstvListaSimples);
 
         AppSQLDao dbDao;

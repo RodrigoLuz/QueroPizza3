@@ -22,6 +22,7 @@ import java.util.Map;
 public class ComplementoActivity extends AppCompatActivity {
 
     List<TItemTela> dados = new ArrayList<TItemTela>();
+    int tamanho;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,12 @@ public class ComplementoActivity extends AppCompatActivity {
         if(getIntent().hasExtra("saboresSelecionados")) {
             Bundle bundleObject = getIntent().getExtras();
             dados = (ArrayList<TItemTela>) bundleObject.getSerializable("saboresSelecionados");
+        }
+
+        if(getIntent().hasExtra("tamanho")) {
+            Bundle b = new Bundle();
+            b = getIntent().getExtras();
+            tamanho = b.getInt("tamanho");
         }
     }
 
@@ -43,6 +50,24 @@ public class ComplementoActivity extends AppCompatActivity {
     public void gravarLista(List<TItemTela> dados) {
         this.dados = dados;
 
+        String desc = "Pizza ";
+        double valor = 0;
+
+        switch (tamanho) {
+            case 1:
+                desc += "gigante";
+                break;
+            case 2:
+                desc += "grande";
+                break;
+            case 3:
+                desc += "média";
+                break;
+            case 4:
+                desc += "pequena";
+                break;
+        }
+
         //Restaura id_pedido gravado
         SharedPreferences prefs = getSharedPreferences("pedido", MODE_PRIVATE);
         int id_pedido = prefs.getInt("id_pedido", -1);
@@ -51,21 +76,30 @@ public class ComplementoActivity extends AppCompatActivity {
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
 
-        for(int j = 0 ; j < dados.size(); j++) {
-            TPedidoItem item = new TPedidoItem();
-            item.setId_pedido(id_pedido);
-            item.setQuantidade(1);
+        TPedidoItem item = new TPedidoItem();
+        item.setId_pedido(id_pedido);
+        item.setQuantidade(1);
 
+        for(int j = 0 ; j < dados.size(); j++) {
+            TCardapioItem cardapioItem = dados.get(j).getCardapio_item();
+            if (cardapioItem.getValor() > valor){
+                valor = cardapioItem.getValor();
+            }
+        }
+
+        desc += String.format( " R$ %.2f", valor);
+        item.setDescricao(desc);
+
+        item.setValor(valor);  // verificar como gravar do maior valor dos itens, não poderá ser do cardápio
+        item.setGrupo(1);  // grupo pizza é definido como 1
+        item.setSubgrupo(0);  // para pizza não é necessário
+        id_item = dbDao.inserirPedidoItem(item);
+
+        for(int j = 0 ; j < dados.size(); j++) {
+            TPedidoDetalhe detalhe = new TPedidoDetalhe();
             TCardapioItem cardapioItem = dados.get(j).getCardapio_item();
 
-            item.setValor(cardapioItem.getValor());
-            item.setGrupo(cardapioItem.getSubgrupo().getGrupo().getCod_grupo());
-            item.setSubgrupo(cardapioItem.getSubgrupo().getCod_subgrupo());
-            id_item = dbDao.inserirPedidoItem(item);
-
-            TPedidoDetalhe detalhe = new TPedidoDetalhe();
             detalhe.setId_item(id_item);
-
             detalhe.setCardapio_item(cardapioItem);
             dbDao.inserirPedidoSubItem(detalhe);
         }

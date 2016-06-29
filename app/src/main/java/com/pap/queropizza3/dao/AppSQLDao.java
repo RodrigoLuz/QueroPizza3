@@ -296,6 +296,10 @@ public class AppSQLDao {
             item.setValor(c.getDouble(c.getColumnIndex(AppCriaTabelas.f_ped_item_valor)));
             item.setTamanho(c.getInt(c.getColumnIndex(AppCriaTabelas.f_ped_item_tamanho)));
             item.setObservacao(c.getString(c.getColumnIndex(AppCriaTabelas.f_ped_item_obs)));
+            item.setGrupo(c.getInt(c.getColumnIndex(AppCriaTabelas.f_ped_item_grupo)));
+            item.setSubgrupo(c.getInt(c.getColumnIndex(AppCriaTabelas.f_ped_item_subgrupo)));
+            item.setDescricao(c.getString(c.getColumnIndex(AppCriaTabelas.f_ped_item_descricao)));
+
             item.setSubitens(listaPedidoDetalhe(item));
             itens.add(item);
         }
@@ -420,6 +424,7 @@ public class AppSQLDao {
         cv.put(AppCriaTabelas.f_ped_item_obs, obj.getObservacao());
         cv.put(AppCriaTabelas.f_ped_item_grupo, obj.getGrupo());
         cv.put(AppCriaTabelas.f_ped_item_subgrupo, obj.getSubgrupo());
+        cv.put(AppCriaTabelas.f_ped_item_descricao, obj.getDescricao());
 
         int id = (int) db.insert(AppCriaTabelas.t_pedido_item, null, cv);
         if (id == -1) {
