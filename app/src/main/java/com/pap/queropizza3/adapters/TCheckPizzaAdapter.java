@@ -9,8 +9,10 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pap.queropizza3.R;
+import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TItemTela;
 import com.pap.queropizza3.models.TPedidoDetalhe;
 
@@ -20,6 +22,7 @@ import java.util.Map;
 
 /**
  * Created by Rodrigo on 28/06/2016.
+ * http://cyrilmottier.com/2011/11/23/listview-tips-tricks-4-add-several-clickable-areas/
  */
 public class TCheckPizzaAdapter extends BaseExpandableListAdapter {
 
@@ -36,21 +39,25 @@ public class TCheckPizzaAdapter extends BaseExpandableListAdapter {
 
     // sub categorias
     @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+    public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = View.inflate(parent.getContext(), R.layout.expandable_list_item_button, null);
-            Button btnExcluirPizza = (Button)convertView.findViewById(R.id.btnExcluirPizza);
+//            convertView = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_expandable_list_item_1, null);
+            ImageButton btnExcluirPizza = (ImageButton)convertView.findViewById(R.id.btnExcluirPizza);
+            btnExcluirPizza.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+ //                   AppSQLDao dbDao;
+ //                   dbDao = new AppSQLDao(view.getContext());
+ //                   dbDao.apagarPedidoItem(dados.get(groupPosition));
 
-//            btnExcluirPizza.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-                    // your code to add to the child list
-//                }
-//            });
+ //                   dados.remove(groupPosition); // substituir adapter por cursor ?
+ //                   notifyDataSetChanged();
 
-           // convertView = LayoutInflater.from(
-             //       parent.getContext()).inflate(
-               //     android.R.layout.simple_expandable_list_item_1, null);
+                    Toast.makeText(view.getContext(), "Excluindo", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
 
         TextView txt = (TextView) convertView.findViewById(android.R.id.text1);

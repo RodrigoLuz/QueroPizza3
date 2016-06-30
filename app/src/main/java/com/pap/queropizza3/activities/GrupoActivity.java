@@ -14,7 +14,7 @@ import java.util.List;
 
 public class GrupoActivity extends AppCompatActivity {
 
-    Button btnGrupo1, btnGrupo2, btnGrupo3, btnGrupo4, btnGrupo5, btnFinalizar;
+    Button btnGrupo1, btnGrupo5, btnFinalizar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
