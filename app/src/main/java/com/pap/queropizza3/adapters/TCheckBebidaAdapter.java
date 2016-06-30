@@ -57,7 +57,7 @@ public class TCheckBebidaAdapter extends ArrayAdapter<TPedidoItem> {
 
                     AppSQLDao dbDao;
                     dbDao = new AppSQLDao(context);
-                    dbDao.apagarPedidoItem(list.get(position));
+                    dbDao.apagarPedidoItem(list.get(position).getId_item());
 
                     list.remove(position); // substituir adapter por cursor ?
                     notifyDataSetChanged();

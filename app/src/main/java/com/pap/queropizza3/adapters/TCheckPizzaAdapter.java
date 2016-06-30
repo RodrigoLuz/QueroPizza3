@@ -42,19 +42,24 @@ public class TCheckPizzaAdapter extends BaseExpandableListAdapter {
     public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = View.inflate(parent.getContext(), R.layout.expandable_list_item_button, null);
-//            convertView = LayoutInflater.from(parent.getContext()).inflate(android.R.layout.simple_expandable_list_item_1, null);
             ImageButton btnExcluirPizza = (ImageButton)convertView.findViewById(R.id.btnExcluirPizza);
             btnExcluirPizza.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
- //                   AppSQLDao dbDao;
- //                   dbDao = new AppSQLDao(view.getContext());
- //                   dbDao.apagarPedidoItem(dados.get(groupPosition));
+                    TPedidoDetalhe det = (TPedidoDetalhe) getChild(groupPosition, 0); // pega o primeiro child
 
- //                   dados.remove(groupPosition); // substituir adapter por cursor ?
- //                   notifyDataSetChanged();
+                    String group = (String) getGroup(groupPosition);
+                    Toast.makeText(view.getContext(), group + " - " + det.getCardapio_item().getNome(), Toast.LENGTH_SHORT).show();
 
-                    Toast.makeText(view.getContext(), "Excluindo", Toast.LENGTH_SHORT).show();
+
+                    AppSQLDao dbDao;
+                    dbDao = new AppSQLDao(view.getContext());
+                    dbDao.apagarPedidoItem(det.getId_item());
+
+                    dados.remove(getGroup(groupPosition)); // substituir adapter por cursor ?
+                    notifyDataSetChanged();
+
+                    //Toast.makeText(view.getContext(), group, Toast.LENGTH_SHORT).show();
                 }
             });
 

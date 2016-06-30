@@ -464,10 +464,10 @@ public class AppSQLDao {
 //        db.close();
     }
 
-    public void apagarPedidoItem(TPedidoItem obj){
+    public void apagarPedidoItem(int item_id){
         SQLiteDatabase db = helper.getWritableDatabase();
         String sql = AppCriaTabelas.f_ped_item_id +" = ?";
-        String[] argumentos = new String[]{ String.valueOf(obj.getId_item()) };
+        String[] argumentos = new String[]{ String.valueOf(item_id) };
         db.delete(AppCriaTabelas.t_pedido_item, sql, argumentos);
 //        db.close();
     }
