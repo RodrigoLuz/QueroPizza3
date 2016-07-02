@@ -5,6 +5,8 @@
 // https://www.sitepoint.com/better-user-interfaces-android-action-bar/
 // https://material.google.com/components/bottom-navigation.html#bottom-navigation-specs
 // https://material.google.com/layout/structure.html#
+// https://developer.android.com/training/material/theme.html?hl=pt-br
+// https://developer.android.com/design/patterns/actionbar.html
 
 package com.pap.queropizza3.activities;
 

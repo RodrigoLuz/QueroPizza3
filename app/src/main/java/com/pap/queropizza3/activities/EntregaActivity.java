@@ -1,18 +1,23 @@
+// https://www.learn2crack.com/2013/10/android-custom-listview-images-text-example.html
+
 package com.pap.queropizza3.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,25 +38,21 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/*
-Seleciona a forma de retirada (delivery ou balcão)
-Informa o valor de taxa de entrega, buscando no back, para delivery
- */
+public class EntregaActivity extends AppCompatActivity {
 
-public class RetiradaActivity extends AppCompatActivity {
-
-    Button btnAvancarRetirada;
-    ProgressDialog progress;
-    String url;
-    Double taxa, distancia, tempo;
-    RadioButton rdoDelivery, rdoBalcao;
-    RadioGroup rgRetirada;
-    TextView txtvInfoDelivery;
+    ListView list;
+    List<String> entrega = new ArrayList<String>();// {"Delivery", "Balcão"};
+    List<String> info = new ArrayList<String>();// {"Delivery", "Balcão"};
+    List<Integer> imageId = new ArrayList<>(); //  {R.drawable.ic_action_mais, R.drawable.ic_action_menos};
     String urlWeb = "queropizza.azurewebsites.net";
     AppSQLDao dbDao;
+    Double taxa = 0.00, distancia, tempo;
+    ProgressDialog progress;
+    CustomList adapter;
 
     Handler handler = new Handler(){
         @Override
@@ -63,10 +64,11 @@ public class RetiradaActivity extends AppCompatActivity {
 
             switch (msg.what){
                 case 1:
-                      rdoDelivery.setText("Delivery (taxa de entrega R$ " + String.format( "%.2f", taxa) + ")");
+                    info.set(1, "Taxa de entrega: R$" + String.format( "%.2f", taxa) + ",  tempo estimado: " + Math.round(tempo / 60) + "min") ;
+                    adapter.notifyDataSetChanged();
                     break;
                 case 2:
-                    Toast.makeText(RetiradaActivity.this, "Erro de conexão", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EntregaActivity.this, "Erro de conexão", Toast.LENGTH_LONG).show();
                     break;
                 default:
                     break;
@@ -74,29 +76,79 @@ public class RetiradaActivity extends AppCompatActivity {
         }
     };
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_retirada);
-        btnAvancarRetirada = (Button)findViewById(R.id.btnAvancarRetirada);
-        rdoDelivery = (RadioButton)findViewById(R.id.rdoDelivery);
-        rdoBalcao = (RadioButton)findViewById(R.id.rdoBalcao);
-        rgRetirada = (RadioGroup)findViewById(R.id.rgRetirada);
-        txtvInfoDelivery = (TextView)findViewById(R.id.txtvInfoDelivery);
+        setContentView(R.layout.activity_entrega);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Forma de entrega");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         dbDao = new AppSQLDao(getApplicationContext());
-        Bundle b = new Bundle();
 
+        adapter = new CustomList(this, entrega, info, imageId);
+        list=(ListView)findViewById(R.id.lstvEntrega);
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//              Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        Bundle b = new Bundle();
         if(getIntent().hasExtra("delivery")) {
             b = getIntent().getExtras();
         }
 
         if (b.getBoolean("delivery")){
             buscarValorEntrega("", buscarEnderecoUsuario());
-            txtvInfoDelivery.setVisibility(View.GONE);
+            entrega.add("Balcão");
+            imageId.add(R.drawable.pizza_icon);
+
+            entrega.add("Delivery");
+            imageId.add(R.drawable.pizza_delivery);
+
+            info.add("");
+            info.add("");
+
         } else {
-            rdoDelivery.setVisibility(View.INVISIBLE);
-            rdoBalcao.setChecked(true);
+            entrega.add("Balcão");
+            imageId.add(R.drawable.pizza_icon);
+            info.add("(Delivery indisponível para esta unidade no momento)");
+        }
+
+    }
+
+    public class CustomList extends ArrayAdapter<String>{
+
+        private final Activity context;
+        private final List<String> entrega;
+        private final List<String> info;
+        private final List<Integer> imageId;
+        public CustomList(Activity context, List<String> entrega, List<String> info, List<Integer> imageId) {
+            super(context, R.layout.layout_item_entrega, entrega);
+            this.context = context;
+            this.entrega = entrega;
+            this.info = info;
+            this.imageId = imageId;
+
+        }
+        @Override
+        public View getView(int position, View view, ViewGroup parent) {
+            LayoutInflater inflater = context.getLayoutInflater();
+            View rowView= inflater.inflate(R.layout.layout_item_entrega, null, true);
+
+            TextView txtvNome = (TextView) rowView.findViewById(R.id.txtvNome);
+            TextView txtvInfo1 = (TextView) rowView.findViewById(R.id.txtvInfo1);
+            ImageView imgView = (ImageView) rowView.findViewById(R.id.imgView);
+
+            txtvNome.setText(entrega.get(position));
+            txtvInfo1.setText(info.get(position));
+            imgView.setImageResource(imageId.get(position));
+            return rowView;
         }
     }
 
@@ -117,31 +169,11 @@ public class RetiradaActivity extends AppCompatActivity {
         return input == null ? "" : input;
     }
 
-    public void btnAvancarRetiradaClick(View v){
-        {
-            // limpa banco - pedidos
-            dbDao.limparPedido();
-            criarPedido();
-
-            Intent it = new Intent(this, GrupoActivity.class);
-            startActivity(it);
-        }
-    }
-
-    public void criarPedido(){
-        int id = rgRetirada.getCheckedRadioButtonId();
-        int d;
-        if (id == R.id.rdoBalcao){
-            d = 0; // balcão
-        }
-        else{
-            d = 1; // delivery
-        }
-
+    public void criarPedido(int tipo){
         TCliente c = dbDao.listaCliente().get(0);
 
         TPedido p = new TPedido();
-        p.setDelivery(d);
+        p.setDelivery(tipo);  // delivery = 1
         p.setTaxa(taxa);
         p.setCliente(c);
 
@@ -158,7 +190,7 @@ public class RetiradaActivity extends AppCompatActivity {
 
     // busca valor da entrega no ws ApiEntrega
     public void buscarValorEntrega(final String origins, final String destinations) {
-        progress = new ProgressDialog(RetiradaActivity.this);
+        progress = new ProgressDialog(this);
         progress.setTitle("Calculando taxa de entrega");
         progress.setMessage("Aguarde");
         progress.show();
@@ -174,7 +206,7 @@ public class RetiradaActivity extends AppCompatActivity {
                 } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
-                url = uri.toASCIIString();
+                final String url = uri.toASCIIString();
                 HttpGet get = new HttpGet(url);
 
                 try {
@@ -205,8 +237,4 @@ public class RetiradaActivity extends AppCompatActivity {
         trd.start();
     }
 
-
 }
-
-
-

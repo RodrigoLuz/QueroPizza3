@@ -23,4 +23,5 @@
         completions."
     </string>
     <string name="title_activity_check">Confirmar pedido</string>
+    <string name="title_activity_entrega">EntregaActivity</string>
 </resources>

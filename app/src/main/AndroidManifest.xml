@@ -18,39 +18,68 @@
         android:theme="@style/BaggioTheme">
         <activity
             android:name=".activities.MainActivity"
-            android:screenOrientation="portrait"
             android:background="@drawable/fundo_vermelho_textura"
             android:label="Quero Baggio"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:screenOrientation="portrait"
+            android:theme="@style/BaggioTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.EstabelecimentoActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".activities.RetiradaActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".activities.ClienteActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".activities.GrupoActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".activities.TamanhoActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".activities.BebidaActivity"  android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.EstabelecimentoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RetiradaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ClienteActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.GrupoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.TamanhoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.BebidaActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".activities.PizzaActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".activities.ComplementoActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".activities.EstabelecimentoDetalheActivity"  android:screenOrientation="portrait"/>
-        <activity android:name=".activities.PagamentoActivity"  android:screenOrientation="portrait"/>
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.PizzaActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ComplementoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EstabelecimentoDetalheActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.PagamentoActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.CheckActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_check"
             android:parentActivityName=".activities.GrupoActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/BaggioTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pap.queropizza3.activities.GrupoActivity" />
+        </activity>
+        <activity
+            android:name=".activities.EntregaActivity"
+            android:label="@string/title_activity_entrega"
+            android:parentActivityName=".activities.EstabelecimentoActivity"
+            android:theme="@style/BaggioTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pap.queropizza3.activities.EstabelecimentoActivity" />
         </activity>
     </application>
 

@@ -106,7 +106,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                    buscarCardapio(); // busca cardápio do estabelecimento selecionado e grava no banco
-                    Intent it = new Intent(EstabelecimentoActivity.this, RetiradaActivity.class);
+                    Intent it = new Intent(EstabelecimentoActivity.this, EntregaActivity.class);
                     TEstabelecimento eClick = getItem(position);
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("delivery", eClick.getDelivery());
