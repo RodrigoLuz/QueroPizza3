@@ -10,7 +10,8 @@
         android:text="Item"
         android:id="@+id/txtvChkItem"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
         android:layout_width="wrap_content"

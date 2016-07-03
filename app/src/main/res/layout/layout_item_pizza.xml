@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/chkbSelecao"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
     <TextView
         android:padding="1dip"
         android:layout_marginLeft="5dip"
@@ -39,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/txtvIngredientes"
         android:layout_alignParentEnd="true"
-        android:textStyle="bold" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
 

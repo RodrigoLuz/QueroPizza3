@@ -4,8 +4,10 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,6 +29,26 @@ public class PagamentoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pagamento);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppSQLDao dbDao;
+                dbDao = new AppSQLDao(getApplicationContext());
+                SharedPreferences prefs = getSharedPreferences("pedido", MODE_PRIVATE);
+                int id_pedido = prefs.getInt("id_pedido", -1); // se retornar -1 tem algo errado
+                TPedido p;
+                p = dbDao.buscarPedido(id_pedido);
+
+                EnviarPedido e = new EnviarPedido();
+                e.envia(p, getBaseContext());
+            }
+        });
+
     }
 
     private boolean checkIfAppIsInstalled() {
@@ -57,19 +79,6 @@ public class PagamentoActivity extends AppCompatActivity {
         }else{
             Toast.makeText(getApplicationContext(), "Aplicativo PagSeguro não instalado", Toast.LENGTH_SHORT).show();
         }
-    }
-
-
-    public void btnFinalizarChkClick(View view) {
-        AppSQLDao dbDao;
-        dbDao = new AppSQLDao(getApplicationContext());
-        SharedPreferences prefs = getSharedPreferences("pedido", MODE_PRIVATE);
-        int id_pedido = prefs.getInt("id_pedido", -1); // se retornar -1 tem algo errado
-        TPedido p;
-        p = dbDao.buscarPedido(id_pedido);
-
-        EnviarPedido e = new EnviarPedido();
-        e.envia(p, getBaseContext());
     }
 
 }

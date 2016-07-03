@@ -45,8 +45,8 @@ public class TPizzaAdapter extends BaseExpandableListAdapter {
         TextView txt = (TextView) convertView.findViewById(android.R.id.text1);
         txt.setText(keys.get(groupPosition));
         txt.setTextColor(Color.WHITE);
-        txt.setBackgroundColor(Color.rgb(178, 34, 34));
-        txt.setMinHeight(150);
+        txt.setBackgroundColor(Color.rgb(0, 102, 51));
+        txt.setMinHeight(130);
         return convertView;
     }
 

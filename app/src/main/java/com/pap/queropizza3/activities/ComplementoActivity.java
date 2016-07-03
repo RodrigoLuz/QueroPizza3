@@ -2,22 +2,19 @@ package com.pap.queropizza3.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.dao.AppSQLDao;
 import com.pap.queropizza3.models.TCardapioItem;
-import com.pap.queropizza3.models.TCliente;
 import com.pap.queropizza3.models.TItemTela;
 import com.pap.queropizza3.models.TPedidoDetalhe;
 import com.pap.queropizza3.models.TPedidoItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ComplementoActivity extends AppCompatActivity {
 
@@ -93,6 +90,7 @@ public class ComplementoActivity extends AppCompatActivity {
         item.setValor(valor);  // verificar como gravar do maior valor dos itens, não poderá ser do cardápio
         item.setGrupo(1);  // grupo pizza é definido como 1
         item.setSubgrupo(0);  // para pizza não é necessário
+        item.setTamanho(tamanho);
         id_item = dbDao.inserirPedidoItem(item);
 
         for(int j = 0 ; j < dados.size(); j++) {

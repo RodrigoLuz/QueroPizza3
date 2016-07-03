@@ -132,23 +132,23 @@ public class AppSQLDao {
         sql += " WHERE "+ AppCriaTabelas.f_item_id +" = ?";
         argumentos = new String[]{ String.valueOf(id_item) };
         Cursor c = db.rawQuery(sql, argumentos);
+        TCardapioItem item = new TCardapioItem();
+
         if(c!=null){
             c.moveToFirst();
+
+            int cod_item = c.getInt(c.getColumnIndex(AppCriaTabelas.f_item_cod_item));
+            String nome = c.getString(c.getColumnIndex(AppCriaTabelas.f_item_nome));
+            String descricao = c.getString(c.getColumnIndex(AppCriaTabelas.f_item_descricao));
+            double valor = c.getFloat(c.getColumnIndex(AppCriaTabelas.f_item_valor));
+
+            item.setId_item(id_item);
+            item.setCod_item(cod_item);
+            item.setNome(nome);
+            item.setDescricao(descricao);
+            item.setValor(valor);
         }
-
-//        int cod_item = c.getInt(c.getColumnIndex(AppCriaTabelas.f_item_cod_item));
-        String nome = c.getString(c.getColumnIndex(AppCriaTabelas.f_item_nome));
-        String descricao = c.getString(c.getColumnIndex(AppCriaTabelas.f_item_descricao));
-        double valor = c.getFloat(c.getColumnIndex(AppCriaTabelas.f_item_valor));
-
-        TCardapioItem item = new TCardapioItem();
-        item.setId_item(id_item);
-        item.setNome(nome);
-        item.setDescricao(descricao);
-        item.setValor(valor);
         c.close();
-//        db.close();
-
         return item;
     }
 
@@ -311,7 +311,7 @@ public class AppSQLDao {
     public List<TPedidoDetalhe> listaPedidoDetalhe (TPedidoItem pedidoitem) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
-        String sql = "SELECT * FROM "+ AppCriaTabelas.t_pedido_detalhe;
+        String sql = "SELECT * FROM " + AppCriaTabelas.t_pedido_detalhe;
         String[] argumentos = null;
         sql += " WHERE "+ AppCriaTabelas.f_ped_detalhe_ped_itens_id +" = ?";
         argumentos = new String[]{ String.valueOf(pedidoitem.getId_item()) };
@@ -323,6 +323,7 @@ public class AppSQLDao {
             TPedidoDetalhe item = new TPedidoDetalhe();
             item.setId_detalhe(c.getInt(c.getColumnIndex(AppCriaTabelas.f_ped_detalhe_id)));
             item.setId_item(c.getInt(c.getColumnIndex(AppCriaTabelas.f_ped_detalhe_ped_itens_id)));
+
             int id_item = c.getInt(c.getColumnIndex(AppCriaTabelas.f_ped_detalhe_cardapio_id));
             item.setCardapio_item(buscarCardapioItem(id_item));
             itens.add(item);

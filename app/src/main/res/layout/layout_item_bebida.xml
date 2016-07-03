@@ -6,7 +6,6 @@
 
     <TextView
         android:padding="1dip"
-        android:textStyle="normal"
         android:id="@+id/txtvQuant"
         android:text="0"
         android:layout_marginLeft="2dip"
@@ -17,8 +16,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentStart="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="24dp"
-        android:textColor="#ff0000" />
+        android:textColor="#006633" />
 
     <TextView
         android:padding="1dip"

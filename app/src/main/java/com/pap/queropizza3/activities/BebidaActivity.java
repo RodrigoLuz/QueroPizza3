@@ -3,7 +3,9 @@ package com.pap.queropizza3.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ExpandableListView;
 
@@ -35,6 +37,20 @@ public class BebidaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_bebidas);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gravarLista(dados);
+                Intent it = new Intent(BebidaActivity.this, GrupoActivity.class);
+                startActivity(it);
+            }
+        });
+
         lstvListaSimples = (ExpandableListView)findViewById(R.id.lstvListaSimples);
 
         AppSQLDao dbDao;
@@ -51,9 +67,7 @@ public class BebidaActivity extends AppCompatActivity {
     }
 
     public void btnContinuarClick(View view) {
-        gravarLista(dados);
-        Intent it = new Intent(this, GrupoActivity.class);
-        startActivity(it);
+
     }
 
     public void gravarLista(Map<String, List<TItemTela>> dados) {

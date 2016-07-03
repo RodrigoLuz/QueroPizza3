@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@drawable/backrepeat"
-    tools:context=".activities.PizzaActivity">
+    tools:context="com.pap.queropizza3.activities.PizzaActivity">
 
-<ExpandableListView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/lstvSabores"
-    android:layout_gravity="center"
-    android:groupIndicator="@drawable/expandable_selector"
-    android:layout_above="@+id/btnContinuarSab" />
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/BaggioTheme.AppBarOverlay">
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Continuar"
-    android:id="@+id/btnContinuarSab"
-    android:onClick="btnContinuarSabClick"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentEnd="true" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@drawable/fundo_vermelho_textura"
+            app:popupTheme="@style/BaggioTheme.PopupOverlay" />
 
-</RelativeLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_lista_pizzas" />
+
+</android.support.design.widget.CoordinatorLayout>
+

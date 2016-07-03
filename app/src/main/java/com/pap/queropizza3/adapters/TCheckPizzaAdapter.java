@@ -6,14 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.dao.AppSQLDao;
-import com.pap.queropizza3.models.TItemTela;
 import com.pap.queropizza3.models.TPedidoDetalhe;
 
 import java.util.ArrayList;
@@ -48,8 +45,8 @@ public class TCheckPizzaAdapter extends BaseExpandableListAdapter {
                 public void onClick(View view) {
                     TPedidoDetalhe det = (TPedidoDetalhe) getChild(groupPosition, 0); // pega o primeiro child
 
-                    String group = (String) getGroup(groupPosition);
-                    Toast.makeText(view.getContext(), group + " - " + det.getCardapio_item().getNome(), Toast.LENGTH_SHORT).show();
+//                    String group = (String) getGroup(groupPosition);
+//                    Toast.makeText(view.getContext(), group + " - " + det.getCardapio_item().getNome(), Toast.LENGTH_SHORT).show();
 
 
                     AppSQLDao dbDao;
@@ -68,7 +65,7 @@ public class TCheckPizzaAdapter extends BaseExpandableListAdapter {
         TextView txt = (TextView) convertView.findViewById(android.R.id.text1);
         txt.setText(keys.get(groupPosition));
         txt.setTextColor(Color.WHITE);
-        txt.setBackgroundColor(Color.rgb(178, 34, 34));
+        txt.setBackgroundColor(Color.rgb(0, 102, 51));
         txt.setMinHeight(130);
         return convertView;
     }

@@ -4,6 +4,7 @@ package com.pap.queropizza3.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.http.AndroidHttpClient;
 import android.os.Bundle;
@@ -46,7 +47,7 @@ public class EntregaActivity extends AppCompatActivity {
 
     ListView list;
     List<String> entrega = new ArrayList<String>();// {"Delivery", "Balcão"};
-    List<String> info = new ArrayList<String>();// {"Delivery", "Balcão"};
+    List<String> info = new ArrayList<String>();
     List<Integer> imageId = new ArrayList<>(); //  {R.drawable.ic_action_mais, R.drawable.ic_action_menos};
     String urlWeb = "queropizza.azurewebsites.net";
     AppSQLDao dbDao;
@@ -64,7 +65,8 @@ public class EntregaActivity extends AppCompatActivity {
 
             switch (msg.what){
                 case 1:
-                    info.set(1, "Taxa de entrega: R$" + String.format( "%.2f", taxa) + ",  tempo estimado: " + Math.round(tempo / 60) + "min") ;
+                    info.set(1, "Taxa de entrega: R$" + String.format( "%.2f", taxa) + "\n"
+                              + "Tempo estimado: " + Math.round(tempo / 60) + "min") ;
                     adapter.notifyDataSetChanged();
                     break;
                 case 2:
@@ -81,9 +83,9 @@ public class EntregaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_entrega);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("Forma de entrega");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         dbDao = new AppSQLDao(getApplicationContext());
 
         adapter = new CustomList(this, entrega, info, imageId);
@@ -93,7 +95,17 @@ public class EntregaActivity extends AppCompatActivity {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//              Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+                // leva em consideração que balcão sempre é posição ZERO
+                // limpa banco - pedidos
+                dbDao.limparPedido();
+                if (position == 0){
+                    criarPedido(0);
+                } else {
+                    criarPedido(1);
+                }
+
+                Intent it = new Intent(EntregaActivity.this, GrupoActivity.class);
+                startActivity(it);
 
             }
         });
@@ -107,11 +119,10 @@ public class EntregaActivity extends AppCompatActivity {
             buscarValorEntrega("", buscarEnderecoUsuario());
             entrega.add("Balcão");
             imageId.add(R.drawable.pizza_icon);
+            info.add("");
 
             entrega.add("Delivery");
             imageId.add(R.drawable.pizza_delivery);
-
-            info.add("");
             info.add("");
 
         } else {

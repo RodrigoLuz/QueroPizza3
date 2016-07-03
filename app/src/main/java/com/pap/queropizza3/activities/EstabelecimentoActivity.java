@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,14 +69,18 @@ public class EstabelecimentoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_estabelecimento);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         dbDao = new AppSQLDao(getApplicationContext());
+
         buscarCardapio();
         buscarEstabelecimentos();
     }
 
     private void montaLista() {
-        setContentView(R.layout.activity_estabelecimento);
-
         // Create the adapter to convert the array to views
         MyAdapter adapter = new MyAdapter(this, estabelecimentos);
         // Attach the adapter to a ListView

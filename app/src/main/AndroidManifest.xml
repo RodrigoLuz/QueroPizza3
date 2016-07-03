@@ -30,38 +30,94 @@
         </activity>
         <activity
             android:name=".activities.EstabelecimentoActivity"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_activity_estabelecimento"
+            android:parentActivityName=".activities.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaggioTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pap.queropizza3.activities.MainActivity" />
+        </activity>
         <activity
-            android:name=".activities.RetiradaActivity"
-            android:screenOrientation="portrait" />
+            android:name=".activities.EntregaActivity"
+            android:label="@string/title_activity_entrega"
+            android:parentActivityName=".activities.EstabelecimentoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaggioTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pap.queropizza3.activities.EstabelecimentoActivity" />
+        </activity>
         <activity
             android:name=".activities.ClienteActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.GrupoActivity"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_activity_grupo"
+            android:parentActivityName=".activities.EntregaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaggioTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pap.queropizza3.activities.EntregaActivity" />
+        </activity>
         <activity
             android:name=".activities.TamanhoActivity"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_activity_tamanho"
+            android:parentActivityName=".activities.PizzaActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaggioTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pap.queropizza3.activities.PizzaActivity" />
+        </activity>
         <activity
             android:name=".activities.BebidaActivity"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_activity_bebida"
+            android:parentActivityName=".activities.GrupoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaggioTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pap.queropizza3.activities.GrupoActivity" />
+        </activity>
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.PizzaActivity"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_activity_pizza"
+            android:parentActivityName=".activities.GrupoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaggioTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pap.queropizza3.activities.GrupoActivity" />
+        </activity>
         <activity
             android:name=".activities.ComplementoActivity"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_activity_complemento"
+            android:parentActivityName=".activities.GrupoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaggioTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pap.queropizza3.activities.GrupoActivity" />
+        </activity>
         <activity
             android:name=".activities.EstabelecimentoDetalheActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.PagamentoActivity"
-            android:screenOrientation="portrait" />
+            android:label="@string/title_activity_pagamento"
+            android:parentActivityName=".activities.CheckActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BaggioTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.pap.queropizza3.activities.CheckActivity" />
+        </activity>
         <activity
             android:name=".activities.CheckActivity"
             android:label="@string/title_activity_check"
@@ -72,15 +128,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.pap.queropizza3.activities.GrupoActivity" />
         </activity>
-        <activity
-            android:name=".activities.EntregaActivity"
-            android:label="@string/title_activity_entrega"
-            android:parentActivityName=".activities.EstabelecimentoActivity"
-            android:theme="@style/BaggioTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.pap.queropizza3.activities.EstabelecimentoActivity" />
-        </activity>
+        <activity android:name=".activities.CalculaPizzaActivity"></activity>
     </application>
 
 </manifest>

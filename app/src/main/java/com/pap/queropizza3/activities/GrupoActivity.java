@@ -2,7 +2,9 @@ package com.pap.queropizza3.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
@@ -20,18 +22,30 @@ public class GrupoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grupo);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btnGrupo1 = (Button)findViewById(R.id.btnGrupo1);
-        btnGrupo5 = (Button)findViewById(R.id.btnGrupo5);
-
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         AppSQLDao dbDao;
         dbDao = new AppSQLDao(getApplicationContext());
         List<TPedidoItem> itens = dbDao.listaTodosPedidoItem(null);
         if (itens.size() == 0){
-            btnFinalizar = (Button)findViewById(R.id.btnFinalizar);
-            btnFinalizar.setVisibility(View.GONE);
+            fab.setVisibility(View.INVISIBLE);
         }
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(GrupoActivity.this, CheckActivity.class);
+                startActivity(it);
+            }
+        });
+
+        btnGrupo1 = (Button)findViewById(R.id.btnGrupo1);
+        btnGrupo5 = (Button)findViewById(R.id.btnGrupo5);
+
     }
 
     public void btnGrupo1Click(View v){
@@ -46,11 +60,6 @@ public class GrupoActivity extends AppCompatActivity {
             Intent it = new Intent(this, BebidaActivity.class);
             startActivity(it);
         }
-    }
-
-    public void btnFinalizarClick(View view) {
-        Intent it = new Intent(this, CheckActivity.class);
-        startActivity(it);
     }
 
 }
