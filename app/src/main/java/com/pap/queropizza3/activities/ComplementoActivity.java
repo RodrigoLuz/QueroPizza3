@@ -3,7 +3,9 @@ package com.pap.queropizza3.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.pap.queropizza3.R;
@@ -25,6 +27,19 @@ public class ComplementoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complemento);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gravarLista(dados);
+                Intent it = new Intent(ComplementoActivity.this, GrupoActivity.class);
+                startActivity(it);
+            }
+        });
 
         if(getIntent().hasExtra("saboresSelecionados")) {
             Bundle bundleObject = getIntent().getExtras();
@@ -38,11 +53,6 @@ public class ComplementoActivity extends AppCompatActivity {
         }
     }
 
-    public void btnContinuarComplClick(View view) {
-        gravarLista(dados);
-        Intent it = new Intent(this, GrupoActivity.class);
-        startActivity(it);
-    }
 
     public void gravarLista(List<TItemTela> dados) {
         this.dados = dados;

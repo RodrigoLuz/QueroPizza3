@@ -1,5 +1,6 @@
 package com.pap.queropizza3.activities;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +9,13 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pap.queropizza3.R;
@@ -17,6 +24,8 @@ import com.pap.queropizza3.models.TPedido;
 import com.pap.queropizza3.utils.EnviarPedido;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PagamentoActivity extends AppCompatActivity {
 
@@ -24,6 +33,12 @@ public class PagamentoActivity extends AppCompatActivity {
     private static final String PAG_SEGURO_CLASS_NAME = "br.com.uol.ps.app.MainActivity";
     private static final String FLAG_APP_PAYMENT_VALUE = "FLAG_APP_PAYMENT_VALUE";
     private static final int REQUEST_CODE = 3016; // Pode ser o número de sua escolha
+    CustomList adapter;
+
+    ListView list;
+    List<String> entrega = new ArrayList<String>();// {"Delivery", "Balcão"};
+    List<Integer> imageId = new ArrayList<>(); //  {R.drawable.ic_action_mais, R.drawable.ic_action_menos};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +47,26 @@ public class PagamentoActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        entrega.add("Dinheiro");
+        imageId.add(R.drawable.pizza_icon);
+
+        entrega.add("Mastercard - Crédito");
+        imageId.add(R.drawable.pizza_icon);
+
+        entrega.add("Mastercard - Débito");
+        imageId.add(R.drawable.pizza_icon);
+
+        entrega.add("Visa - Crédito");
+        imageId.add(R.drawable.pizza_icon);
+
+        entrega.add("Pay-Pal");
+        imageId.add(R.drawable.pizza_icon);
+
+
+        adapter = new CustomList(this, entrega, imageId);
+        list=(ListView)findViewById(R.id.lstvEntrega);
+        list.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,5 +115,32 @@ public class PagamentoActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Aplicativo PagSeguro não instalado", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public class CustomList extends ArrayAdapter<String> {
+
+        private final Activity context;
+        private final List<String> entrega;
+        private final List<Integer> imageId;
+        public CustomList(Activity context, List<String> entrega, List<Integer> imageId) {
+            super(context, R.layout.layout_item_entrega, entrega);
+            this.context = context;
+            this.entrega = entrega;
+            this.imageId = imageId;
+
+        }
+        @Override
+        public View getView(int position, View view, ViewGroup parent) {
+            LayoutInflater inflater = context.getLayoutInflater();
+            View rowView= inflater.inflate(R.layout.layout_item_pagamento, null, true);
+
+            TextView txtvNome = (TextView) rowView.findViewById(R.id.txtvNome);
+            ImageView imgView = (ImageView) rowView.findViewById(R.id.imgView);
+
+            txtvNome.setText(entrega.get(position));
+            imgView.setImageResource(imageId.get(position));
+            return rowView;
+        }
+    }
+
 
 }
