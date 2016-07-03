@@ -13,17 +13,7 @@
         android:layout_height="match_parent"
         android:id="@+id/lstvSabores"
         android:layout_gravity="center"
-        android:groupIndicator="@drawable/expandable_selector"
-        android:layout_above="@+id/btnContinuarSab" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Continuar"
-        android:id="@+id/btnContinuarSab"
-        android:onClick="btnContinuarSabClick"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:groupIndicator="@drawable/expandable_selector"/>
 
 </RelativeLayout>
 

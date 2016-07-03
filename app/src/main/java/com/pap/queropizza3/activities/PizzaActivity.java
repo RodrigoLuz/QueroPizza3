@@ -2,6 +2,7 @@ package com.pap.queropizza3.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -34,6 +35,27 @@ public class PizzaActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(PizzaActivity.this, ComplementoActivity.class);
+
+                List<TItemTela> saboresSelecionados = gravarLista(dados);
+                if (saboresSelecionados.size() > 0 ){
+                    Bundle bundleObject = new Bundle();
+                    bundleObject.putSerializable("saboresSelecionados", (Serializable) saboresSelecionados);
+                    it.putExtras(bundleObject);
+                }
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("tamanho", tamanho);
+                it.putExtras(bundle);
+
+                startActivity(it);
+            }
+        });
+
         if(getIntent().hasExtra("tamanho")) {
             Bundle b = new Bundle();
             b = getIntent().getExtras();
@@ -53,23 +75,6 @@ public class PizzaActivity extends AppCompatActivity {
             dados.put(subgrupos.get(i).getNome(), itens);  // insere chave (= cabeçalho = subgrupo)
         }
         lstvSabores.setAdapter(new TPizzaAdapter(dados));
-    }
-
-    public void btnContinuarSabClick(View view) {
-        Intent it = new Intent(this, ComplementoActivity.class);
-
-        List<TItemTela> saboresSelecionados = gravarLista(dados);
-        if (saboresSelecionados.size() > 0 ){
-            Bundle bundleObject = new Bundle();
-            bundleObject.putSerializable("saboresSelecionados", (Serializable) saboresSelecionados);
-            it.putExtras(bundleObject);
-        }
-
-        Bundle bundle = new Bundle();
-        bundle.putInt("tamanho", tamanho);
-        it.putExtras(bundle);
-
-        startActivity(it);
     }
 
     public List<TItemTela> gravarLista(Map<String, List<TItemTela>> dados) {

@@ -33,6 +33,9 @@ public class JsonPedido {
             jsonObject.put("email", pedido.getCliente().getEmail());
             jsonObject.put("telefone", pedido.getCliente().getTelefone());
 
+            jsonObject.put("forma_pag", pedido.getF_pagamento());
+            jsonObject.put("troco_para", pedido.getTroco_para());
+
             // In this case we need a json array to hold the java list
             JSONArray jsonPedidoItem = new JSONArray();
 
