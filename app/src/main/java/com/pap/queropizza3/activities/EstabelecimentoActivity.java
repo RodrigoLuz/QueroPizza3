@@ -94,7 +94,7 @@ public class EstabelecimentoActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             if (convertView == null) {
                 convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_lstv_estabelecimento, parent, false);
@@ -123,9 +123,12 @@ public class EstabelecimentoActivity extends AppCompatActivity {
 
             imgBtnInfoEstabelecimento.setOnClickListener(new View.OnClickListener(){
                     @Override
-                    public void onClick(View v) {
-                    Intent it = new Intent(EstabelecimentoActivity.this, EstabelecimentoDetalheActivity.class);
-                    startActivity(it);
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("estabelecimento", position);
+                        Intent it = new Intent(EstabelecimentoActivity.this, EstabelecimentoDetalheActivity.class);
+                        it.putExtras(bundle);
+                        startActivity(it);
                 }
                 });
 

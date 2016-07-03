@@ -1,7 +1,9 @@
 package com.pap.queropizza3.adapters;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pap.queropizza3.R;
 import com.pap.queropizza3.models.TItemTela;
@@ -24,13 +27,18 @@ public class TPizzaAdapter extends BaseExpandableListAdapter {
 
     private List<String> keys;
     private Map<String, List<TItemTela>> dados;
+    private final Activity context;
+    private final int sabores;
 
-    public TPizzaAdapter(Map<String, List<TItemTela>> dados) {
+    public TPizzaAdapter(Activity context, int sabores, Map<String, List<TItemTela>> dados) {
+        this.sabores = sabores;
+        this.context = context;
         this.dados = dados;
         this.keys = new ArrayList<String>(dados.keySet());
     }
 
     protected void onCreate(Bundle savedInstanceState) {
+
     }
 
     // sub categorias
@@ -67,7 +75,22 @@ public class TPizzaAdapter extends BaseExpandableListAdapter {
         chkbSelecao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
                 item.setSelecionado(buttonView.isChecked());
+                int i = getCheckedItemCount(dados);
+                if (i > sabores) {
+                    item.setSelecionado(false);
+                    buttonView.setChecked(false);
+                    Toast.makeText(context, "Máximo " + sabores + " sabores", Toast.LENGTH_SHORT).show();
+                }
+
+                FloatingActionButton fab = (FloatingActionButton) context.findViewById(R.id.fab);
+                if (i == 0) {
+                    fab.setVisibility(View.INVISIBLE);
+                } else {
+                    fab.setVisibility(View.VISIBLE);
+                }
+
            }
          });
 
@@ -77,6 +100,18 @@ public class TPizzaAdapter extends BaseExpandableListAdapter {
         txtvValor.setText(String.format("%.2f", (item.getCardapio_item().getValor())));
 
         return convertView;
+    }
+
+    public int getCheckedItemCount(Map<String, List<TItemTela>> dados){
+        int count = 0;
+        for (String key: keys) {
+            for (TItemTela item: dados.get(key)) {
+                if (item.isSelecionado()){
+                    count ++;
+                }
+            }
+        }
+        return count;
     }
 
     @Override
@@ -119,5 +154,6 @@ public class TPizzaAdapter extends BaseExpandableListAdapter {
             int groupPosition, int childPosition) {
         return true;
     }
+
 
 }
