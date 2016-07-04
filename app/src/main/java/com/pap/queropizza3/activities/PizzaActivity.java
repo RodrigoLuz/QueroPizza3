@@ -25,7 +25,7 @@ public class PizzaActivity extends AppCompatActivity {
 
     ExpandableListView lstvSabores;
     Map<String, List<TItemTela>> dados =  new HashMap<String, List<TItemTela>>();
-    int tamanho;
+    int tamanho, sabores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class PizzaActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.INVISIBLE);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +51,8 @@ public class PizzaActivity extends AppCompatActivity {
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("tamanho", tamanho);
+
+                bundle.putInt("sabores", sabores);
                 it.putExtras(bundle);
 
                 startActivity(it);
@@ -60,6 +63,23 @@ public class PizzaActivity extends AppCompatActivity {
             Bundle b = new Bundle();
             b = getIntent().getExtras();
             tamanho = b.getInt("tamanho");
+        }
+
+        switch(tamanho) {
+            case 1:
+                sabores = 4;
+                break;
+            case 2:
+                sabores = 4;
+                break;
+            case 3:
+                sabores = 4;
+                break;
+            case 4:
+                sabores = 2;
+                break;
+            default:
+                throw new RuntimeException("Opção inválida");
         }
 
         lstvSabores = (ExpandableListView)findViewById(R.id.lstvSabores);
@@ -74,7 +94,7 @@ public class PizzaActivity extends AppCompatActivity {
             List<TItemTela> itens = dbDao.listaItensPorSubGrupo(subgrupos.get(i));  // busca itens dos subgrupos
             dados.put(subgrupos.get(i).getNome(), itens);  // insere chave (= cabeçalho = subgrupo)
         }
-        lstvSabores.setAdapter(new TPizzaAdapter(dados));
+        lstvSabores.setAdapter(new TPizzaAdapter(PizzaActivity.this, sabores, dados));
     }
 
     public List<TItemTela> gravarLista(Map<String, List<TItemTela>> dados) {

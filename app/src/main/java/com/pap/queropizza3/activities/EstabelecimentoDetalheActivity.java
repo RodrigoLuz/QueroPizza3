@@ -10,6 +10,18 @@ public class EstabelecimentoDetalheActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_estabelecimento_detalhe);
+        int e = 0;
+        Bundle b = new Bundle();
+        if(getIntent().hasExtra("estabelecimento")) {
+            b = getIntent().getExtras();
+        }
+        e = b.getInt("estabelecimento");
+
+        if (e == 0) {
+            setContentView(R.layout.activity_estabelecimento_detalhe);
+        } else {
+            setContentView(R.layout.activity_estabelecimento_detalhe_2);
+        }
+
     }
 }
