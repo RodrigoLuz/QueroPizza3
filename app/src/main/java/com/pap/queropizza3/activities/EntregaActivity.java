@@ -118,7 +118,7 @@ public class EntregaActivity extends AppCompatActivity {
         if (b.getBoolean("delivery")){
             buscarValorEntrega("", buscarEnderecoUsuario());
             entrega.add("Balcão");
-            imageId.add(R.drawable.pizza_icon);
+            imageId.add(R.drawable.balcao);
             info.add("");
 
             entrega.add("Delivery");
@@ -127,7 +127,7 @@ public class EntregaActivity extends AppCompatActivity {
 
         } else {
             entrega.add("Balcão");
-            imageId.add(R.drawable.pizza_icon);
+            imageId.add(R.drawable.balcao);
             info.add("(Delivery indisponível para esta unidade no momento)");
         }
 

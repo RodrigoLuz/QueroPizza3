@@ -50,22 +50,22 @@ public class PagamentoActivity extends AppCompatActivity implements TrocoDialog.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         entrega.add("Dinheiro");
-        imageId.add(R.drawable.pizza_icon);
+        imageId.add(R.drawable.dinheiro);
 
         entrega.add("Mastercard - Crédito");
-        imageId.add(R.drawable.pizza_icon);
+        imageId.add(R.drawable.master_cre);
 
         entrega.add("Mastercard - Débito");
-        imageId.add(R.drawable.pizza_icon);
+        imageId.add(R.drawable.master_deb);
 
         entrega.add("Visa - Crédito");
-        imageId.add(R.drawable.pizza_icon);
+        imageId.add(R.drawable.visa_cre);
 
         entrega.add("Visa - Débito");
-        imageId.add(R.drawable.pizza_icon);
+        imageId.add(R.drawable.visa_deb);
 
         entrega.add("Pag Seguro");
-        imageId.add(R.drawable.pizza_icon);
+        imageId.add(R.drawable.paypal);
 
 
         adapter = new CustomList(this, entrega, imageId);
