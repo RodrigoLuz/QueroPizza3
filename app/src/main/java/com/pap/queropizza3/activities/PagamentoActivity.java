@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -27,7 +28,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PagamentoActivity extends AppCompatActivity {
+public class PagamentoActivity extends AppCompatActivity implements TrocoDialog.TrocoDialogListener {
 
     private static final String PAG_SEGURO_PACKAGE_NAME = "br.com.uol.ps";
     private static final String PAG_SEGURO_CLASS_NAME = "br.com.uol.ps.app.MainActivity";
@@ -60,30 +61,30 @@ public class PagamentoActivity extends AppCompatActivity {
         entrega.add("Visa - Crédito");
         imageId.add(R.drawable.pizza_icon);
 
-        entrega.add("Pay-Pal");
+        entrega.add("Visa - Débito");
+        imageId.add(R.drawable.pizza_icon);
+
+        entrega.add("Pag Seguro");
         imageId.add(R.drawable.pizza_icon);
 
 
         adapter = new CustomList(this, entrega, imageId);
         list=(ListView)findViewById(R.id.lstvEntrega);
         list.setAdapter(adapter);
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppSQLDao dbDao;
-                dbDao = new AppSQLDao(getApplicationContext());
-                SharedPreferences prefs = getSharedPreferences("pedido", MODE_PRIVATE);
-                int id_pedido = prefs.getInt("id_pedido", -1); // se retornar -1 tem algo errado
-                TPedido p;
-                p = dbDao.buscarPedido(id_pedido);
+    private void enviarPedido(int fp, double troco) {
+        AppSQLDao dbDao;
+        dbDao = new AppSQLDao(getApplicationContext());
+        SharedPreferences prefs = getSharedPreferences("pedido", MODE_PRIVATE);
+        int id_pedido = prefs.getInt("id_pedido", -1); // se retornar -1 tem algo errado
+        TPedido p;
+        p = dbDao.buscarPedido(id_pedido);
+        p.setTroco_para(troco);
+        p.setF_pagamento(fp);
 
-                EnviarPedido e = new EnviarPedido();
-                e.envia(p, getBaseContext());
-            }
-        });
-
+        EnviarPedido e = new EnviarPedido();
+        e.envia(p, getBaseContext());
     }
 
     private boolean checkIfAppIsInstalled() {
@@ -100,7 +101,8 @@ public class PagamentoActivity extends AppCompatActivity {
     }
 
 
-    public void pagSeguroClick(View view) {
+    private boolean pagamentoPagSeguro() {
+        boolean result = false;
         if (checkIfAppIsInstalled()) {
             BigDecimal paymentValue = new BigDecimal("10.99");
             Intent it = new Intent(Intent.ACTION_MAIN);
@@ -108,12 +110,14 @@ public class PagamentoActivity extends AppCompatActivity {
             it.putExtra(FLAG_APP_PAYMENT_VALUE, paymentValue); // Valor da venda.
             try {
                 startActivityForResult(it, REQUEST_CODE); // Chama o aplicativo do PagSeguro.
+                result = true;
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(getApplicationContext(), "Erro ao abrir PagSeguro", Toast.LENGTH_SHORT).show();
             }
         }else{
             Toast.makeText(getApplicationContext(), "Aplicativo PagSeguro não instalado", Toast.LENGTH_SHORT).show();
         }
+        return result;
     }
 
     public class CustomList extends ArrayAdapter<String> {
@@ -133,6 +137,28 @@ public class PagamentoActivity extends AppCompatActivity {
             LayoutInflater inflater = context.getLayoutInflater();
             View rowView= inflater.inflate(R.layout.layout_item_pagamento, null, true);
 
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if (position == 0) { // dinheiro
+                        showTrocoDialog();
+                    } else
+                    if (position == 5) // pag seguro
+                    {
+                        if (pagamentoPagSeguro()) {
+                            enviarPedido(position, 0.00);
+                            Intent it = new Intent(PagamentoActivity.this, MainActivity.class);
+                            startActivity(it);
+                        };
+                    } else  // cartões
+                    {
+                        enviarPedido(position, 0.00);
+                        Intent it = new Intent(PagamentoActivity.this, MainActivity.class);
+                        startActivity(it);
+                    }
+                }
+            });
+
             TextView txtvNome = (TextView) rowView.findViewById(R.id.txtvNome);
             ImageView imgView = (ImageView) rowView.findViewById(R.id.imgView);
 
@@ -142,5 +168,18 @@ public class PagamentoActivity extends AppCompatActivity {
         }
     }
 
+    private void showTrocoDialog() {
+        FragmentManager fm = getSupportFragmentManager();
+        TrocoDialog trocoDialog = new TrocoDialog();
+        trocoDialog.show(fm, "fragment_troco");
+    }
+
+    @Override
+    public void onFinishTrocoDialog(Double inputValor) {
+//        Toast.makeText(this, "Hi, " + inputValor, Toast.LENGTH_SHORT).show();
+        enviarPedido(0, inputValor);
+        Intent it = new Intent(PagamentoActivity.this, MainActivity.class);
+        startActivity(it);
+    }
 
 }

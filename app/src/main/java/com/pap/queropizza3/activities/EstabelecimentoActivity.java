@@ -108,8 +108,8 @@ public class EstabelecimentoActivity extends AppCompatActivity {
             ImageButton imgBtnInfoEstabelecimento = (ImageButton)convertView.findViewById(R.id.imgBtnInfoEstabelecimento);
             ListView l = (ListView) findViewById(R.id.lstvEstabelecimentos);
             l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                    buscarCardapio(); // busca cardápio do estabelecimento selecionado e grava no banco
                     Intent it = new Intent(EstabelecimentoActivity.this, EntregaActivity.class);
                     TEstabelecimento eClick = getItem(position);
@@ -119,18 +119,18 @@ public class EstabelecimentoActivity extends AppCompatActivity {
 
                     startActivity(it);
                 }
-                });
+            });
 
             imgBtnInfoEstabelecimento.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View view) {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("estabelecimento", position);
-                        Intent it = new Intent(EstabelecimentoActivity.this, EstabelecimentoDetalheActivity.class);
-                        it.putExtras(bundle);
-                        startActivity(it);
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("estabelecimento", position);
+                    Intent it = new Intent(EstabelecimentoActivity.this, EstabelecimentoDetalheActivity.class);
+                    it.putExtras(bundle);
+                    startActivity(it);
                 }
-                });
+            });
 
             txtvNome.setText(e.getNome());
             txtvInfo1.setText(e.getEndereco());
