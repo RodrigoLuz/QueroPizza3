@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.pap.queropizza3.activities.ClienteActivity"
+    tools:showIn="@layout/activity_cliente">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="16"
+            android:id="@+id/edtNome"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:maxLength="60"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome"
+            android:id="@+id/txtvNome"
+            android:layout_below="@+id/edtNome"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number|textPostalAddress"
+            android:ems="10"
+            android:id="@+id/edtCep"
+            android:layout_below="@+id/txtvNome"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:maxLength="8" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CEP"
+            android:id="@+id/txtvCep"
+            android:layout_below="@+id/edtCep"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtEndereco"
+            android:layout_below="@+id/txtvCep"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@+id/edtUf"
+            android:maxLength="100" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Endereço"
+            android:id="@+id/txtvEndereco"
+            android:layout_below="@+id/edtEndereco"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout2">
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="email"
+            android:id="@+id/txtvEmail"
+            android:layout_below="@+id/edtEmail"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="30"
+            android:id="@+id/edtEmail"
+            android:layout_below="@+id/txtvBairro"
+            android:layout_alignParentStart="true"
+            android:maxLength="60"
+            android:layout_toLeftOf="@+id/txtvComplemento"
+            android:layout_toStartOf="@+id/txtvComplemento" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telefone"
+            android:id="@+id/txtvTelefone"
+            android:singleLine="true"
+            android:layout_below="@+id/edtTelefone"
+            android:layout_alignLeft="@+id/edtTelefone"
+            android:layout_alignStart="@+id/edtTelefone" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/edtTelefone"
+            android:maxLength="16"
+            android:layout_below="@+id/txtvComplemento"
+            android:layout_alignLeft="@+id/edtComplemento"
+            android:layout_alignStart="@+id/edtComplemento" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cidade"
+            android:id="@+id/txtvCidade"
+            android:layout_below="@+id/edtCidade"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UF"
+            android:id="@+id/txtvUf"
+            android:layout_marginLeft="5dp"
+            android:layout_alignStart="@+id/edtUf"
+            android:layout_alignBottom="@+id/txtvCidade" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtCidade"
+            android:layout_below="@+id/txtvEndereco"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/edtUf"
+            android:layout_marginTop="5dp"
+            android:ems="5"
+            android:maxLength="60" />
+
+        <EditText
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtUf"
+            android:ems="2"
+            android:layout_alignEnd="@+id/edtNumero"
+            android:layout_alignBottom="@+id/edtCidade"
+            android:maxLength="2"
+            android:capitalize="characters" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscar"
+            android:id="@+id/btnBuscarCep"
+            android:layout_alignBottom="@+id/edtCep"
+            android:layout_toEndOf="@+id/edtCep"
+            android:onClick="btnBuscarClick"/>
+
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtComplemento"
+            android:layout_below="@+id/txtvUf"
+            android:layout_alignEnd="@+id/edtUf"
+            android:layout_marginTop="5dp"
+            android:maxLength="20" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtBairro"
+            android:layout_below="@+id/txtvCidade"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@+id/edtComplemento"
+            android:maxLength="60" />
+
+        <EditText
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtNumero"
+            android:layout_alignParentEnd="true"
+            android:layout_alignBottom="@+id/edtEndereco" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtvNr"
+            android:text="Nr."
+            android:layout_below="@+id/edtNumero"
+            android:layout_alignStart="@+id/edtNumero"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bairro"
+            android:id="@+id/txtvBairro"
+            android:layout_below="@+id/edtBairro"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Complemento"
+            android:id="@+id/txtvComplemento"
+            android:layout_below="@+id/edtComplemento"
+            android:layout_alignStart="@+id/edtComplemento"
+            android:layout_alignParentStart="false"
+            android:layout_marginLeft="5dp" />
+
+    </RelativeLayout>
+
+

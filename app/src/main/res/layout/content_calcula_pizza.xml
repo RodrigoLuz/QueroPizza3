@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.pap.queropizza3.activities.CalculaPizzaActivity"
+    tools:showIn="@layout/activity_calcula_pizza">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Índice de fome"
+        android:id="@+id/textView7"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarIndice"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp"
+        style="@style/BaggioTheme"
+        android:longClickable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Normal"
+        android:id="@+id/textView8"
+        android:layout_below="@+id/seekBarIndice"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Morto de fome"
+        android:id="@+id/textView9"
+        android:layout_below="@+id/seekBarIndice"
+        android:layout_alignRight="@+id/seekBarIndice"
+        android:layout_alignEnd="@+id/seekBarIndice" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarHomens"
+        android:layout_marginTop="80dp"
+        android:layout_below="@+id/textView8"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        style="@style/BaggioTheme" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Homens 0"
+        android:id="@+id/txtvHomens"
+        android:layout_below="@+id/seekBarHomens"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarMulheres"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/txtvHomens"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        style="@style/BaggioTheme" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mulheres e crianças 0"
+        android:id="@+id/txtvMulheres"
+        android:layout_below="@+id/seekBarMulheres"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Pedaços: 0"
+        android:id="@+id/txtvPedacos"
+        android:layout_marginTop="80dp"
+        android:layout_below="@+id/txtvMulheres"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+
+</RelativeLayout>

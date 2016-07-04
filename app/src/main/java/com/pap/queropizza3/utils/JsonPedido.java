@@ -33,7 +33,30 @@ public class JsonPedido {
             jsonObject.put("email", pedido.getCliente().getEmail());
             jsonObject.put("telefone", pedido.getCliente().getTelefone());
 
-            jsonObject.put("forma_pag", pedido.getF_pagamento());
+            int fp = pedido.getF_pagamento();
+            String msg = "";
+            switch (fp){
+                case 0:
+                    msg = "Dinheiro";
+                    break;
+                case 1:
+                    msg = "Mastercard - Crédito";
+                    break;
+                case 2:
+                    msg = "Mastercard - Débito";
+                    break;
+                case 3:
+                    msg = "Visa - Crédito";
+                    break;
+                case 4:
+                    msg = "Visa - Débito";
+                    break;
+                case 5:
+                    msg = "Pag Seguro";
+                    break;
+            }
+
+            jsonObject.put("forma_pag", msg);
             jsonObject.put("troco_para", pedido.getTroco_para());
 
             // In this case we need a json array to hold the java list

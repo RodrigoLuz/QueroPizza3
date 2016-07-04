@@ -5,9 +5,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.pap.queropizza3.R;
@@ -20,15 +21,27 @@ import java.util.regex.Pattern;
 
 public class ClienteActivity extends AppCompatActivity {
 
-    Button btnSalvarCliente;
     EditText edtNome, edtCep, edtEndereco, edtCidade, edtNumero, edtComplemento, edtBairro, edtUf, edtEmail, edtTelefone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cliente);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btnSalvarCliente = (Button)findViewById(R.id.btnSalvarCliente);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                salvarCliente();
+                Intent it = new Intent(ClienteActivity.this, EstabelecimentoActivity.class);
+                startActivity(it);
+                finish();
+            }
+        });
+
         edtNome = (EditText)findViewById(R.id.edtNome);
         edtCep = (EditText)findViewById(R.id.edtCep);
         edtEndereco = (EditText)findViewById(R.id.edtEndereco);
@@ -56,14 +69,6 @@ public class ClienteActivity extends AppCompatActivity {
             edtTelefone.setText(c.getTelefone());
         }
 
-    }
-
-
-    public void btnSalvarClienteClick(View v){
-        salvarCliente();
-        Intent it = new Intent(this, EstabelecimentoActivity.class);
-        startActivity(it);
-        finish();
     }
 
     private void salvarCliente(){
