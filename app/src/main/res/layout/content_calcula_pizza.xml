@@ -12,34 +12,95 @@
     tools:context="com.pap.queropizza3.activities.CalculaPizzaActivity"
     tools:showIn="@layout/activity_calcula_pizza">
 
-    <NumberPicker
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/numberPicker"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Índice de fome"
+        android:id="@+id/textView7"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarIndice"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp"
+        style="@style/BaggioTheme"
+        android:longClickable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Normal"
+        android:id="@+id/textView8"
+        android:layout_below="@+id/seekBarIndice"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Morto de fome"
+        android:id="@+id/textView9"
+        android:layout_below="@+id/seekBarIndice"
+        android:layout_alignRight="@+id/seekBarIndice"
+        android:layout_alignEnd="@+id/seekBarIndice" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarHomens"
+        android:layout_marginTop="80dp"
+        android:layout_below="@+id/textView8"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        style="@style/BaggioTheme" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Homens 0"
+        android:id="@+id/txtvHomens"
+        android:layout_below="@+id/seekBarHomens"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarMulheres"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/txtvHomens"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="97dp" />
+        style="@style/BaggioTheme" />
 
-    <NumberPicker
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/numberPicker2"
-        android:layout_alignTop="@+id/numberPicker"
-        android:layout_toRightOf="@+id/numberPicker"
-        android:layout_toEndOf="@+id/numberPicker"
-        android:layout_marginLeft="45dp"
-        android:layout_marginStart="45dp" />
+        android:text="Mulheres e crianças 0"
+        android:id="@+id/txtvMulheres"
+        android:layout_below="@+id/seekBarMulheres"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView6"
-        android:layout_below="@+id/numberPicker"
+        android:text="Pedaços: 0"
+        android:id="@+id/txtvPedacos"
+        android:layout_marginTop="80dp"
+        android:layout_below="@+id/txtvMulheres"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="45dp" />
+        android:layout_alignParentStart="true" />
+
+
 
 </RelativeLayout>

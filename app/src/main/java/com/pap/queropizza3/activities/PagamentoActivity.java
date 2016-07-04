@@ -104,7 +104,7 @@ public class PagamentoActivity extends AppCompatActivity implements TrocoDialog.
     private boolean pagamentoPagSeguro() {
         boolean result = false;
         if (checkIfAppIsInstalled()) {
-            BigDecimal paymentValue = new BigDecimal("10.99");
+            BigDecimal paymentValue = new BigDecimal("22.00");
             Intent it = new Intent(Intent.ACTION_MAIN);
             it.setClassName(PAG_SEGURO_PACKAGE_NAME, PAG_SEGURO_CLASS_NAME); // Intent que será chamada.
             it.putExtra(FLAG_APP_PAYMENT_VALUE, paymentValue); // Valor da venda.

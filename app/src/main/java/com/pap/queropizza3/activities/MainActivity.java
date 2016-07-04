@@ -91,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(it);
             return true;
         }
+        if (id == R.id.action_calcula_pizza) {
+            Intent it = new Intent(this, CalculaPizzaActivity.class);
+            startActivity(it);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
